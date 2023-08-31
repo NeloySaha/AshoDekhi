@@ -1,0 +1,515 @@
+Meg 2: The Trench
+/Images/movies/meg2.jpg 
+English
+Jonas Taylor leads a research team on an exploratory dive into the deepest depths of the ocean. Their voyage spirals into chaos when a malevolent mining operation threatens their mission and forces them into a high-stakes battle for survival. Pitted against colossal, prehistoric sharks and relentless environmental plunderers, they must outrun, outsmart and outswim their merciless predators.
+5.5
+1h 56m
+Jason Statham
+2023-08-04
+Action,Adventure,Horror
+Ben Wheatley
+
+
+
+
+
+Bashundhara Shopping Mall
+Panthapath
+Show Motion Limited Level 8, Bashundhara City 13/3 Ka, Panthapath, Tejgaon, Dhaka-1205
+
+Shimanto Shambhar
+Dhanmondi
+Shimanto Shamvar Road no 2, Dhanmondi, Dhaka-1205
+
+SKS Tower
+Mohakhali
+SKS Tower, Mohakhali, Dhaka-1205
+
+Bangabandhu Military Museum
+Bijoy Shoroni
+Bangabandhu Military Museum, Bijoy Shoroni, Dhaka-1216
+
+
+create table Theatre(
+id int not null auto_increment,
+name varchar(100),
+location varchar(30),
+location_details varchar(250),
+primary key (id)
+);
+
+create table Features(
+    id int not null auto_increment,
+    title varchar(100),
+    description varchar(1000),
+    icon varchar(2000),
+    image_path varchar(100),
+    theatre_id int not null,
+    primary key(id),
+    foreign key (theatre_id) references Theatre(id) on delete cascade
+
+);
+
+
+Insert into Theatre (name, location, location_details)
+values
+('Bashundhara Shopping Mall','Panthapath','Show Motion Limited Level 8, Bashundhara City 13/3 Ka, Panthapath, Tejgaon, Dhaka-1205'),
+('Shimanto Shambhar','Dhanmondi','Shimanto Shamvar Road no 2, Dhanmondi, Dhaka-1205'),
+('SKS Tower','Mohakhali','SKS Tower, Mohakhali, Dhaka-1205'),
+('Bangabandhu Military Museum','Bijoy Shoroni','Bangabandhu Military Museum, Bijoy Shoroni, Dhaka-1216');
+
+
+Insert into Features(title,description,icon,image_path,theatre_id)
+values
+('Unparalleled Cinematic Experience','Immerse yourself in stunning visuals and crystal-clear sound, as our state-of-the-art IMAX technology transports you directly into the heart of the action. With a screen that stretches beyond your peripheral vision every frame comes alive with unparalleled brilliance.','/Images/features/imax.jpg',1),
+('Delight in Dolby Atmos','Experience sound like never before with Dolby Atmos, the epitome of
+            audio technology that takes you on an immersive sonic journey.With
+            sound objects moving seamlessly around the theatre, you'll be
+            transported into the heart of every scene, making you an integral
+            part of the story.','/Images/features/sound.jpg',1),
+('Tantalizing Treats','At our movie theatre, we take your movie-watching experience beyond
+            the screen by offering a delectable array of food items at our
+            concession stand. From freshly buttered popcorn, crispy nachos with
+            zesty cheese dips, to gourmet hotdogs and a variety of refreshing
+            beverages, our concession stand is a culinary paradise for movie
+            enthusiasts.','/Images/features/food.jpg',1),
+('Luxurious Escape','Step into a world of opulence and relaxation, designed to cater to
+            your every need before and after the main event. Our Premium Lounge
+            welcomes you with plush leather seating, elegant decor, and a
+            refined ambiance that sets the stage for an unforgettable cinematic
+            journey.','/Images/features/lounge.jpg',1),  
+
+
+                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create table Movie(
+id int not null auto_increment,
+name varchar(50),
+image_path varchar(150),
+language varchar(15),
+genre_1 varchar(15),
+genre_2 varchar(15),
+synopsis varchar(300),
+rating decimal(2,1),
+duration varchar (10),
+top_cast varchar(30),
+release_date date,
+primary key (id)
+);
+
+create table Hall(
+id int not null auto_increment,
+name varchar(10),
+total_seats int,
+theatre_id int not null,
+primary key(id),
+foreign key(theatre_id) references Theatre(id) on delete cascade
+); 
+
+create table Showtimes(
+id int not null auto_increment,
+movie_start_time varchar(20),
+show_type char(2),
+showtime_date date,
+price_per_seat int,
+primary key (id)
+);
+
+create table Seat(
+id int not null auto_increment,
+name char(2),
+primary key(id)
+);
+
+create table Person (
+email varchar(100) not null,
+first_name varchar(20),
+last_name varchar(20),
+password varchar(100),
+phone_number char(11),
+account_balance int,
+person_type varchar(8),
+primary key (email)
+);
+
+create table Payment (
+id int not null auto_increment,
+payment_time timestamp,
+amount int,
+method varchar(30),
+customer_email varchar(100) not null,
+primary key(id),
+foreign key (customer_email) references Person(email)
+);
+
+create table Ticket (
+id int not null auto_increment,
+price int,
+purchase_date date,
+payment_id int not null,
+seat_id int not null,
+hall_id int not null,
+movie_id int not null,
+showtimes_id int not null,
+primary key (id),
+foreign key (showtimes_id) references Showtimes(id),
+foreign key (payment_id) references Payment(id),
+foreign key (seat_id) references Seat(id),
+foreign key (hall_id) references Hall(id),
+foreign key (movie_id) references Movie(id)
+);
+
+
+create table Shown_In (
+movie_id int not null,
+showtime_id int not null,
+hall_id int not null,
+primary key(movie_id,showtime_id,hall_id),
+foreign key(movie_id) references Movie(id) on delete cascade,
+foreign key(showtime_id) references Showtimes(id) on delete cascade,
+foreign key (hall_id) references Hall(id) on delete cascade
+);
+
+
+Lage nai
+create table Screens (
+hall_id int not null,
+showtime_id int not null,
+primary key(hall_id,showtime_id),
+foreign key (hall_id) references Hall(id) on delete cascade,
+foreign key(showtime_id) references Showtimes(id) on delete cascade
+);
+
+create table Hallwise_Seat (
+hall_id int not null,
+seat_id int not null,
+primary key(hall_id,seat_id),
+foreign key (hall_id) references Hall(id) on delete cascade,
+foreign key (seat_id) references Seat(id) on delete cascade
+);
+
+create table Movie_Directors (
+    movie_id int not null,
+    director varchar(30),
+    primary key (movie_id, director),
+    foreign key (movie_id) references Movie(id) on delete cascade
+);
+
+create table Movie_Genre (
+    movie_id int not null,
+    genre varchar(30),
+    primary key (movie_id,genre),
+    foreign key (movie_id) references Movie(id) on delete cascade
+);
+
+ALTER TABLE movie
+MODIFY synopsis varchar(500);
+
+alter table Shown_In
+add hall_id int not null,
+add CONSTRAINT foreign key (hall_id) references Hall(id) on delete cascade;
+    
+
+Joaquim Dos Santos, Justin K. Thompson, Kemp Powers
+Sam Hargrave
+Jeremy Garelick
+Christopher McQuarrie
+Christopher Nolan
+Greta Gerwig
+Ben Wheatley
+
+Animation
+Action
+Adventure
+
+Action 
+Thriller
+
+Mystery
+Comedy
+
+Action
+Adventure
+Thriller
+
+History
+Drama
+Biography
+
+Adventure
+Comedy
+Fantasy
+
+Action
+Adventure
+Horror
+
+
+
+
+Spider-Man: Across the Spider-Verse
+/Images/movies/spiderman.jpg
+English
+Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.
+8.8
+2h 16m
+Oscar Isaac
+2023-06-23
+
+Extraction 2
+/Images/movies/extraction2.jpg
+English
+After barely surviving his grievous wounds from his mission in Dhaka, Bangladesh, Tyler Rake is back, and his team is ready to take on their next mission.
+7
+2h 3m
+Chris Hemsworth
+2023-06-13
+
+Murder Mystery 2
+/Images/movies/murderMystery.jpg
+English
+Full-time detectives Nick and Audrey are struggling to get their private eye agency off the ground. They find themselves at the center of international abduction when their friend Maharaja, is kidnapped at his own lavish wedding.
+5.7
+1h 30m
+Jennifer Aniston
+2023-03-31
+
+Mission: Impossible – Dead Reckoning Part One
+/Images/movies/missionImpossible.jpg
+English
+Ethan Hunt and the IMF team must track down a terrifying new weapon that threatens all of humanity if it falls into the wrong hands. With control of the future and the fate of the world at stake, a deadly race around the globe begins. Confronted by a mysterious, all-powerful enemy, Ethan is forced to consider that nothing can matter more than the mission -- not even the lives of those he cares about most.
+8
+2h 43m
+Tom Cruise
+2023-07-10
+
+Oppenheimer
+/Images/movies/oppenheimer.jpg
+English
+During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project. Oppenheimer and a team of scientists spend years developing and designing the atomic bomb. Their work comes to fruition on July 16, 1945, as they witness the world's first nuclear explosion, forever changing the course of history.
+9.4
+3h
+Cillian Murphy
+2023-07-21
+
+Barbie
+/Images/movies/barbie.jpg
+English
+Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.
+7.6
+1h 54m
+Margot Robbie
+2023-07-21 
+
+Meg 2: The Trench
+/Images/movies/meg2.jpg 
+English
+Jonas Taylor leads a research team on an exploratory dive into the deepest depths of the ocean. Their voyage spirals into chaos when a malevolent mining operation threatens their mission and forces them into a high-stakes battle for survival. Pitted against colossal, prehistoric sharks and relentless environmental plunderers, they must outrun, outsmart and outswim their merciless predators.
+5.5
+1h 56m
+Jason Statham
+2023-08-04
+
+
+
+
+Insert into Movie (name,image_path,language,synopsis,rating,duration,top_cast,release_date)
+values
+('Spider-Man: Across the Spider-Verse','/Images/movies/spiderman.jpg','English','Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.',8.8,'2h 16m','Oscar Isaac','2023-06-23');
+
+Insert into Movie (name,image_path,language,synopsis,rating,duration,top_cast,release_date)
+values
+('Extraction 2','/Images/movies/extraction2.jpg','English','After barely surviving his grievous wounds from his mission in Dhaka, Bangladesh, Tyler Rake is back, and his team is ready to take on their next mission.',7,'2h 3m','Chris Hemsworth','2023-06-13');
+
+Insert into Movie (name,image_path,language,synopsis,rating,duration,top_cast,release_date)
+values
+('Murder Mystery 2','/Images/movies/murderMystery.jpg','English','Full-time detectives Nick and Audrey are struggling to get their private eye agency off the ground. They find themselves at the center of international abduction when their friend Maharaja, is kidnapped at his own lavish wedding.',5.7,'1h 30m','Jennifer Aniston','2023-03-31'),
+('Mission: Impossible – Dead Reckoning Part One','/Images/movies/missionImpossible.jpg','English','Ethan Hunt and the IMF team must track down a terrifying new weapon that threatens all of humanity if it falls into the wrong hands. With control of the future and the fate of the world at stake, a deadly race around the globe begins. Confronted by a mysterious, all-powerful enemy, Ethan is forced to consider that nothing can matter more than the mission -- not even the lives of those he cares about most.',8,'2h 43m','Tom Cruise','2023-07-10'),
+('Oppenheimer','/Images/movies/oppenheimer.jpg','English',"During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project. Oppenheimer and a team of scientists spend years developing and designing the atomic bomb. Their work comes to fruition on July 16, 1945, as they witness the world's first nuclear explosion, forever changing the course of history.",9.4,'3h','Cillian Murphy','2023-07-21'),
+('Barbie','/Images/movies/barbie.jpg','English','Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.',7.6,'1h 54m','Margot Robbie','2023-07-21');
+
+Insert into Movie_Directors(movie_id,director)
+values
+(1,'Joaquim Dos Santos'),
+(1,'Justin K. Thompson'),
+(1,'Kemp Powers'),
+(2,'Sam Hargrave'),
+(3,'Jeremy Garelick'),
+(4,'Christopher McQuarrie'),
+(5,'Christopher Nolan'),
+(6,'Greta Gerwig');
+
+Insert into Movie_Genre(movie_id,genre)
+values
+(1,'Animation'),
+(1,'Action'),
+(1,'Adventure'),
+(2,'Action'),
+(2,'Thriller'),
+(3,'Mystery'),
+(3,'Comedy'),
+(4,'Action'),
+(4,'Adventure'),
+(4,'Thriller'),
+(5,'History'),
+(5,'Drama'),
+(5,'Biography'),
+(6,'Adventure'),
+(6,'Comedy'),
+(6,'Fantasy');
+
+Insert into hall (name,total_seats,theatre_id)
+values
+('Hall 1',48,1),
+('Hall 2',48,1),
+('Hall 3',48,1),
+('Hall 4',48,1),
+('Hall 1',48,2),
+('Hall 2',48,2),
+('Hall 3',48,2),
+('Hall 4',48,2);
+
+Insert into Seat (name)
+values
+('A1'),('A2'),('A3'),('A4'),('A5'),('A6'),('A7'),('A8'),
+('B1'),('B2'),('B3'),('B4'),('B5'),('B6'),('B7'),('B8'),
+('C1'),('C2'),('C3'),('C4'),('C5'),('C6'),('C7'),('C8'),
+('D1'),('D2'),('D3'),('D4'),('D5'),('D6'),('D7'),('D8'),
+('E1'),('E2'),('E3'),('E4'),('E5'),('E6'),('E7'),('E8'),
+('F1'),('F2'),('F3'),('F4'),('F5'),('F6'),('F7'),('F8');
+
+Insert into Showtimes (movie_start_time,show_type,showtime_date,price_per_seat)
+values
+('11:00 am','2D','2023-08-19',350),
+('2:30 pm','3D','2023-08-19',450),
+('6:00 pm','3D','2023-08-19',450),
+('11:00 am','2D','2023-08-20',350),
+('2:30 pm','3D','2023-08-20',450),
+('6:00 pm','3D','2023-08-20',450),
+('11:00 am','2D','2023-08-21',350),
+('2:30 pm','3D','2023-08-21',450),
+('6:00 pm','3D','2023-08-21',450),
+('11:00 am','2D','2023-08-22',350),
+('2:30 pm','3D','2023-08-22',450),
+('6:00 pm','3D','2023-08-22',450);
+
+
+
+
+
+Insert into Shown_In(movie_id,showtime_id,hall_id)
+values
+(1,1,1),(5,1,2),(3,1,3),(4,1,4),(1,1,5),(5,1,6),(3,1,7),(4,1,8),
+(5,2,1),(6,2,2),(1,2,3),(2,2,4),(5,2,5),(6,2,6),(1,2,7),(2,2,8),
+(5,3,1),(6,3,2),(1,3,3),(2,3,4),(4,3,5),(6,3,6),(1,3,7),(2,3,8),
+
+(1,4,1),(5,4,2),(3,4,3),(4,4,4),(1,4,5),(5,4,6),(3,4,7),(4,4,8),
+(5,5,1),(6,5,2),(1,5,3),(2,5,4),(5,5,5),(6,5,6),(1,5,7),(2,5,8),
+(5,6,1),(6,6,2),(1,6,3),(2,6,4),(4,6,5),(6,6,6),(1,6,7),(2,6,8),
+
+(1,7,1),(5,7,2),(3,7,3),(4,7,4),(1,7,5),(5,7,6),(3,7,7),(4,7,8),
+(5,8,1),(6,8,2),(1,8,3),(2,8,4),(5,8,5),(6,8,6),(1,8,7),(2,8,8),
+(5,9,1),(6,9,2),(1,9,3),(2,9,4),(4,9,5),(6,9,6),(1,9,7),(2,9,8),
+
+(1,10,1),(2,10,2),(3,10,3),(4,10,4),(1,10,5),(2,10,6),(3,10,7),(4,10,8),
+(5,11,1),(6,11,2),(1,11,3),(2,11,4),(5,11,5),(6,11,6),(1,11,7),(2,11,8),
+(5,12,1),(6,12,2),(1,12,3),(2,12,4),(4,12,5),(6,12,6),(1,12,7),(2,12,8);
+
+(1,19,1),(2,19,2),(3,19,3),(4,19,4),(1,19,5),(2,10,6),(3,10,7),(4,10,8),
+(5,11,1),(6,11,2),(1,11,3),(2,11,4),(5,11,5),(6,11,6),(1,11,7),(2,11,8),
+(5,12,1),(6,12,2),(1,12,3),(2,12,4),(4,12,5),(6,12,6),(1,12,7),(2,12,8)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Insert into Hallwise_Seat (hall_id,seat_id)
+values
+(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(1,33),(1,34),(1,35),(1,36),(1,37),(1,38),(1,39),(1,40),(1,41),(1,42),(1,43),(1,44),(1,45),(1,46),(1,47),(1,48),
+
+(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,13),(2,14),(2,15),(2,16),(2,17),(2,18),(2,19),(2,20),(2,21),(2,22),(2,23),(2,24),(2,25),(2,26),(2,27),(2,28),(2,29),(2,30),(2,31),(2,32),(2,33),(2,34),(2,35),(2,36),(2,37),(2,38),(2,39),(2,40),(2,41),(2,42),(2,43),(2,44),(2,45),(2,46),(2,47),(2,48),
+
+(3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),(3,19),(3,20),(3,21),(3,22),(3,23),(3,24),(3,25),(3,26),(3,27),(3,28),(3,29),(3,30),(3,31),(3,32),(3,33),(3,34),(3,35),(3,36),(3,37),(3,38),(3,39),(3,40),(3,41),(3,42),(3,43),(3,44),(3,45),(3,46),(3,47),(3,48),
+
+(4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7),(4,8),(4,9),(4,10),(4,11),(4,12),(4,13),(4,14),(4,15),(4,16),(4,17),(4,18),(4,19),(4,20),(4,21),(4,22),(4,23),(4,24),(4,25),(4,26),(4,27),(4,28),(4,29),(4,30),(4,31),(4,32),(4,33),(4,34),(4,35),(4,36),(4,37),(4,38),(4,39),(4,40),(4,41),(4,42),(4,43),(4,44),(4,45),(4,46),(4,47),(4,48),
+
+(5,1),(5,2),(5,3),(5,4),(5,5),(5,6),(5,7),(5,8),(5,9),(5,10),(5,11),(5,12),(5,13),(5,14),(5,15),(5,16),(5,17),(5,18),(5,19),(5,20),(5,21),(5,22),(5,23),(5,24),(5,25),(5,26),(5,27),(5,28),(5,29),(5,30),(5,31),(5,32),(5,33),(5,34),(5,35),(5,36),(5,37),(5,38),(5,39),(5,40),(5,41),(5,42),(5,43),(5,44),(5,45),(5,46),(5,47),(5,48),
+
+(6,1),(6,2),(6,3),(6,4),(6,5),(6,6),(6,7),(6,8),(6,9),(6,10),(6,11),(6,12),(6,13),(6,14),(6,15),(6,16),(6,17),(6,18),(6,19),(6,20),(6,21),(6,22),(6,23),(6,24),(6,25),(6,26),(6,27),(6,28),(6,29),(6,30),(6,31),(6,32),(6,33),(6,34),(6,35),(6,36),(6,37),(6,38),(6,39),(6,40),(6,41),(6,42),(6,43),(6,44),(6,45),(6,46),(6,47),(6,48),
+
+(7,1),(7,2),(7,3),(7,4),(7,5),(7,6),(7,7),(7,8),(7,9),(7,10),(7,11),(7,12),(7,13),(7,14),(7,15),(7,16),(7,17),(7,18),(7,19),(7,20),(7,21),(7,22),(7,23),(7,24),(7,25),(7,26),(7,27),(7,28),(7,29),(7,30),(7,31),(7,32),(7,33),(7,34),(7,35),(7,36),(7,37),(7,38),(7,39),(7,40),(7,41),(7,42),(7,43),(7,44),(7,45),(7,46),(7,47),(7,48),
+
+(8,1),(8,2),(8,3),(8,4),(8,5),(8,6),(8,7),(8,8),(8,9),(8,10),(8,11),(8,12),(8,13),(8,14),(8,15),(8,16),(8,17),(8,18),(8,19),(8,20),(8,21),(8,22),(8,23),(8,24),(8,25),(8,26),(8,27),(8,28),(8,29),(8,30),(8,31),(8,32),(8,33),(8,34),(8,35),(8,36),(8,37),(8,38),(8,39),(8,40),(8,41),(8,42),(8,43),(8,44),(8,45),(8,46),(8,47),(8,48);
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
