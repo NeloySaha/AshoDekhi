@@ -159,6 +159,6 @@ Contributions are welcome! If you'd like to contribute to ASHO DEKHI, please fol
 
 This project is licensed under the **MIT License**.
 
-## P.S.
 
-**ASHO DEKHI** - Unfortunately, due to the absence of suitable free MySQL hosting services currently, the website couldn't be hosted 😔. However, if the situation improves in the future, I'll surely consider hosting it 😊.
+
+***P.S.*** - Unfortunately, due to the absence of suitable free MySQL hosting services currently, the website couldn't be hosted 😔. However, if the situation improves in the future, I'll surely consider hosting it 😊.
