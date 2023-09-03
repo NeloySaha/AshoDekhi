@@ -17,9 +17,9 @@ app.get("/", (req, res) => {
   return res.json("Hello Backend Side");
 });
 
-// ///////////////
-// Home
-// ///////////////
+// /////
+// HOME
+// /////
 
 app.get("/latestMovies", (req, res) => {
   const sql =
@@ -52,11 +52,10 @@ app.get("/locationFeatures", (req, res) => {
   });
 });
 
-// //////////////
-// showtimes
-// ///////////////
+// /////////
+// SHOWTIMES
+// /////////
 
-// Farhan + Fariha + Neloy
 app.get("/theatres", (req, res) => {
   sql = "SELECT id, name,location FROM theatre";
 
@@ -106,7 +105,7 @@ app.get("/genres", (req, res) => {
 });
 
 // /////////////
-// Payment page
+// PAYMENT PAGE
 // /////////////
 
 app.post("/showtimesDates", (req, res) => {
@@ -244,9 +243,9 @@ app.post("/recentPurchase", (req, res) => {
   });
 });
 
-// //////////
-// Sign up
-// ///////////
+// ////////
+// SIGN UP
+// ////////
 
 app.post("/registration", (req, res) => {
   const email = req.body.email;
@@ -272,9 +271,9 @@ app.post("/registration", (req, res) => {
   );
 });
 
-// ////////////
-// login
-// ///////////
+// /////
+// LOGIN
+// /////
 
 app.post("/login", (req, res) => {
   const email = req.body.email;
@@ -293,11 +292,9 @@ app.post("/login", (req, res) => {
   });
 });
 
-// //////////////////////////
-// //////////////////////////
-// MovieDetails Page (JOY)
-// /////////////////////////
-// /////////////////////////
+// /////////////////
+// MOVIEDETAILS PAGE
+// /////////////////
 
 app.post("/movieDetail", (req, res) => {
   const id = req.body.movieDetailsId;
@@ -352,7 +349,7 @@ app.post("/otherMovies", (req, res) => {
 });
 
 // ///////////////////
-// customer Info page
+// CUSTOMER INFO PAGE
 // ///////////////////
 
 app.post("/customerProfile", (req, res) => {
@@ -402,9 +399,9 @@ ORDER BY payment_id DESC`;
   });
 });
 
-// /////////////////
-// Admin
-// /////////////////
+// /////
+// ADMIN
+// /////
 
 app.get("/totalTickets", (req, res) => {
   const sql = `SELECT COUNT(*) AS total_tickets FROM ticket`;
@@ -647,5 +644,3 @@ app.post("/movieSwap", (req, res) => {
 app.listen(7000, () => {
   console.log("Now, it is listening");
 });
-
-// Yarn start
