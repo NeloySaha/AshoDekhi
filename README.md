@@ -21,7 +21,7 @@ Welcome to ASHO DEKHI, your one-stop destination for booking movie tickets onlin
   - [🔧 Installation](#installation)
 - [🎉 Usage](#usage)
 - [🤝 Contributing](#contributing)
-- [📄 License](#license)
+
 
 ## Introduction
 
@@ -155,9 +155,6 @@ Contributions are welcome! If you'd like to contribute to ASHO DEKHI, please fol
 - Push your changes to your fork.
 - Create a pull request detailing your changes.
 
-## License
-
-This project is licensed under the **MIT License**.
 
 
 
