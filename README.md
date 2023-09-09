@@ -21,6 +21,7 @@ Welcome to ASHO DEKHI, your one-stop destination for booking movie tickets onlin
   - [🔧 Installation](#installation)
 - [🎉 Usage](#usage)
 - [🤝 Contributing](#contributing)
+- [📄 License](#license)
 
 ## Introduction
 
@@ -154,6 +155,8 @@ Contributions are welcome! If you'd like to contribute to ASHO DEKHI, please fol
 - Push your changes to your fork.
 - Create a pull request detailing your changes.
 
-## P.S.
+## License
 
-**ASHO DEKHI** - This project shows all dummy data and not connected to any actual Theatre Chain.
+This project is licensed under the **MIT License**.
+
+**ASHO DEKHI** - Unfortunately, due to the absence of suitable free MySQL hosting services currently, the website couldn't be hosted 😔. However, if the situation improves in the future, I'll surely consider hosting it 😊.
