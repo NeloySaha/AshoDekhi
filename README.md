@@ -2,9 +2,7 @@
 
 Welcome to ASHO DEKHI, your one-stop destination for booking movie tickets online. This repository contains the codebase for the ASHO DEKHI website, built using React, Express, MySQL, and Node.js.
 
-<style>h1,h2,h3,h4 { border-bottom: 0; } </style>
-
-# 🚀 Visit ASHO DEKHI live [Here](https://asho-dekhi.vercel.app/)
+<h1 style="border-bottom: none;">🚀 Visit ASHO DEKHI live <a href="https://asho-dekhi.vercel.app/">Here</a></h1>
 
 ## Table of Contents
 
