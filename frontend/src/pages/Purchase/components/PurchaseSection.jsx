@@ -59,7 +59,7 @@ export const PurchaseSection = ({
 
     setLoading(true);
     await axios
-      .post("http://localhost:7000/payment", {
+      .post(`${import.meta.env.VITE_API_URL}/payment`, {
         amount: userSeatPrice * userSeatListName.length,
         userPayMethod,
         email: signedPerson.email,
