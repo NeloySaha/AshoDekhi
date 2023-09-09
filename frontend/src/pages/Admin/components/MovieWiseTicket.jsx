@@ -7,7 +7,7 @@ export const MovieWiseTicket = () => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get("http://localhost:7000/totalTicketPerMovie")
+        .get(`${import.meta.env.VITE_API_URL}/totalTicketPerMovie`)
         .then((res) => setTicketData(res.data))
         .catch((err) => console.log(err));
     };

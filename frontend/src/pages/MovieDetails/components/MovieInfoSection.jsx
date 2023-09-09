@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { LocationSelector } from "../../../components/LocationSelector";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 
 export const MovieInfoSection = ({
   locationData,
@@ -15,11 +16,19 @@ export const MovieInfoSection = ({
   const [movieData, setMovieData] = useState({});
   const [showtimesData, setShowtimesData] = useState([]);
   const navigate = useNavigate();
+  const [loading1, setLoading1] = useState(false);
+
+  const override = {
+    display: "block",
+    margin: "9.6rem auto",
+  };
+  const initialRender = useRef(true);
 
   useEffect(() => {
-    const fetchData1 = async () => {
+    const fetchData = async () => {
+      setLoading1(true);
       await axios
-        .post("http://localhost:7000/movieDetail", { movieDetailsId })
+        .post(`${import.meta.env.VITE_API_URL}/movieDetail`, { movieDetailsId })
         .then((res) =>
           setMovieData(() => {
             const formattedRelDate = new Date(
@@ -39,9 +48,7 @@ export const MovieInfoSection = ({
           })
         )
         .catch((err) => console.log(err));
-    };
 
-    const fetchData2 = async () => {
       await axios
         .post("http://localhost:7000/movieWiseShowtime", {
           movieDetailsId,
@@ -49,11 +56,25 @@ export const MovieInfoSection = ({
         })
         .then((res) => setShowtimesData(res.data))
         .catch((err) => console.log(err));
+      setLoading1(false);
     };
 
-    fetchData1();
-    fetchData2();
-  }, [movieDetailsId, userLocation]);
+    fetchData();
+  }, [movieDetailsId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .post(`${import.meta.env.VITE_API_URL}/movieWiseShowtime`, {
+          movieDetailsId,
+          theatreId: userLocation?.id,
+        })
+        .then((res) => setShowtimesData(res.data))
+        .catch((err) => console.log(err));
+    };
+
+    fetchData();
+  }, [userLocation]);
 
   const showtimesObj3d = {};
   const showtimesObj2d = {};
@@ -154,7 +175,9 @@ export const MovieInfoSection = ({
     );
   });
 
-  return (
+  return loading1 ? (
+    <HashLoader cssOverride={override} size={60} color="#eb3656" />
+  ) : (
     <div className="section-movie-info container">
       <div className="movie-info-grid-container">
         <div className="movie-info-img-container">
@@ -309,6 +332,7 @@ export const MovieInfoSection = ({
       </div>
 
       <h3 className="movie-info-screen-heading">Showtimes</h3>
+
       <div className="movie-info-screen-container">
         {showHtml3d.length > 0 && (
           <div className="movie-info-screen-container-3d">

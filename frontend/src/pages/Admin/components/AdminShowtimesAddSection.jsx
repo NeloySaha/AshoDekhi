@@ -15,7 +15,7 @@ export const AdminShowtimesAddSection = ({
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get("http://localhost:7000/lastShowDate")
+        .get(`${import.meta.env.VITE_API_URL}/lastShowDate`)
         .then((res) => setLastShowDate(res.data[0].lastDate))
         .catch((err) => {
           console.log(err);
@@ -91,7 +91,7 @@ export const AdminShowtimesAddSection = ({
     let showtimeId;
 
     await axios
-      .post("http://localhost:7000/showdateAdd", {
+      .post(`${import.meta.env.VITE_API_URL}/showdateAdd`, {
         selectedShowDate,
       })
       .then((res) => (showtimeId = res.data && res.data[0].last_id))
@@ -101,7 +101,7 @@ export const AdminShowtimesAddSection = ({
       });
 
     await axios
-      .post("http://localhost:7000/shownInUpdate", { showtimeId })
+      .post(`${import.meta.env.VITE_API_URL}/shownInUpdate`, { showtimeId })
       .then((res) => {
         adminShowtimeToast();
       })

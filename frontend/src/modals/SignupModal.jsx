@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import BarLoader from "react-spinners/BarLoader";
 
 export const SignupModal = ({
   handleSignState,
   signupSuccessToast,
   signupFailedToast,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [passViewState, setPassViewState] = useState(false);
   const [signupDetails, setSignupDetails] = useState({
     firstName: "",
@@ -38,10 +40,12 @@ export const SignupModal = ({
       signupDetails.phoneNumber !== "" &&
       signupDetails.phoneNumber.length === 11 &&
       signupDetails.email !== "" &&
-      signupDetails.password !== ""
+      signupDetails.password !== "" &&
+      signupDetails.password.length >= 8
     ) {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/registration", {
+        .post(`${import.meta.env.VITE_API_URL}/registration`, {
           firstName: signupDetails.firstName,
           lastName: signupDetails.lastName,
           phoneNumber: signupDetails.phoneNumber,
@@ -59,6 +63,7 @@ export const SignupModal = ({
           handleSignState();
           signupFailedToast(err.response.data.message);
         });
+      setLoading(false);
     }
   };
 
@@ -122,7 +127,7 @@ export const SignupModal = ({
 
           <div className="signup-form-category">
             <label>
-              Phone Number: <span>*</span>
+              Phone Number(Must contain 11 digits): <span>*</span>
             </label>
             <input
               name="phoneNumber"
@@ -148,7 +153,7 @@ export const SignupModal = ({
 
           <div className="signup-form-category">
             <label>
-              Enter Your Password: <span>*</span>
+              Password(Must contain at least 8 digits): <span>*</span>
             </label>
             <div className="input-password">
               <input
@@ -202,7 +207,7 @@ export const SignupModal = ({
           </div>
 
           <button type="submit" className="btn-reg">
-            Sign up
+            {loading ? <BarLoader color="#e6e6e8" /> : "Sign up"}
           </button>
           <ToastContainer />
         </div>

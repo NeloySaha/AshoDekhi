@@ -8,7 +8,7 @@ export const Features = () => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get("http://localhost:7000/locationFeatures")
+        .get(`${import.meta.env.VITE_API_URL}/locationFeatures`)
         .then((res) => setFeaturesData(res.data))
         .catch((err) => console.log(err));
     };

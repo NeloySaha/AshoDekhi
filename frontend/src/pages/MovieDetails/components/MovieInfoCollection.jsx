@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CollectionCard } from "../../../components/CollectionCard";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const MovieInfoCollection = ({
   currentMovieDetails,
@@ -9,13 +10,20 @@ export const MovieInfoCollection = ({
   handleLoginState,
 }) => {
   const [movieData, setMovieData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const override = {
+    display: "block",
+    margin: "4.8rem auto",
+  };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/otherMovies", { movieDetailsId })
+        .post(`${import.meta.env.VITE_API_URL}/otherMovies`, { movieDetailsId })
         .then((res) => setMovieData(res.data))
         .catch((err) => console.log(err));
+      setLoading(false);
     };
 
     fetchData();
@@ -42,7 +50,11 @@ export const MovieInfoCollection = ({
           Find other movies &rarr;
         </h1>
       </div>
-      <div className="details-collection-container">{latestMoviesCards}</div>
+      {loading ? (
+        <HashLoader cssOverride={override} color="#eb3656" />
+      ) : (
+        <div className="details-collection-container">{latestMoviesCards}</div>
+      )}
     </section>
   );
 };

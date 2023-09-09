@@ -10,7 +10,7 @@ export const LocationSelector = ({
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get("http://localhost:7000/theatres")
+        .get(`${import.meta.env.VITE_API_URL}/theatres`)
         .then((res) => {
           getTheatreData(res.data);
         })

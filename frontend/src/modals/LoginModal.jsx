@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import BarLoader from "react-spinners/BarLoader";
 
 export const LoginModal = ({
   handleLoginState,
   handleSignedPerson,
   loginFailedToast,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [passViewState, setPassViewState] = useState(false);
   const [loginDetails, setLoginDetails] = useState({
     email: "",
@@ -28,8 +30,9 @@ export const LoginModal = ({
     e.preventDefault();
 
     const fetchData = async () => {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/login", {
+        .post(`${import.meta.env.VITE_API_URL}/login`, {
           email: loginDetails.email,
           password: loginDetails.password,
         })
@@ -42,6 +45,7 @@ export const LoginModal = ({
           console.log("Couldn't log in");
           handleLoginState();
         });
+      setLoading(false);
     };
 
     if (loginDetails.email !== "" && loginDetails.password !== "") {
@@ -152,7 +156,7 @@ export const LoginModal = ({
           </div>
 
           <button type="submit" className="btn-reg">
-            Sign in
+            {loading ? <BarLoader color="#e6e6e8" /> : "Sign in"}
           </button>
         </div>
       </form>

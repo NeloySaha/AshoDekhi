@@ -3,6 +3,7 @@ import { Navbar } from "../../components/Navbar";
 import { ShowTimesHeader } from "./components/ShowTimesHeader";
 import { ShowTimesCollection } from "./components/ShowTimesCollection";
 import { Footer } from "../../components/Footer";
+import { AnimatedPage } from "../../components/AnimatedPage";
 
 export const ShowtimesPage = ({
   handleSignState,
@@ -22,33 +23,35 @@ export const ShowtimesPage = ({
   };
 
   return (
-    <>
-      <Navbar
-        signedPerson={signedPerson}
-        pageName="showtimes"
-        handleSignState={handleSignState}
-        handleLoginState={handleLoginState}
-        handlelogout={handlelogout}
-      />
-      <ShowTimesHeader
-        locationData={locationData}
-        userLocation={userLocation}
-        handleLocationSelection={handleLocationSelection}
-        handleGenreChange={handleGenreChange}
-        userGenre={userGenre}
-        getTheatreData={getTheatreData}
-      />
-      <ShowTimesCollection
-        userLocation={userLocation}
-        userGenre={userGenre}
-        currentMovieDetails={currentMovieDetails}
-        handleLoginState={handleLoginState}
-        signedPerson={signedPerson}
-      />
-      <Footer
-        handleSignState={handleSignState}
-        handleLoginState={handleLoginState}
-      />
-    </>
+    <AnimatedPage>
+      <>
+        <Navbar
+          signedPerson={signedPerson}
+          pageName="showtimes"
+          handleSignState={handleSignState}
+          handleLoginState={handleLoginState}
+          handlelogout={handlelogout}
+        />
+        <ShowTimesHeader
+          locationData={locationData}
+          userLocation={userLocation}
+          handleLocationSelection={handleLocationSelection}
+          handleGenreChange={handleGenreChange}
+          userGenre={userGenre}
+          getTheatreData={getTheatreData}
+        />
+        <ShowTimesCollection
+          userLocation={userLocation}
+          userGenre={userGenre}
+          currentMovieDetails={currentMovieDetails}
+          handleLoginState={handleLoginState}
+          signedPerson={signedPerson}
+        />
+        <Footer
+          handleSignState={handleSignState}
+          handleLoginState={handleLoginState}
+        />
+      </>
+    </AnimatedPage>
   );
 };

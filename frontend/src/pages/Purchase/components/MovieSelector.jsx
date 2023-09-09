@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const MovieSelector = ({
   userMovieId,
@@ -9,15 +10,24 @@ export const MovieSelector = ({
   userDate,
   theatreId,
 }) => {
+  const override = {
+    display: "block",
+    margin: "1.6rem auto",
+  };
+
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/uniqueMovies", {
+        .post(`${import.meta.env.VITE_API_URL}/uniqueMovies`, {
           theatreId,
           userDate,
         })
         .then((res) => getMovieData(res.data))
         .catch((err) => console.log(err));
+      setLoading(false);
     };
 
     fetchData();
@@ -78,7 +88,8 @@ export const MovieSelector = ({
     <div>
       <form>
         <div className="form-item-heading">Select a movie</div>
-        <div className="form-movie-options">{movieOptions}</div>
+        {loading && <HashLoader cssOverride={override} color="#eb3656" />}
+        {!loading && <div className="form-movie-options">{movieOptions}</div>}
       </form>
     </div>
   );

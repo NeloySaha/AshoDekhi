@@ -6,6 +6,7 @@ import { PictureQualitySelector } from "./PictureQualitySelector";
 import { SeatSelector } from "./SeatSelector";
 import { LocationSelector } from "../../../components/LocationSelector";
 import { PayMethodSelector } from "./PayMethodSelector";
+import BarLoader from "react-spinners/BarLoader";
 
 export const PurchaseSection = ({
   locationData,
@@ -43,6 +44,7 @@ export const PurchaseSection = ({
   purchaseCompletion,
 }) => {
   const [ticketIds, setTicketIds] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const currentDate = () => {
     const date = new Date();
@@ -55,6 +57,7 @@ export const PurchaseSection = ({
   const handleTicketPurchase = async () => {
     let paymentID;
 
+    setLoading(true);
     await axios
       .post("http://localhost:7000/payment", {
         amount: userSeatPrice * userSeatListName.length,
@@ -69,7 +72,7 @@ export const PurchaseSection = ({
 
     userSeatList.forEach(async (seatId) => {
       await axios
-        .post("http://localhost:7000/purchaseTicket", {
+        .post(`${import.meta.env.VITE_API_URL}/purchaseTicket`, {
           price: userSeatPrice,
           purchase_date: currentDate(),
           paymentID,
@@ -85,7 +88,7 @@ export const PurchaseSection = ({
     });
 
     await axios
-      .post("http://localhost:7000/recentPurchase", { paymentID })
+      .post(`${import.meta.env.VITE_API_URL}/recentPurchase`, { paymentID })
       .then((res) => setTicketIds(res.data))
       .catch((err) => {
         console.log(err);
@@ -93,6 +96,7 @@ export const PurchaseSection = ({
       });
 
     await clearUserSelection();
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -475,7 +479,7 @@ export const PurchaseSection = ({
               onClick={handleTicketPurchase}
               disabled={userPayMethod === ""}
             >
-              purchase ticket
+              {loading ? <BarLoader color="#e6e6e8" /> : "purchase ticket"}
             </button>
           </div>
         </div>

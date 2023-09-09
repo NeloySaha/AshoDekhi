@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { SignupModal } from "./modals/SignupModal";
@@ -16,6 +16,7 @@ import { MovieDetailsPage } from "./pages/MovieDetails/MovieDetailsPage";
 import { AboutUsPage } from "./pages/AboutUs/AboutUsPage";
 import { CustomerInfoPage } from "./pages/CustomerInfo/CustomerInfoPage";
 import { AdminPage } from "./pages/Admin/AdminPage";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   // //////////
@@ -39,6 +40,8 @@ function App() {
   const [movieDetailsId, setMovieDetailsId] = useState(
     JSON.parse(window.localStorage.getItem("selectedMovie")) || ""
   );
+
+  const location = useLocation();
 
   const blurredStyle = {
     filter: "blur(5px)",
@@ -343,60 +346,25 @@ function App() {
     <>
       <div style={signModalState || loginModalState ? blurredStyle : {}}>
         <ToastContainer />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                signedPerson={signedPerson}
-                handleSignState={handleSignState}
-                handleLoginState={handleLoginState}
-                handlelogout={handlelogout}
-                currentMovieDetails={currentMovieDetails}
-              />
-            }
-          />
-
-          <Route
-            path="/showtimes"
-            element={
-              <ShowtimesPage
-                signedPerson={signedPerson}
-                handleSignState={handleSignState}
-                handleLoginState={handleLoginState}
-                handlelogout={handlelogout}
-                getTheatreData={getTheatreData}
-                locationData={locationData}
-                userLocation={userLocation}
-                handleLocationSelection={handleLocationSelection}
-                currentMovieDetails={currentMovieDetails}
-              />
-            }
-          />
-
-          <Route
-            element={
-              <ProtectedRoute
-                condition={
-                  Object.keys(signedPerson).length !== 0 &&
-                  signedPerson.person_type === "Customer"
-                }
-              />
-            }
-          >
+        <AnimatePresence wait>
+          <Routes key={location.pathname} location={location}>
             <Route
-              path="/purchase"
+              path="/"
               element={
-                <PurchasePage
-                  theatreId={userPurchaseInfo.theatre_id}
-                  userDate={userPurchaseInfo.showtime_date}
-                  userMovieId={userPurchaseInfo.movie_id}
-                  userHallId={userPurchaseInfo.hall_id}
-                  userShowtimeId={userPurchaseInfo.showtime_id}
-                  userSeatPrice={userPurchaseInfo.seat_price}
-                  userSeatList={userPurchaseInfo.seat_id_list}
-                  userPayMethod={userPurchaseInfo.payment_method}
-                  clearUserSelection={handleUserPurchaseLocationInfo}
+                <HomePage
+                  signedPerson={signedPerson}
+                  handleSignState={handleSignState}
+                  handleLoginState={handleLoginState}
+                  handlelogout={handlelogout}
+                  currentMovieDetails={currentMovieDetails}
+                />
+              }
+            />
+
+            <Route
+              path="/showtimes"
+              element={
+                <ShowtimesPage
                   signedPerson={signedPerson}
                   handleSignState={handleSignState}
                   handleLoginState={handleLoginState}
@@ -405,99 +373,136 @@ function App() {
                   locationData={locationData}
                   userLocation={userLocation}
                   handleLocationSelection={handleLocationSelection}
-                  handleUserDateChange={handleUserDateChange}
-                  datesData={datesData}
-                  getMovieData={getMovieData}
-                  movieData={movieData}
-                  handleUserMovieChange={handleUserMovieChange}
-                  getHallData={getHallData}
-                  hallData={hallData}
-                  handleUserHallShow={handleUserHallShow}
-                  getShowDatesData={getShowDatesData}
-                  seatsData={seatsData}
-                  getSeatsData={getSeatsData}
-                  handleUserSeats={handleUserSeats}
-                  formattedDate={formattedDate}
-                  curHallObj={curHallObj}
-                  currentMovie={currentMovie}
-                  userSeatListName={userSeatListName}
-                  handleUserPaymentMethod={handleUserPaymentMethod}
-                  purchaseCompletion={purchaseCompletion}
-                  ticketPurchaseError={ticketPurchaseError}
+                  currentMovieDetails={currentMovieDetails}
                 />
               }
             />
 
             <Route
-              path="/customer"
               element={
-                <CustomerInfoPage
-                  signedPerson={signedPerson}
-                  handleSignState={handleSignState}
-                  handleLoginState={handleLoginState}
-                  handlelogout={handlelogout}
+                <ProtectedRoute
+                  condition={
+                    Object.keys(signedPerson).length !== 0 &&
+                    signedPerson.person_type === "Customer"
+                  }
                 />
               }
-            />
-          </Route>
-
-          <Route
-            element={
-              <ProtectedRoute
-                condition={
-                  Object.keys(signedPerson).length !== 0 &&
-                  signedPerson.person_type === "Admin"
+            >
+              <Route
+                path="/purchase"
+                element={
+                  <PurchasePage
+                    theatreId={userPurchaseInfo.theatre_id}
+                    userDate={userPurchaseInfo.showtime_date}
+                    userMovieId={userPurchaseInfo.movie_id}
+                    userHallId={userPurchaseInfo.hall_id}
+                    userShowtimeId={userPurchaseInfo.showtime_id}
+                    userSeatPrice={userPurchaseInfo.seat_price}
+                    userSeatList={userPurchaseInfo.seat_id_list}
+                    userPayMethod={userPurchaseInfo.payment_method}
+                    clearUserSelection={handleUserPurchaseLocationInfo}
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                    getTheatreData={getTheatreData}
+                    locationData={locationData}
+                    userLocation={userLocation}
+                    handleLocationSelection={handleLocationSelection}
+                    handleUserDateChange={handleUserDateChange}
+                    datesData={datesData}
+                    getMovieData={getMovieData}
+                    movieData={movieData}
+                    handleUserMovieChange={handleUserMovieChange}
+                    getHallData={getHallData}
+                    hallData={hallData}
+                    handleUserHallShow={handleUserHallShow}
+                    getShowDatesData={getShowDatesData}
+                    seatsData={seatsData}
+                    getSeatsData={getSeatsData}
+                    handleUserSeats={handleUserSeats}
+                    formattedDate={formattedDate}
+                    curHallObj={curHallObj}
+                    currentMovie={currentMovie}
+                    userSeatListName={userSeatListName}
+                    handleUserPaymentMethod={handleUserPaymentMethod}
+                    purchaseCompletion={purchaseCompletion}
+                    ticketPurchaseError={ticketPurchaseError}
+                  />
                 }
               />
-            }
-          >
+
+              <Route
+                path="/customer"
+                element={
+                  <CustomerInfoPage
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                  />
+                }
+              />
+            </Route>
+
             <Route
-              path="/admin"
               element={
-                <AdminPage
+                <ProtectedRoute
+                  condition={
+                    Object.keys(signedPerson).length !== 0 &&
+                    signedPerson.person_type === "Admin"
+                  }
+                />
+              }
+            >
+              <Route
+                path="/admin"
+                element={
+                  <AdminPage
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                    adminErrorToast={adminErrorToast}
+                    adminMovieToast={adminMovieToast}
+                    adminShowtimeToast={adminShowtimeToast}
+                    adminShowninToast={adminShowninToast}
+                  />
+                }
+              />
+            </Route>
+
+            <Route
+              path="/aboutus"
+              element={
+                <AboutUsPage
                   signedPerson={signedPerson}
                   handleSignState={handleSignState}
                   handleLoginState={handleLoginState}
                   handlelogout={handlelogout}
-                  adminErrorToast={adminErrorToast}
-                  adminMovieToast={adminMovieToast}
-                  adminShowtimeToast={adminShowtimeToast}
-                  adminShowninToast={adminShowninToast}
                 />
               }
             />
-          </Route>
 
-          <Route
-            path="/aboutus"
-            element={
-              <AboutUsPage
-                signedPerson={signedPerson}
-                handleSignState={handleSignState}
-                handleLoginState={handleLoginState}
-                handlelogout={handlelogout}
-              />
-            }
-          />
-
-          <Route
-            path="/movieDetails"
-            element={
-              <MovieDetailsPage
-                signedPerson={signedPerson}
-                handleSignState={handleSignState}
-                handleLoginState={handleLoginState}
-                handlelogout={handlelogout}
-                getTheatreData={getTheatreData}
-                locationData={locationData}
-                userLocation={userLocation}
-                handleLocationSelection={handleLocationSelection}
-                movieDetailsId={movieDetailsId}
-                currentMovieDetails={currentMovieDetails}
-              />
-            }
-          />
-        </Routes>
+            <Route
+              path="/movieDetails"
+              element={
+                <MovieDetailsPage
+                  signedPerson={signedPerson}
+                  handleSignState={handleSignState}
+                  handleLoginState={handleLoginState}
+                  handlelogout={handlelogout}
+                  getTheatreData={getTheatreData}
+                  locationData={locationData}
+                  userLocation={userLocation}
+                  handleLocationSelection={handleLocationSelection}
+                  movieDetailsId={movieDetailsId}
+                  currentMovieDetails={currentMovieDetails}
+                />
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </div>
 
       {signModalState && (

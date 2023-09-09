@@ -145,7 +145,7 @@ header {
   text-decoration: none;
   color: inherit;
   font-weight: 400;
-  transition: all 0.3s;
+  transition: all 0.3s ease-in;
   display: inline-block;
   padding: 1rem;
   border-radius: 20px;
@@ -366,6 +366,9 @@ header {
 }
 
 .btn-reg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 4.4rem;
   margin-top: 2.4rem;
   border: none;
@@ -396,6 +399,7 @@ header {
 .hero {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  min-height: 62.8rem;
 }
 
 .heading-primary {
@@ -511,6 +515,7 @@ header {
   background-color: #313441;
   padding: 5.8rem 4.8rem;
   position: relative;
+  min-height: 76.8rem;
 }
 
 .section-home-collection:after {
@@ -1289,7 +1294,7 @@ header {
   text-transform: uppercase;
   align-items: center;
   justify-content: center;
-  padding: 1.6rem 0;
+  min-height: 4.8rem;
   margin-top: auto;
   border-radius: 2.8rem;
   color: #e6e6e8;
@@ -1897,6 +1902,13 @@ header {
 .customer-info-details div p:nth-child(3) {
   color: #cccdd0;
   font-weight: 500;
+}
+
+.customer-empty-status {
+  font-size: 1.6rem;
+  color: #767780;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .purchase-history-list {

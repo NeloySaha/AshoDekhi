@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 
 export const Footer = ({ handleSignState, handleLoginState }) => {
   const [locationData, setLocationData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:7000/locationDetails")
-      .then((res) => setLocationData(res.data))
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      await axios
+        .get(`${import.meta.env.VITE_API_URL}/locationDetails`)
+        .then((res) => setLocationData(res.data))
+        .catch((err) => console.log(err));
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   const locations = locationData.map((location, idx) => {
@@ -69,10 +76,12 @@ export const Footer = ({ handleSignState, handleLoginState }) => {
       <h3 className="footer-heading">Our Theatres</h3>
 
       <p className="copyright">
-        Copyright &copy; 2027 by ASHO DEKHI, Inc. All rights reserved.
+        Copyright &copy; 2023 by NELOY SAHA, Inc. All rights reserved.
       </p>
 
-      <div className="footer-address-container">{locations}</div>
+      <div className="footer-address-container">
+        {loading ? <HashLoader color="#eb3656" /> : locations}
+      </div>
     </section>
   );
 };

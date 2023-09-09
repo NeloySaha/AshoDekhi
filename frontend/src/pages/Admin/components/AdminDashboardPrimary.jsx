@@ -1,27 +1,34 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import HashLoader from "react-spinners/HashLoader";
 
 export const AdminDashboardPrimary = () => {
   const [ticketData, setTicketData] = useState([]);
   const [paymentData, setPaymentData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+  const [loading3, setLoading3] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get("http://localhost:7000/totalTickets")
+        .get(`${import.meta.env.VITE_API_URL}/totalTickets`)
         .then((res) => setTicketData(res.data))
         .catch((err) => console.log(err));
+      setLoading1(false);
 
       await axios
-        .get("http://localhost:7000/totalPayment")
+        .get(`${import.meta.env.VITE_API_URL}/totalPayment`)
         .then((res) => setPaymentData(res.data))
         .catch((err) => console.log(err));
+      setLoading2(false);
 
       await axios
-        .get("http://localhost:7000/totalCustomers")
+        .get(`${import.meta.env.VITE_API_URL}/totalCustomers`)
         .then((res) => setCustomerData(res.data))
         .catch((err) => console.log(err));
+      setLoading3(false);
     };
 
     fetchData();
@@ -32,9 +39,13 @@ export const AdminDashboardPrimary = () => {
       <h2 className="form-admin-heading dash-heading">Summary</h2>
       <div className="admin-dashboard-primary">
         <div className="dashboard-pri-card">
-          <p className="admin-dashboard-val">
-            {ticketData.length > 0 && ticketData[0].total_tickets}
-          </p>
+          {loading1 ? (
+            <HashLoader size={30} color="#eb3656" />
+          ) : (
+            <p className="admin-dashboard-val">
+              {ticketData.length > 0 && ticketData[0].total_tickets}
+            </p>
+          )}
           <div className="admin-dashboard-category">
             <p>Total Tickets Sold</p>
             <svg
@@ -83,12 +94,16 @@ export const AdminDashboardPrimary = () => {
         </div>
 
         <div className="dashboard-pri-card">
-          <p className="admin-dashboard-val">
-            BDT{" "}
-            {paymentData.length > 0 &&
-              paymentData[0].total_amount.toLocaleString("en-US")}
-            Tk
-          </p>
+          {loading2 ? (
+            <HashLoader size={30} color="#eb3656" />
+          ) : (
+            <p className="admin-dashboard-val">
+              BDT{" "}
+              {paymentData.length > 0 &&
+                paymentData[0].total_amount.toLocaleString("en-US")}
+              Tk
+            </p>
+          )}
           <div className="admin-dashboard-category">
             <p>Total Payment Received</p>
             <svg
@@ -121,9 +136,13 @@ export const AdminDashboardPrimary = () => {
         </div>
 
         <div className="dashboard-pri-card">
-          <p className="admin-dashboard-val">
-            {customerData.length > 0 && customerData[0].total_customers}
-          </p>
+          {loading3 ? (
+            <HashLoader size={26} color="#eb3656" />
+          ) : (
+            <p className="admin-dashboard-val">
+              {customerData.length > 0 && customerData[0].total_customers}
+            </p>
+          )}
           <div className="admin-dashboard-category">
             <p>Total Customers</p>
             <svg

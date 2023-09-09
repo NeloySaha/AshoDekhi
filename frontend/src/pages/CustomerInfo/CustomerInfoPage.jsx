@@ -3,6 +3,7 @@ import React from "react";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import { CustomerInfoSection } from "./components/CustomerInfoSection";
+import { AnimatedPage } from "../../components/AnimatedPage";
 
 export const CustomerInfoPage = ({
   handleSignState,
@@ -11,19 +12,21 @@ export const CustomerInfoPage = ({
   handlelogout,
 }) => {
   return (
-    <>
-      <Navbar
-        signedPerson={signedPerson}
-        pageName="customerInfo"
-        handleSignState={handleSignState}
-        handleLoginState={handleLoginState}
-        handlelogout={handlelogout}
-      />
-      <CustomerInfoSection signedPerson={signedPerson} />
-      <Footer
-        handleSignState={handleSignState}
-        handleLoginState={handleLoginState}
-      />
-    </>
+    <AnimatedPage>
+      <>
+        <Navbar
+          signedPerson={signedPerson}
+          pageName="customerInfo"
+          handleSignState={handleSignState}
+          handleLoginState={handleLoginState}
+          handlelogout={handlelogout}
+        />
+        <CustomerInfoSection signedPerson={signedPerson} />
+        <Footer
+          handleSignState={handleSignState}
+          handleLoginState={handleLoginState}
+        />
+      </>
+    </AnimatedPage>
   );
 };

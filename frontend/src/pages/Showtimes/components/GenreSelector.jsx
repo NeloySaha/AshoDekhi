@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const GenreSelector = ({ userGenre, handleGenreChange }) => {
   const [genreData, setGenreData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const override = {
+    display: "block",
+    margin: "4.8rem auto",
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get("http://localhost:7000/genres")
+        .get(`${import.meta.env.VITE_API_URL}/genres`)
         .then((res) => setGenreData([{ genre: "All" }, ...res.data]))
         .catch((err) => console.log(err));
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -44,7 +51,9 @@ export const GenreSelector = ({ userGenre, handleGenreChange }) => {
     );
   });
 
-  return (
+  return loading ? (
+    <HashLoader cssOverride={override} color="#eb3656" />
+  ) : (
     <div className="genre-container">
       <div className="genre-icon-container">
         <svg

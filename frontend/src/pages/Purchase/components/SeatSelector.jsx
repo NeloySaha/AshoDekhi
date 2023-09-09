@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const SeatSelector = ({
   userShowtimeId,
@@ -10,16 +11,24 @@ export const SeatSelector = ({
   handleUserSeats,
   userSeatList,
 }) => {
+  const override = {
+    display: "block",
+    margin: "1.6rem auto",
+  };
+
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/seats", {
+        .post(`${import.meta.env.VITE_API_URL}/seats`, {
           userShowtimeId,
           userHallId,
           userMovieId,
         })
         .then((res) => getSeatsData(res.data))
         .catch((err) => console.log(err));
+      setLoading(false);
     };
 
     fetchData();
@@ -79,20 +88,25 @@ export const SeatSelector = ({
   return (
     <div>
       <div className="form-item-heading">Select Seat</div>
-      <div className="seat-guide-container">
-        <div className="seat-available-demo"></div>
-        <p className="seat-status-details">Available</p>
-        <div className="seat-booked-demo"></div>
-        <p className="seat-status-details">Booked</p>
-        <div className="seat-selected-demo"></div>
-        <p className="seat-status-details">Selected</p>
-      </div>
-      <div className="theatre-screen">
-        <div className="screen-1"></div>
-        <div className="screen-2"></div>
-      </div>
-      <div className="theatre-screen-heading">Theatre Screen</div>
-      <div className="seat-container">{rows}</div>
+      {loading && <HashLoader cssOverride={override} color="#eb3656" />}
+      {!loading && (
+        <>
+          <div className="seat-guide-container">
+            <div className="seat-available-demo"></div>
+            <p className="seat-status-details">Available</p>
+            <div className="seat-booked-demo"></div>
+            <p className="seat-status-details">Booked</p>
+            <div className="seat-selected-demo"></div>
+            <p className="seat-status-details">Selected</p>
+          </div>
+          <div className="theatre-screen">
+            <div className="screen-1"></div>
+            <div className="screen-2"></div>
+          </div>
+          <div className="theatre-screen-heading">Theatre Screen</div>
+          <div className="seat-container">{rows}</div>
+        </>
+      )}
     </div>
   );
 };

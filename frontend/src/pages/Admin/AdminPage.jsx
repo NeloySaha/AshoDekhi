@@ -6,6 +6,7 @@ import { AdminShowtimesAddSection } from "./components/AdminShowtimesAddSection"
 import { AdminShownInModifySection } from "./components/AdminShownInModifySection";
 import { AdminDashboardPrimary } from "./components/AdminDashboardPrimary";
 import { MovieWiseTicket } from "./components/MovieWiseTicket";
+import { AnimatedPage } from "../../components/AnimatedPage";
 
 export const AdminPage = ({
   signedPerson,
@@ -24,36 +25,38 @@ export const AdminPage = ({
   };
 
   return (
-    <>
-      <Navbar
-        signedPerson={signedPerson}
-        pageName="admin"
-        handleSignState={handleSignState}
-        handleLoginState={handleLoginState}
-        handlelogout={handlelogout}
-      />
-      <AdminDashboardPrimary />
-      <MovieWiseTicket />
-      <AdminMovieAddSection
-        adminErrorToast={adminErrorToast}
-        adminMovieToast={adminMovieToast}
-      />
-      <AdminShowtimesAddSection
-        selectedShowDate={selectedShowDate}
-        setSelectedShowDate={setSelectedShowDate}
-        handleSelectedDate={handleSelectedDate}
-        adminErrorToast={adminErrorToast}
-        adminShowtimeToast={adminShowtimeToast}
-      />
-      <AdminShownInModifySection
-        selectedDate={selectedShowDate}
-        adminErrorToast={adminErrorToast}
-        adminShowninToast={adminShowninToast}
-      />
-      <Footer
-        handleSignState={handleSignState}
-        handleLoginState={handleLoginState}
-      />
-    </>
+    <AnimatedPage>
+      <>
+        <Navbar
+          signedPerson={signedPerson}
+          pageName="admin"
+          handleSignState={handleSignState}
+          handleLoginState={handleLoginState}
+          handlelogout={handlelogout}
+        />
+        <AdminDashboardPrimary />
+        <MovieWiseTicket />
+        <AdminMovieAddSection
+          adminErrorToast={adminErrorToast}
+          adminMovieToast={adminMovieToast}
+        />
+        <AdminShowtimesAddSection
+          selectedShowDate={selectedShowDate}
+          setSelectedShowDate={setSelectedShowDate}
+          handleSelectedDate={handleSelectedDate}
+          adminErrorToast={adminErrorToast}
+          adminShowtimeToast={adminShowtimeToast}
+        />
+        <AdminShownInModifySection
+          selectedDate={selectedShowDate}
+          adminErrorToast={adminErrorToast}
+          adminShowninToast={adminShowninToast}
+        />
+        <Footer
+          handleSignState={handleSignState}
+          handleLoginState={handleLoginState}
+        />
+      </>
+    </AnimatedPage>
   );
 };

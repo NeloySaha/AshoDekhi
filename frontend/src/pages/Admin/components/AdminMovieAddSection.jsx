@@ -52,7 +52,7 @@ export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
       movieInfo.directors !== ""
     ) {
       await axios
-        .post("http://localhost:7000/adminMovieAdd", {
+        .post(`${import.meta.env.VITE_API_URL}/adminMovieAdd`, {
           name: movieInfo.movieName,
           image_path: movieInfo.imagePath,
           language: movieInfo.language,
@@ -71,7 +71,7 @@ export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
       movieId !== "" &&
         (await movieInfo.genres.forEach((genre) => {
           axios
-            .post("http://localhost:7000/genreInsert", {
+            .post(`${import.meta.env.VITE_API_URL}/genreInsert`, {
               movieId,
               genre,
             })
@@ -87,7 +87,7 @@ export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
       movieId !== "" &&
         (await movieInfo.directors.forEach((director, idx) => {
           axios
-            .post("http://localhost:7000/directorInsert", {
+            .post(`${import.meta.env.VITE_API_URL}/directorInsert`, {
               movieId,
               director,
             })

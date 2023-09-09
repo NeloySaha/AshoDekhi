@@ -19,7 +19,7 @@ export const AdminShownInModifySection = ({
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get("http://localhost:7000/adminLatestShowDates")
+        .get(`${import.meta.env.VITE_API_URL}/adminLatestShowDates`)
         .then((res) =>
           setLatestShowDates(() => {
             const tempDateList = res.data.map((dateObj) => {
@@ -40,13 +40,20 @@ export const AdminShownInModifySection = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .post("http://localhost:7000/adminShowtimes", { selectedShowDate })
-        .then((res) => setShowtimeData(res.data))
-        .catch((err) => {
-          console.log(err);
-          adminErrorToast();
-        });
+      if (selectedShowDate !== "") {
+        await axios
+          .post(`${import.meta.env.VITE_API_URL}/adminShowtimes`, {
+            selectedShowDate,
+          })
+          .then((res) => {
+            console.log(res.data);
+            setShowtimeData(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            adminErrorToast();
+          });
+      }
     };
 
     fetchData();
@@ -56,7 +63,9 @@ export const AdminShownInModifySection = ({
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .post("http://localhost:7000/movieReplaceFrom", { selectedShowtime })
+        .post(`${import.meta.env.VITE_API_URL}/movieReplaceFrom`, {
+          selectedShowtime,
+        })
         .then((res) => setMovieReplaceData(res.data))
         .catch((err) => {
           console.log(err);
@@ -71,7 +80,9 @@ export const AdminShownInModifySection = ({
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .post("http://localhost:7000/movieReplaceTo", { selectedShowtime })
+        .post(`${import.meta.env.VITE_API_URL}/movieReplaceTo`, {
+          selectedShowtime,
+        })
         .then((res) => setMovieAltData(res.data))
         .catch((err) => {
           console.log(err);
@@ -110,7 +121,7 @@ export const AdminShownInModifySection = ({
     e.preventDefault();
 
     await axios
-      .post("http://localhost:7000/movieSwap", {
+      .post(`${import.meta.env.VITE_API_URL}/movieSwap`, {
         selectedAlt,
         selectedShowtime,
         selectedReplace,

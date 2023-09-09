@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ShowtimesCard } from "./ShowtimesCard";
+import HashLoader from "react-spinners/HashLoader";
 
 export const ShowTimesCollection = ({
   userLocation,
@@ -9,24 +10,50 @@ export const ShowTimesCollection = ({
   handleLoginState,
   signedPerson,
 }) => {
-  const [showtimesData, setShowtimesData] = useState([]);
+  const override = {
+    display: "block",
+    margin: "4.8rem auto",
+  };
 
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [showtimesData, setShowtimesData] = useState([]);
   const theatreName = userLocation && userLocation.name;
+  const initialRender = useRef(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      axios
-        .post("http://localhost:7000/showtimes", { theatreName, userGenre })
-        .then((res) => {
-          setShowtimesData(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      setLoading1(true);
+      await dataFetch();
+      setLoading1(false);
+    };
+    console.log(userLocation);
+    fetchData();
+  }, [userLocation]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading2(true);
+      await dataFetch();
+      setLoading2(false);
     };
 
     fetchData();
-  }, [userLocation, userGenre]);
+  }, [userGenre]);
+
+  const dataFetch = async () => {
+    await axios
+      .post(`${import.meta.env.VITE_API_URL}/showtimes`, {
+        theatreName,
+        userGenre,
+      })
+      .then((res) => {
+        setShowtimesData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const movieShowtimes = [];
 
@@ -96,7 +123,13 @@ export const ShowTimesCollection = ({
 
   return (
     <section className="section-showtimes">
-      <div className="showtimes-collection container">{showtimesCards}</div>
+      <div className="showtimes-collection container">
+        {loading1 || loading2 ? (
+          <HashLoader cssOverride={override} color="#eb3656" />
+        ) : (
+          showtimesCards
+        )}
+      </div>
     </section>
   );
 };

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const CustomerInfoSection = ({ signedPerson }) => {
   const [cusProData, setCusProData] = useState({});
   const [cusTicketData, setCusTicketData] = useState([]);
+  const override = {
+    display: "block",
+    margin: "2.4rem auto",
+  };
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData1 = async () => {
       await axios
-        .post("http://localhost:7000/customerProfile", {
+        .post(`${import.meta.env.VITE_API_URL}/customerProfile`, {
           email: signedPerson.email,
         })
         .then((res) => {
@@ -18,8 +25,9 @@ export const CustomerInfoSection = ({ signedPerson }) => {
     };
 
     const fetchData2 = async () => {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/customerPurchases", {
+        .post(`${import.meta.env.VITE_API_URL}/customerPurchases`, {
           email: signedPerson.email,
         })
         .then((res) => {
@@ -43,6 +51,7 @@ export const CustomerInfoSection = ({ signedPerson }) => {
           });
         })
         .catch((err) => console.log(err));
+      setLoading(false);
     };
 
     fetchData1();
@@ -142,10 +151,20 @@ export const CustomerInfoSection = ({ signedPerson }) => {
         </div>
 
         <h3 className="customer-info-heading">Purchase History</h3>
-
-        <div className="purchase-history-section">
-          <ul className="purchase-history-list">{purchaseHtml}</ul>
-        </div>
+        {loading ? (
+          <HashLoader cssOverride={override} color="#eb3656" />
+        ) : (
+          <>
+            {cusTicketData.length === 0 && (
+              <p className="customer-empty-status">
+                You haven't purchased any ticket yet
+              </p>
+            )}
+            <div className="purchase-history-section">
+              <ul className="purchase-history-list">{purchaseHtml}</ul>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

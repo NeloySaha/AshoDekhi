@@ -1,17 +1,42 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
+const env = require("dotenv").config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "movie_ticket_booking_website",
-});
+let db;
+
+const configuration = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+};
+
+function handleDisconnect() {
+  db = mysql.createConnection(configuration);
+
+  db.connect(function (err) {
+    if (err) {
+      console.log("error when connecting to db:", err);
+      setTimeout(handleDisconnect, 2000);
+    } else {
+      console.log("connection is successful");
+    }
+  });
+  db.on("error", function (err) {
+    console.log("db error", err);
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+handleDisconnect();
 
 app.get("/", (req, res) => {
   return res.json("Hello Backend Side");
@@ -70,9 +95,9 @@ app.post("/showtimes", (req, res) => {
   const theatreName = req.body.theatreName;
   const userGenre = req.body.userGenre;
 
-  sql1 = `SELECT M.id, M.name AS movie_name, M.image_path, S.showtime_date, S.movie_start_time, S.show_type, MG.genre FROM Theatre T JOIN Hall H ON T.id = H.theatre_id JOIN Shown_In SI ON H.id = SI.hall_id JOIN Showtimes S ON SI.showtime_id = S.id JOIN Movie M ON SI.movie_id = M.id JOIN Movie_genre MG ON MG.movie_id = M.id JOIN ( SELECT DISTINCT showtime_date FROM Showtimes ORDER BY showtime_date DESC LIMIT 4 ) AS LatestDates ON S.showtime_date = LatestDates.showtime_date WHERE T.name =? and MG.genre=? ORDER BY S.showtime_date ASC`;
+  sql1 = `SELECT M.id, M.name AS movie_name, M.image_path, S.showtime_date, S.movie_start_time, S.show_type, MG.genre FROM theatre T JOIN hall H ON T.id = H.theatre_id JOIN shown_in SI ON H.id = SI.hall_id JOIN showtimes S ON SI.showtime_id = S.id JOIN movie M ON SI.movie_id = M.id JOIN movie_genre MG ON MG.movie_id = M.id JOIN ( SELECT DISTINCT showtime_date FROM showtimes ORDER BY showtime_date DESC LIMIT 4 ) AS LatestDates ON S.showtime_date = LatestDates.showtime_date WHERE T.name =? and MG.genre=? ORDER BY S.showtime_date ASC`;
 
-  sql2 = `SELECT M.id, M.name AS movie_name, M.image_path, S.showtime_date, S.movie_start_time, S.show_type, MG.genre FROM Theatre T JOIN Hall H ON T.id = H.theatre_id JOIN Shown_In SI ON H.id = SI.hall_id JOIN Showtimes S ON SI.showtime_id = S.id JOIN Movie M ON SI.movie_id = M.id JOIN Movie_genre MG ON MG.movie_id = M.id JOIN ( SELECT DISTINCT showtime_date FROM Showtimes ORDER BY showtime_date DESC LIMIT 4 ) AS LatestDates ON S.showtime_date = LatestDates.showtime_date WHERE T.name = ? ORDER BY S.showtime_date ASC`;
+  sql2 = `SELECT M.id, M.name AS movie_name, M.image_path, S.showtime_date, S.movie_start_time, S.show_type, MG.genre FROM theatre T JOIN hall H ON T.id = H.theatre_id JOIN shown_in SI ON H.id = SI.hall_id JOIN showtimes S ON SI.showtime_id = S.id JOIN movie M ON SI.movie_id = M.id JOIN movie_genre MG ON MG.movie_id = M.id JOIN ( SELECT DISTINCT showtime_date FROM showtimes ORDER BY showtime_date DESC LIMIT 4 ) AS LatestDates ON S.showtime_date = LatestDates.showtime_date WHERE T.name =?  ORDER BY S.showtime_date ASC`;
 
   userGenre === "All"
     ? db.query(sql2, [theatreName], (err, data) => {
@@ -114,10 +139,10 @@ app.post("/showtimesDates", (req, res) => {
   const sql = `SELECT subquery.showtime_date
   FROM (
       SELECT DISTINCT showtimes.showtime_date
-      FROM Showtimes
-      JOIN Shown_In ON Showtimes.id = Shown_In.showtime_id
-      JOIN Hall ON Shown_In.hall_id = Hall.id
-      WHERE Hall.theatre_id = ?
+      FROM showtimes
+      JOIN shown_in ON showtimes.id = shown_in.showtime_id
+      JOIN hall ON shown_in.hall_id = hall.id
+      WHERE hall.theatre_id = ?
       ORDER BY showtimes.id DESC
       LIMIT 4
   ) AS subquery
@@ -135,7 +160,7 @@ app.post("/uniqueMovies", (req, res) => {
   const showtimeDate = req.body.userDate;
 
   const sql =
-    "SELECT DISTINCT M.id,M.duration, M.name AS movie_name, M.image_path FROM Movie M JOIN Shown_In SI ON M.id = SI.movie_id JOIN Showtimes S ON SI.showtime_id = S.id JOIN Hall H ON SI.hall_id = H.id WHERE H.theatre_id = ? AND S.showtime_date = ?";
+    "SELECT DISTINCT M.id,M.duration, M.name AS movie_name, M.image_path FROM movie M JOIN shown_in SI ON M.id = SI.movie_id JOIN showtimes S ON SI.showtime_id = S.id JOIN hall H ON SI.hall_id = H.id WHERE H.theatre_id = ? AND S.showtime_date = ?";
 
   db.query(sql, [theatreId, showtimeDate], (err, data) => {
     if (err) return res.json(err);
@@ -150,7 +175,7 @@ app.post("/halls", (req, res) => {
   const movieId = req.body.userMovieId;
 
   const sql =
-    "SELECT H.id AS hall_id, H.name AS hall_name, SI.showtime_id, S.show_type,S.movie_start_time, S.price_per_seat FROM Hall H JOIN Shown_In SI ON H.id = SI.hall_id JOIN Showtimes S ON SI.showtime_id = S.id WHERE H.theatre_id = ? AND S.showtime_date = ? AND SI.movie_id = ?";
+    "SELECT H.id AS hall_id, H.name AS hall_name, SI.showtime_id, S.show_type,S.movie_start_time, S.price_per_seat FROM hall H JOIN shown_in SI ON H.id = SI.hall_id JOIN showtimes S ON SI.showtime_id = S.id WHERE H.theatre_id = ? AND S.showtime_date = ? AND SI.movie_id = ?";
   db.query(sql, [theatreId, showtimeDate, movieId], (err, data) => {
     if (err) return res.json(err);
 
@@ -168,10 +193,10 @@ app.post("/seats", (req, res) => {
   S.name AS seat_name,
   CASE WHEN T.id IS NULL THEN TRUE ELSE FALSE END AS booked_status
 FROM
-  Seat AS S
-  JOIN Hallwise_Seat AS HS ON S.id = HS.seat_id
-  JOIN Shown_In AS SI ON HS.hall_id = SI.hall_id
-  LEFT JOIN Ticket AS T ON
+  seat AS S
+  JOIN hallwise_seat AS HS ON S.id = HS.seat_id
+  JOIN shown_in AS SI ON HS.hall_id = SI.hall_id
+  LEFT JOIN ticket AS T ON
       T.seat_id = S.id AND
       T.showtimes_id = SI.showtime_id AND
       T.hall_id = SI.hall_id AND
@@ -304,11 +329,11 @@ app.post("/movieDetail", (req, res) => {
   GROUP_CONCAT(DISTINCT MD.director SEPARATOR ', ') AS directors,
   GROUP_CONCAT(DISTINCT MG.genre SEPARATOR ', ') AS genres
 FROM
-  Movie M
+  movie M
  JOIN
-  Movie_Directors MD ON M.id = MD.movie_id
+  movie_directors MD ON M.id = MD.movie_id
  JOIN
-  Movie_Genre MG ON M.id = MG.movie_id
+  movie_genre MG ON M.id = MG.movie_id
 WHERE
   M.id = ?
 GROUP BY
@@ -326,7 +351,7 @@ app.post("/movieWiseShowtime", (req, res) => {
   const movieId = req.body.movieDetailsId;
   const theatreId = req.body.theatreId;
 
-  const sql = `SELECT S.id AS showtime_id, H.id AS hall_id, M.id AS movie_id, S.showtime_date, S.movie_start_time, S.show_type, S.price_per_seat FROM Theatre T JOIN Hall H ON T.id = H.theatre_id JOIN Shown_In SI ON H.id = SI.hall_id JOIN Showtimes S ON SI.showtime_id = S.id JOIN Movie M ON SI.movie_id = M.id JOIN ( SELECT DISTINCT showtime_date FROM Showtimes ORDER BY showtime_date DESC LIMIT 4 ) AS LatestDates ON S.showtime_date = LatestDates.showtime_date WHERE T.id = ? AND M.id = ? ORDER BY S.showtime_date ASC`;
+  const sql = `SELECT S.id AS showtime_id, H.id AS hall_id, M.id AS movie_id, S.showtime_date, S.movie_start_time, S.show_type, S.price_per_seat FROM theatre T JOIN hall H ON T.id = H.theatre_id JOIN shown_in SI ON H.id = SI.hall_id JOIN showtimes S ON SI.showtime_id = S.id JOIN movie M ON SI.movie_id = M.id JOIN ( SELECT DISTINCT showtime_date FROM showtimes ORDER BY showtime_date DESC LIMIT 4 ) AS LatestDates ON S.showtime_date = LatestDates.showtime_date WHERE T.id = ? AND M.id = ? ORDER BY S.showtime_date ASC`;
 
   db.query(sql, [theatreId, movieId], (err, data) => {
     if (err) return res.json(err);
@@ -380,14 +405,14 @@ app.post("/customerPurchases", (req, res) => {
   S.showtime_date AS showtime_date,
   PA.amount AS ticket_price,
   T.purchase_date AS purchase_date
-FROM Person P
-JOIN Payment PA ON P.email = PA.customer_email
-JOIN Ticket T ON PA.id = T.payment_id
-JOIN Showtimes S ON T.showtimes_id = S.id
-JOIN Movie M ON T.movie_id = M.id
-JOIN Hall H ON T.hall_id = H.id
-JOIN Theatre TH ON H.theatre_id = TH.id
-JOIN Seat ST ON T.seat_id = ST.id
+FROM person P
+JOIN payment PA ON P.email = PA.customer_email
+JOIN ticket T ON PA.id = T.payment_id
+JOIN showtimes S ON T.showtimes_id = S.id
+JOIN movie M ON T.movie_id = M.id
+JOIN hall H ON T.hall_id = H.id
+JOIN theatre TH ON H.theatre_id = TH.id
+JOIN seat ST ON T.seat_id = ST.id
 WHERE P.email = ?
 GROUP BY PA.id 
 ORDER BY payment_id DESC`;
@@ -453,7 +478,7 @@ app.post("/adminMovieAdd", (req, res) => {
   const top_cast = req.body.top_cast;
   const release_date = req.body.release_date;
 
-  const sql1 = `Insert into Movie (name,image_path,language,synopsis,rating,duration,top_cast,release_date)
+  const sql1 = `Insert into movie (name,image_path,language,synopsis,rating,duration,top_cast,release_date)
   values
   (?,?,?,?,?,?,?,?)`;
 
@@ -487,7 +512,7 @@ app.post("/genreInsert", (req, res) => {
   const movieId = req.body.movieId;
   const genre = req.body.genre;
 
-  const sql = `Insert into Movie_Genre(movie_id,genre)
+  const sql = `Insert into movie_genre(movie_id,genre)
   values
   (?,?)`;
 
@@ -502,7 +527,7 @@ app.post("/directorInsert", (req, res) => {
   const movieId = req.body.movieId;
   const director = req.body.director;
 
-  const sql = `Insert into Movie_Directors(movie_id,director)
+  const sql = `Insert into movie_directors(movie_id,director)
   values
   (?,?)`;
 
@@ -526,7 +551,7 @@ app.get("/lastShowDate", (req, res) => {
 app.post("/showdateAdd", (req, res) => {
   const showDate = req.body.selectedShowDate;
 
-  const sql1 = `Insert into Showtimes (movie_start_time,show_type,showtime_date,price_per_seat)
+  const sql1 = `Insert into showtimes (movie_start_time,show_type,showtime_date,price_per_seat)
   values
   ('11:00 am','2D',?,350),
   ('2:30 pm','3D',?,450),
@@ -558,7 +583,7 @@ app.post("/shownInUpdate", (req, res) => {
     }
   }
 
-  const sql = `Insert into Shown_In(movie_id,showtime_id,hall_id)
+  const sql = `Insert into shown_in(movie_id,showtime_id,hall_id)
   values
   (1,?,1),(5,?,2),(3,?,3),(4,?,4),(1,?,5),(5,?,6),(3,?,7),(4,?,8),
   (5,?,1),(6,?,2),(1,?,3),(2,?,4),(5,?,5),(6,?,6),(1,?,7),(2,?,8),
@@ -573,10 +598,10 @@ app.post("/shownInUpdate", (req, res) => {
 
 app.get("/adminLatestShowDates", (req, res) => {
   const sql = `SELECT DISTINCT s.showtime_date
-  FROM Showtimes s
+  FROM showtimes s
   JOIN (
       SELECT DISTINCT showtime_date
-      FROM Showtimes
+      FROM showtimes
       ORDER BY showtime_date DESC
       LIMIT 4
   ) latest_dates
@@ -641,6 +666,7 @@ app.post("/movieSwap", (req, res) => {
   });
 });
 
+// For local usage
 app.listen(7000, () => {
   console.log("Now, it is listening");
 });

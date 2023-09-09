@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const PictureQualitySelector = ({
   getHallData,
@@ -12,19 +13,27 @@ export const PictureQualitySelector = ({
   theatreId,
   userDate,
 }) => {
+  const override = {
+    display: "block",
+    margin: "1.6rem auto",
+  };
+
+  const [loading, setLoading] = useState(false);
   const newHallData = [];
   let userAns = `${userShowtimeId},${userHallId},${userSeatPrice}`;
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await axios
-        .post("http://localhost:7000/halls", {
+        .post(`${import.meta.env.VITE_API_URL}/halls`, {
           theatreId,
           userDate,
           userMovieId,
         })
         .then((res) => getHallData(res.data))
         .catch((err) => console.log(err));
+      setLoading(false);
     };
 
     fetchData();
@@ -105,7 +114,10 @@ export const PictureQualitySelector = ({
     <div>
       <form>
         <div className="form-item-heading">Select Quality</div>
-        <div className="form-hall-container">{showtimeOptions}</div>
+        {loading && <HashLoader cssOverride={override} color="#eb3656" />}
+        {!loading && (
+          <div className="form-hall-container">{showtimeOptions}</div>
+        )}
       </form>
     </div>
   );
