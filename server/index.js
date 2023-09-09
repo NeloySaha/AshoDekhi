@@ -6,7 +6,7 @@ const env = require("dotenv").config();
 const app = express();
 app.use(
   cors({
-    origin: ["urlbracket chara"],
+    origin: ["https://asho-dekhi.vercel.app"],
     methods: ["POST", "GET"],
   })
 );
