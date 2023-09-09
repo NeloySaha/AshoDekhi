@@ -4,7 +4,12 @@ const cors = require("cors");
 const env = require("dotenv").config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: ["urlbracket chara"],
+    methods: ["POST", "GET"],
+  })
+);
 app.use(express.json());
 
 let db;
