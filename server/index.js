@@ -12,8 +12,6 @@ app.use(
 );
 app.use(express.json());
 
-let db;
-
 const configuration = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -21,27 +19,30 @@ const configuration = {
   database: process.env.DB_NAME,
 };
 
-function handleDisconnect() {
-  db = mysql.createConnection(configuration);
+let db;
+db = mysql.createConnection(configuration);
 
-  db.connect(function (err) {
-    if (err) {
-      console.log("error when connecting to db:", err);
-      setTimeout(handleDisconnect, 2000);
-    } else {
-      console.log("connection is successful");
-    }
-  });
-  db.on("error", function (err) {
-    console.log("db error", err);
-    if (err.code === "PROTOCOL_CONNECTION_LOST") {
-      handleDisconnect();
-    } else {
-      throw err;
-    }
-  });
-}
-handleDisconnect();
+// function handleDisconnect() {
+//   db = mysql.createConnection(configuration);
+
+//   db.connect(function (err) {
+//     if (err) {
+//       console.log("error when connecting to db:", err);
+//       setTimeout(handleDisconnect, 2000);
+//     } else {
+//       console.log("connection is successful");
+//     }
+//   });
+//   db.on("error", function (err) {
+//     console.log("db error", err);
+//     if (err.code === "PROTOCOL_CONNECTION_LOST") {
+//       handleDisconnect();
+//     } else {
+//       throw err;
+//     }
+//   });
+// }
+// handleDisconnect();
 
 app.get("/", (req, res) => {
   return res.json("Hello Backend Side");
