@@ -30,7 +30,7 @@ ASHO DEKHI is a movie ticket booking website that allows users to explore movies
 
 ## Features
 
-- 🎬 Browse and Search Movies
+- 🎬 Browse and Filter Movies
 
 - 🎥 View Movie Details
 
@@ -44,7 +44,7 @@ ASHO DEKHI is a movie ticket booking website that allows users to explore movies
 
 - 🛠 Admin Panel
 
-- 📱 Responsive Design
+- 📱 User-friendly UI
 
 ## Screenshots
 
