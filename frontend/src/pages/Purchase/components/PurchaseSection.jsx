@@ -81,11 +81,14 @@ export const PurchaseSection = ({
           userMovieId,
           userShowtimeId,
         })
+        .then((res) => console.log(res.data))
         .catch((err) => {
           console.log(err);
           ticketPurchaseError();
         });
     });
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     await axios
       .post(`${import.meta.env.VITE_API_URL}/recentPurchase`, { paymentID })

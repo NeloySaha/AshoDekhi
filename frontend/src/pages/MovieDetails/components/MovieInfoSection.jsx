@@ -50,7 +50,7 @@ export const MovieInfoSection = ({
         .catch((err) => console.log(err));
 
       await axios
-        .post("http://localhost:7000/movieWiseShowtime", {
+        .post(`${import.meta.env.VITE_API_URL}/movieWiseShowtime`, {
           movieDetailsId,
           theatreId: userLocation?.id,
         })
