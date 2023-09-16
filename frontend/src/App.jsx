@@ -1,4 +1,6 @@
 import "./styles/AppStyle.css";
+import "./styles/queries.css";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

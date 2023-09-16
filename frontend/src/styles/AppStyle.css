@@ -519,14 +519,14 @@ header {
 }
 
 .section-home-collection:after {
-  width: 160rem;
+  width: 165%;
   height: 90%;
   content: "";
   position: absolute;
   background-color: inherit;
-  top: -5%;
+  top: 0;
   right: 0;
-  transform: skewY(-2.8deg);
+  transform: skewY(-3.2deg);
   z-index: -1;
 }
 
@@ -551,6 +551,7 @@ header {
   display: grid;
   grid-template-columns: repeat(auto-fit, 26rem);
   gap: 4.8rem;
+  justify-content: center;
 }
 
 .details-collection-container {
