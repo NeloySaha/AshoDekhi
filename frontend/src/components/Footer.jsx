@@ -29,7 +29,7 @@ export const Footer = ({ handleSignState, handleLoginState }) => {
 
   return (
     <section className="section-footer container">
-      <div className="footer-logo-container">
+      <Link className="footer-logo-container" to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="footer-logo-icon"
@@ -52,7 +52,7 @@ export const Footer = ({ handleSignState, handleLoginState }) => {
           />
         </svg>
         <h1 className="footer-logo-text">Asho Dekhi</h1>
-      </div>
+      </Link>
 
       <div></div>
       <div className="footer-link-container">

@@ -1,11 +1,208 @@
+@media (-webkit-device-pixel-ratio: 1.25) {
+  :root {
+    zoom: 0.8;
+  }
+}
+
 @media (max-width: 92em) {
   html {
     font-size: 56.25%;
   }
 }
 
-@media (-webkit-device-pixel-ratio: 1.25) {
-  :root {
-    zoom: 0.8;
+@media (max-width: 74em) {
+  html {
+    font-size: 50%;
+  }
+
+  .hero-img {
+    width: 40%;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-btn-container,
+  .hero-review-section,
+  .hero-img-box {
+    justify-content: center;
+  }
+
+  .hero-review-section {
+    margin-top: 2.4rem;
+  }
+
+  .hero-text {
+    text-align: center;
+    margin: 6.4rem 0;
+    padding: 0 6.4rem;
+  }
+
+  .feature-content {
+    column-gap: 3.2rem;
+  }
+
+  .purchase-container {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .purchase-section-left {
+    padding-bottom: 0;
+  }
+
+  .ticket-movie-img {
+    height: 12.4rem;
+    width: 8.4rem;
+  }
+
+  .form-movie-options {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .purchase-section-right {
+    width: 34.4rem;
+  }
+
+  .ticket-container-heading {
+    padding: 0;
+  }
+
+  .purchase-history-list {
+    width: 80%;
+  }
+
+  .form-movie-add {
+    width: 50%;
+  }
+
+  .movie-card-line,
+  .movie-card-third-line,
+  .movie-genre {
+    letter-spacing: 0.5px;
+  }
+
+  .movie-title {
+    letter-spacing: 0.5px;
+  }
+}
+
+@media (max-width: 52em) {
+  .section-features-heading {
+    font-size: 3.2rem;
+    letter-spacing: 0.25px;
+  }
+
+  .feature-text-heading {
+    font-size: 2.2rem;
+    letter-spacing: 0.1px;
+  }
+
+  .feature-icon {
+    height: 4.8rem;
+    width: 4.8rem;
+  }
+
+  .feature-text-details {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-logo-text {
+    font-size: 2.4rem;
+  }
+
+  .copyright {
+    font-size: 1.2rem;
+  }
+
+  .footer-heading {
+    margin-top: auto;
+    grid-column: 2/-1;
+    font-size: 2rem;
+  }
+
+  .address {
+    font-size: 1.4rem;
+  }
+
+  .about-us-heading {
+    font-size: 3.2rem;
+  }
+
+  .aboutus-logo-text {
+    font-size: 3.2rem;
+  }
+
+  .about-us-body {
+    font-size: 1.6rem;
+  }
+
+  .admin-dashboard-primary {
+    gap: 1.6rem;
+  }
+
+  .admin-dashboard-category,
+  .admin-dashboard-val {
+    font-size: 1.6rem;
+  }
+
+  .form-movie-add {
+    width: 60%;
+  }
+
+  .movie-ticket :nth-child(1) {
+    font-size: 1.6rem;
+  }
+
+  .movie-ticket-container {
+    grid-template-columns: repeat(auto-fit, 20rem);
+  }
+
+  .movie-ticket {
+    gap: 1.2rem;
+  }
+
+  .form-movie-add div,
+  .form-movie-add div input {
+    font-size: 1.4rem;
+  }
+
+  .movie-info-grid-container {
+    grid-template-columns: 0.25fr 0.75fr;
+    gap: 3.2rem;
+  }
+
+  .showtimes-card {
+    grid-template-columns: 0.3fr 0.7fr;
+  }
+
+  .showtimes-date {
+    font-size: 1.4rem;
+  }
+
+  .showtimes-startime-btn {
+    font-size: 1.2rem;
+    width: 9rem;
+    height: 3.4rem;
+  }
+
+  .nav-items {
+    font-size: 1.4rem;
+    gap: 1.4rem;
+  }
+
+  .feature-content {
+    column-gap: 3.2rem;
+  }
+
+  .purchase-history-list {
+    width: 100%;
+  }
+
+  .section-social-links {
+    gap: 3.2rem;
   }
 }

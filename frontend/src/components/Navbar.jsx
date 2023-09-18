@@ -21,7 +21,7 @@ export const Navbar = ({
 
   return (
     <header>
-      <div className="logo-container">
+      <Link className="logo-container" to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="main-logo-icon"
@@ -44,7 +44,7 @@ export const Navbar = ({
           />
         </svg>
         <h1 className="logo-text">Asho Dekhi</h1>
-      </div>
+      </Link>
 
       <nav>
         <ul className="nav-items">
