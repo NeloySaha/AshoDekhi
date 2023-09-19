@@ -651,10 +651,10 @@ header {
 
 .book-btn {
   position: absolute;
-  transition: all 0.5s;
-  top: -100%;
+  transition: all 0.3s ease-out;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -100%);
   background-color: #eb3656;
   padding: 1.6rem 3.2rem;
   border: none;
@@ -664,6 +664,9 @@ header {
   border-radius: 2.8rem;
   font-weight: 700;
   cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .home-movie-card:hover .home-movie-img {
@@ -672,7 +675,10 @@ header {
 }
 
 .home-movie-card:hover .book-btn {
-  top: 45%;
+  transform: translate(-50%, 500%);
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .book-btn:hover {

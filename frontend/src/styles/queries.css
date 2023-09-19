@@ -223,6 +223,9 @@
   }
 
   .book-btn {
-    top: 45%;
+    transform: translate(-50%, 500%);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
   }
 }
