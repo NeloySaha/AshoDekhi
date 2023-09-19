@@ -1,9 +1,3 @@
-@media (-webkit-device-pixel-ratio: 1.25) {
-  :root {
-    zoom: 0.8;
-  }
-}
-
 @media (max-width: 92em) {
   html {
     font-size: 56.25%;
@@ -204,5 +198,31 @@
 
   .section-social-links {
     gap: 3.2rem;
+  }
+
+  .home-collection-container,
+  .details-collection-container {
+    overflow-x: auto;
+    justify-content: start;
+  }
+
+  .home-collection-container {
+    grid-template-columns: repeat(6, 26rem);
+  }
+
+  .details-collection-container {
+    grid-template-columns: repeat(5, 26rem);
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-movie-card {
+    box-shadow: none;
+  }
+
+  .book-btn {
+    top: 45%;
   }
 }
