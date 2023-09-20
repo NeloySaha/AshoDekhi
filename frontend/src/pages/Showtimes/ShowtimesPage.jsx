@@ -15,6 +15,7 @@ export const ShowtimesPage = ({
   signedPerson,
   handlelogout,
   currentMovieDetails,
+  setMenuState,
 }) => {
   const [userGenre, setUserGenre] = useState("All");
 
@@ -31,6 +32,7 @@ export const ShowtimesPage = ({
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
           handlelogout={handlelogout}
+          setMenuState={setMenuState}
         />
         <ShowTimesHeader
           locationData={locationData}

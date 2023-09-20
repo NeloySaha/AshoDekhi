@@ -16,10 +16,7 @@ export const HeroSection = ({ handleLoginState, signedPerson }) => {
           <p className="hero-description">
             Immerse yourself in the captivating allure of cinema as you step
             into our exquisite destination, designed to elevate your
-            movie-watching experience to new heights. From the latest
-            blockbuster releases to timeless classics, our platform serves as
-            your exclusive portal to access the most thrilling, heartwarming,
-            and awe-inspiring stories ever told.
+            movie-watching experience to new heights.
           </p>
           <div className="hero-btn-container">
             <button

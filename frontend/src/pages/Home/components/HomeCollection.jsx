@@ -52,6 +52,7 @@ export const HomeCollection = ({
           Now Playing &rarr;
         </h1>
       </div>
+
       {loading && <HashLoader cssOverride={override} color="#eb3656" />}
       <div className="home-collection-container">
         {!loading && latestMoviesCards}

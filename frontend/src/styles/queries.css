@@ -10,7 +10,7 @@
   }
 
   .hero-img {
-    width: 40%;
+    width: 50%;
   }
 
   .hero {
@@ -72,18 +72,66 @@
     width: 50%;
   }
 
-  .movie-card-line,
-  .movie-card-third-line,
-  .movie-genre {
-    letter-spacing: 0.5px;
+  .home-collection-container {
+    grid-template-columns: repeat(auto-fit, 27rem);
   }
 
+  .movie-card-line {
+    font-size: 1.4rem;
+  }
   .movie-title {
-    letter-spacing: 0.5px;
+    font-size: 1.6rem;
+  }
+  .movie-genre {
+    font-size: 1.4rem;
+  }
+
+  .book-btn {
+    font-size: 1.4rem;
+    padding: 1.4rem 3rem;
+  }
+
+  .signup-form,
+  .login-form {
+    top: 1.6rem;
+  }
+
+  .signup-form {
+    padding: 1.4rem 2.4rem;
+  }
+
+  .signup-form-heading {
+    margin-bottom: 1.2rem;
+  }
+
+  .signup-form-body {
+    gap: 1.2rem;
+  }
+
+  .btn-reg {
+    margin-top: 1.2rem;
   }
 }
 
+/* *************************** */
+/* Below 832px(Tablets-Medium) */
+/* *************************** */
+
 @media (max-width: 52em) {
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .heading-primary {
+    font-size: 4.4rem;
+  }
+
+  .hero-img {
+    width: 60%;
+  }
+
   .section-features-heading {
     font-size: 3.2rem;
     letter-spacing: 0.25px;
@@ -97,11 +145,6 @@
   .feature-icon {
     height: 4.8rem;
     width: 4.8rem;
-  }
-
-  .feature-text-details {
-    font-size: 1.4rem;
-    letter-spacing: 0.5px;
   }
 
   .footer-logo-text {
@@ -135,7 +178,7 @@
   }
 
   .admin-dashboard-primary {
-    gap: 1.6rem;
+    gap: 1.4rem;
   }
 
   .admin-dashboard-category,
@@ -152,7 +195,7 @@
   }
 
   .movie-ticket-container {
-    grid-template-columns: repeat(auto-fit, 20rem);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .movie-ticket {
@@ -173,23 +216,9 @@
     grid-template-columns: 0.3fr 0.7fr;
   }
 
-  .showtimes-date {
-    font-size: 1.4rem;
-  }
-
   .showtimes-startime-btn {
-    font-size: 1.2rem;
-    width: 9rem;
-    height: 3.4rem;
-  }
-
-  .nav-items {
-    font-size: 1.4rem;
-    gap: 1.4rem;
-  }
-
-  .feature-content {
-    column-gap: 3.2rem;
+    width: 9.4rem;
+    height: 3.8rem;
   }
 
   .purchase-history-list {
@@ -207,11 +236,11 @@
   }
 
   .home-collection-container {
-    grid-template-columns: repeat(6, 26rem);
+    grid-template-columns: repeat(6, 27rem);
   }
 
   .details-collection-container {
-    grid-template-columns: repeat(5, 26rem);
+    grid-template-columns: repeat(5, 27rem);
   }
 
   ::-webkit-scrollbar {
@@ -227,5 +256,351 @@
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
+  }
+
+  .btn-menu {
+    display: block;
+  }
+
+  nav,
+  .btn-signup-arrow,
+  .btn-logout,
+  .nav-signed-name {
+    display: none;
+  }
+}
+
+/* *************************** */
+/* Below 704px(Tablets-Small) */
+/* *************************** */
+
+@media (max-width: 44em) {
+  .hero-img {
+    width: 65%;
+  }
+
+  .hero-text {
+    margin: 4.8rem 0;
+    padding: 0 4.2rem;
+  }
+
+  .hero-description {
+    margin-bottom: 3.2rem;
+  }
+
+  .hero-btn-container {
+    gap: 0.8rem;
+  }
+
+  .section-features {
+    margin-top: 4.8rem;
+    margin-bottom: 4.8rem;
+  }
+
+  .section-features-heading {
+    line-height: 1.2;
+    margin-bottom: 4.4rem;
+  }
+
+  .feature-text-heading {
+    margin: 0.6rem 0 0.8rem 0;
+  }
+
+  .feature-contents {
+    row-gap: 4.2rem;
+  }
+
+  .feature-content {
+    column-gap: 1.6rem;
+  }
+
+  .feature-icon {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  .movie-info-grid-container {
+    grid-template-columns: 0.3fr 0.7fr;
+    gap: 1rem;
+  }
+
+  .movie-info-name {
+    font-size: 3.2rem;
+  }
+
+  .movie-info-attr-container {
+    margin: 1.6rem;
+  }
+
+  .movie-info-director-container {
+    line-height: 1.6;
+  }
+
+  .movie-info-title {
+    white-space: nowrap;
+  }
+
+  .section-footer {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2.4rem;
+  }
+
+  .footer-logo-container {
+    grid-row: 4/5;
+    align-items: flex-end;
+  }
+
+  .foot-reg {
+    grid-column: 1/2;
+  }
+
+  .copyright {
+    grid-row: 4/5;
+    grid-column: 2/4;
+  }
+
+  .footer-heading {
+    margin-top: auto;
+    grid-column: 1/2;
+  }
+
+  .footer-address-container {
+    grid-column: 1/4;
+    gap: 2.4rem;
+  }
+
+  .footer-logo-icon {
+    height: 2.6rem;
+    width: 2.6rem;
+  }
+
+  .about-us-heading {
+    flex-wrap: wrap;
+  }
+
+  .admin-dashboard-primary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-movie-add {
+    width: 75%;
+  }
+
+  .customer-info-heading {
+    margin: 2.4rem 0;
+  }
+
+  .purchase-history-item {
+    grid-template-columns: 0.6fr 0.4fr;
+  }
+
+  .movie-ticket-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .showtimes-card {
+    grid-template-columns: 0.45fr 0.55fr;
+  }
+  .showtimes-screen-container {
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+
+  .showtimes-schedule-container-3d,
+  .showtimes-schedule-container-2d {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 5.4rem auto;
+  }
+
+  .showtimes-img-box {
+    width: 80%;
+  }
+
+  .showtimes-details-btn {
+    margin-top: auto;
+  }
+}
+
+/* *************************** */
+/* Below 576px(Mobile Phones) */
+/* *************************** */
+
+@media (max-width: 36em) {
+  .section-hero {
+    padding: 3.2rem 0 4.8rem 0;
+  }
+
+  .hero-text {
+    margin: 0;
+    margin-bottom: 4.8rem;
+    padding: 0;
+  }
+
+  .hero-img {
+    width: 75%;
+  }
+
+  .btn:link,
+  .btn:visited,
+  .btn-full,
+  .btn-outline:link,
+  .btn-outline:visited {
+    padding: 1.6rem;
+  }
+  .mobile-nav-menu {
+    width: 50%;
+  }
+
+  .feature-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 2.4rem;
+  }
+
+  .feature-img {
+    grid-row: 1;
+  }
+
+  .signup-form,
+  .login-form {
+    width: 36rem;
+  }
+
+  .signup-form-category-sp {
+    flex-direction: column;
+  }
+
+  .hero-review-text {
+    line-height: 1.6;
+  }
+
+  .footer-logo-container {
+    grid-row: 4;
+    grid-column: span 2;
+    align-items: flex-end;
+  }
+
+  .copyright {
+    grid-row: 5;
+    grid-column: span 3;
+  }
+
+  .footer-heading {
+    grid-column: 1/3;
+  }
+  .form-item-options {
+    flex-wrap: wrap;
+  }
+
+  .form-hall-container {
+    padding: 0.6rem 1.6rem;
+  }
+
+  .form-picture-quality {
+    gap: 1.2rem;
+    white-space: nowrap;
+    font-size: 1.4rem;
+  }
+
+  .form-options-hall {
+    gap: 1rem;
+  }
+
+  .seat-status-details {
+    margin-right: 1.2rem;
+  }
+
+  .theatre-screen {
+    width: 34rem;
+  }
+
+  .seat:nth-child(2) {
+    margin-right: 1.2rem;
+  }
+
+  .seat:nth-child(7) {
+    margin-left: 1.2rem;
+  }
+
+  .screen-1 {
+    left: -2.8%;
+  }
+  .screen-2 {
+    right: -2.8%;
+  }
+
+  .seat {
+    height: 3.4rem;
+    width: 3.4rem;
+    font-size: 1.2rem;
+  }
+
+  .form-pay-options {
+    flex-wrap: wrap;
+  }
+
+  .section-footer {
+    column-gap: 1.6rem;
+  }
+
+  .showtimes-card {
+    grid-template-columns: 1fr;
+  }
+
+  .showtimes-img-box {
+    width: 65%;
+  }
+
+  .purchase-history-item {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  .purchase-item-img-box {
+    grid-row: 1;
+    justify-content: center;
+  }
+
+  .movie-info-grid-container {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-info-img-container {
+    box-shadow: none;
+    border-radius: none;
+  }
+
+  .movie-info-img {
+    width: 50%;
+    overflow: hidden;
+    border-radius: 11px;
+  }
+
+  .movie-info-attr-container {
+    margin-left: 0;
+  }
+
+  .movie-info-screen-container-3d,
+  .movie-info-screen-container-2d {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-dashboard-primary {
+    grid-template-columns: 1fr;
+  }
+
+  .form-movie-add {
+    width: 100%;
+  }
+
+  .form-movie-add div {
+    gap: 1.4rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-movie-add div input {
+    width: 100%;
+    margin-left: 0;
   }
 }

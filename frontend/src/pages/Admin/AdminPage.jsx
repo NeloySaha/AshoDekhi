@@ -17,6 +17,7 @@ export const AdminPage = ({
   adminMovieToast,
   adminShowtimeToast,
   adminShowninToast,
+  setMenuState,
 }) => {
   const [selectedShowDate, setSelectedShowDate] = useState("");
 
@@ -33,6 +34,7 @@ export const AdminPage = ({
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
           handlelogout={handlelogout}
+          setMenuState={setMenuState}
         />
         <AdminDashboardPrimary />
         <MovieWiseTicket />

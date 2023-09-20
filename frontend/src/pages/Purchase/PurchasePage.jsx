@@ -40,6 +40,7 @@ export const PurchasePage = ({
   handlelogout,
   clearUserSelection,
   purchaseCompletion,
+  setMenuState,
 }) => {
   return (
     <AnimatedPage>
@@ -50,6 +51,7 @@ export const PurchasePage = ({
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
           handlelogout={handlelogout}
+          setMenuState={setMenuState}
         />
         <PurchaseSection
           clearUserSelection={clearUserSelection}

@@ -132,6 +132,11 @@ header {
 }
 
 .nav-items {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+
   display: flex;
   list-style: none;
   font-size: 1.6rem;
@@ -247,6 +252,90 @@ header {
 
 .customer-profile-btn:hover {
   transform: scale(1.2);
+}
+
+.btn-menu,
+.btn-menu-close,
+.mobile-nav-item {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn-menu {
+  display: none;
+}
+
+.btn-menu-close {
+  align-self: flex-start;
+  padding-left: 2.4rem;
+}
+
+.menu-icon {
+  height: 3.2rem;
+  width: 3.2rem;
+  color: #e6e6e6;
+}
+
+.mobile-nav-menu {
+  background-color: #171a28;
+  padding: 2.4rem 0;
+  position: fixed;
+  height: 100%;
+  width: 40%;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  transition: all 0.4s ease-in;
+
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.mobile-nav-items {
+  display: flex;
+  /* background-color: yellow; */
+
+  list-style: none;
+  flex-direction: column;
+}
+
+.mobile-nav-item {
+  width: 100%;
+  text-align: left;
+  color: #e6e6e6;
+  font-size: 2.4rem;
+  font-weight: 500;
+  letter-spacing: 0.75px;
+  padding: 1.6rem 2.4rem;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.mobile-nav-name {
+  color: #e6e6e6;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.75px;
+  padding: 1.6rem 1.6rem 1.6rem 2.4rem;
+  line-height: 1.6;
+  margin-top: auto;
+}
+
+.mobile-nav-item:hover {
+  color: #eb3656;
+}
+
+.mobile-nav-list-item {
+  border-bottom: 1px solid #313441;
+}
+
+.mobile-nav-list-item:last-child {
+  border-bottom: none;
 }
 
 /* ************* */
@@ -588,6 +677,7 @@ header {
 .movie-card-third-line,
 .movie-genre {
   margin: 0 2rem;
+  letter-spacing: 0.75px;
 }
 
 .movie-card-line {
@@ -605,7 +695,7 @@ header {
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.4;
-  letter-spacing: 1;
+  letter-spacing: 0.75px;
   color: #e8e8ea;
 }
 
@@ -812,6 +902,10 @@ header {
   text-decoration: none;
 }
 
+.foot-reg {
+  grid-column: 2/3;
+}
+
 .footer-logo-icon {
   height: 3.8rem;
   width: 3.8rem;
@@ -987,7 +1081,6 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   background-color: #1a1d2c;
   padding: 3.2rem 0;
   gap: 1.6rem;
@@ -1885,7 +1978,6 @@ header {
 
 .customer-info-heading {
   margin: 3.2rem 0;
-  font-weight: 600;
 }
 
 .customer-info-details {
@@ -2157,7 +2249,7 @@ header {
 .movie-ticket-container {
   margin-top: 2.4rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 24rem);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.2rem;
   margin-bottom: 4.8rem;
 }

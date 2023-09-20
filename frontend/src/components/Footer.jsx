@@ -55,7 +55,7 @@ export const Footer = ({ handleSignState, handleLoginState }) => {
       </Link>
 
       <div></div>
-      <div className="footer-link-container">
+      <div className="footer-link-container foot-reg">
         <button className="footer-btn" onClick={handleSignState}>
           Create account
         </button>

@@ -13,6 +13,7 @@ export const HomePage = ({
   signedPerson,
   handlelogout,
   currentMovieDetails,
+  setMenuState,
 }) => {
   return (
     <AnimatedPage>
@@ -23,6 +24,7 @@ export const HomePage = ({
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
           handlelogout={handlelogout}
+          setMenuState={setMenuState}
         />
         <HeroSection
           handleLoginState={handleLoginState}

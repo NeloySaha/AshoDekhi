@@ -16,6 +16,7 @@ export const MovieDetailsPage = ({
   handleLocationSelection,
   movieDetailsId,
   currentMovieDetails,
+  setMenuState,
 }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -30,6 +31,7 @@ export const MovieDetailsPage = ({
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
           handlelogout={handlelogout}
+          setMenuState={setMenuState}
         />
         <MovieInfoSection
           getTheatreData={getTheatreData}

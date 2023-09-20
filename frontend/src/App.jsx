@@ -19,6 +19,7 @@ import { AboutUsPage } from "./pages/AboutUs/AboutUsPage";
 import { CustomerInfoPage } from "./pages/CustomerInfo/CustomerInfoPage";
 import { AdminPage } from "./pages/Admin/AdminPage";
 import { AnimatePresence } from "framer-motion";
+import { MobileNav } from "./components/MobileNav";
 
 function App() {
   // //////////
@@ -27,6 +28,13 @@ function App() {
 
   const [signModalState, setSignModalState] = useState(false);
   const [loginModalState, setLoginModalState] = useState(false);
+  const [menuState, setMenuState] = useState(false);
+  const menuStyle = {
+    opacity: "1",
+    pointerEvents: "auto",
+    visibility: "visible",
+    transform: "translateX(0)",
+  };
   const [signedPerson, setSignedPerson] = useState(
     JSON.parse(window.localStorage.getItem("signedInPerson")) || {}
   );
@@ -346,7 +354,11 @@ function App() {
 
   return (
     <>
-      <div style={signModalState || loginModalState ? blurredStyle : {}}>
+      <div
+        style={
+          signModalState || loginModalState || menuState ? blurredStyle : {}
+        }
+      >
         <ToastContainer />
         <AnimatePresence wait>
           <Routes key={location.pathname} location={location}>
@@ -359,6 +371,7 @@ function App() {
                   handleLoginState={handleLoginState}
                   handlelogout={handlelogout}
                   currentMovieDetails={currentMovieDetails}
+                  setMenuState={setMenuState}
                 />
               }
             />
@@ -376,6 +389,7 @@ function App() {
                   userLocation={userLocation}
                   handleLocationSelection={handleLocationSelection}
                   currentMovieDetails={currentMovieDetails}
+                  setMenuState={setMenuState}
                 />
               }
             />
@@ -430,6 +444,7 @@ function App() {
                     handleUserPaymentMethod={handleUserPaymentMethod}
                     purchaseCompletion={purchaseCompletion}
                     ticketPurchaseError={ticketPurchaseError}
+                    setMenuState={setMenuState}
                   />
                 }
               />
@@ -442,6 +457,7 @@ function App() {
                     handleSignState={handleSignState}
                     handleLoginState={handleLoginState}
                     handlelogout={handlelogout}
+                    setMenuState={setMenuState}
                   />
                 }
               />
@@ -469,6 +485,7 @@ function App() {
                     adminMovieToast={adminMovieToast}
                     adminShowtimeToast={adminShowtimeToast}
                     adminShowninToast={adminShowninToast}
+                    setMenuState={setMenuState}
                   />
                 }
               />
@@ -482,6 +499,7 @@ function App() {
                   handleSignState={handleSignState}
                   handleLoginState={handleLoginState}
                   handlelogout={handlelogout}
+                  setMenuState={setMenuState}
                 />
               }
             />
@@ -500,6 +518,7 @@ function App() {
                   handleLocationSelection={handleLocationSelection}
                   movieDetailsId={movieDetailsId}
                   currentMovieDetails={currentMovieDetails}
+                  setMenuState={setMenuState}
                 />
               }
             />
@@ -521,6 +540,15 @@ function App() {
           loginFailedToast={loginFailedToast}
         />
       )}
+      <MobileNav
+        menuState={menuState}
+        menuStyle={menuStyle}
+        setMenuState={setMenuState}
+        signedPerson={signedPerson}
+        handlelogout={handlelogout}
+        handleSignState={handleSignState}
+        handleLoginState={handleLoginState}
+      />
     </>
   );
 }

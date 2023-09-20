@@ -10,6 +10,7 @@ export const CustomerInfoPage = ({
   handleLoginState,
   signedPerson,
   handlelogout,
+  setMenuState,
 }) => {
   return (
     <AnimatedPage>
@@ -20,6 +21,7 @@ export const CustomerInfoPage = ({
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
           handlelogout={handlelogout}
+          setMenuState={setMenuState}
         />
         <CustomerInfoSection signedPerson={signedPerson} />
         <Footer
