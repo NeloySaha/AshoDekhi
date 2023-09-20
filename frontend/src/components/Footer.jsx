@@ -54,7 +54,6 @@ export const Footer = ({ handleSignState, handleLoginState }) => {
         <h1 className="footer-logo-text">Asho Dekhi</h1>
       </Link>
 
-      <div></div>
       <div className="footer-link-container foot-reg">
         <button className="footer-btn" onClick={handleSignState}>
           Create account
