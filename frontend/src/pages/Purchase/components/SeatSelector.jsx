@@ -44,6 +44,11 @@ export const SeatSelector = ({
   seatsData.forEach((seat, idx) => {
     let seatStatus;
 
+    const handleTouchStart = (e) => {
+      e.preventDefault();
+      handleUserSeats(seat.seat_id);
+    };
+
     seat.booked_status === 0
       ? (seatStatus = "booked")
       : (seatStatus = "available");
@@ -52,6 +57,7 @@ export const SeatSelector = ({
       <div
         className={`seat ${seatStatus}`}
         onClick={() => seatStatus !== "booked" && handleUserSeats(seat.seat_id)}
+        onTouchEnd={seatStatus !== "booked" ? handleTouchStart : undefined}
         key={seat.seat_id}
         style={{
           backgroundColor: userSeatList.includes(seat.seat_id) ? "#ef5e78" : "",
