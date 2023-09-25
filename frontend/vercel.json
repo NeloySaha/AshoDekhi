@@ -1,0 +1,29 @@
+{
+  "routes": [
+    { "src": "/", "dest": "/" },
+    {
+      "src": "/showtimes",
+      "dest": "/"
+    },
+    {
+      "src": "/purchase",
+      "dest": "/"
+    },
+    {
+      "src": "/customer",
+      "dest": "/"
+    },
+    {
+      "src": "/admin",
+      "dest": "/"
+    },
+    {
+      "src": "/aboutus",
+      "dest": "/"
+    },
+    {
+      "src": "/movieDetails",
+      "dest": "/"
+    }
+  ]
+}

@@ -487,6 +487,7 @@
 
   .footer-heading {
     grid-column: 1/3;
+    white-space: nowrap;
   }
   .form-item-options {
     flex-wrap: wrap;
