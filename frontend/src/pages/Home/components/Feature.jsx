@@ -143,12 +143,7 @@ export const Feature = ({ idx, title, description, image_path }) => {
   return (
     <div className="feature-content">
       {idx % 2 === 0 && (
-        <img
-          className="feature-img"
-          src={image_path}
-          alt={title}
-          loading="lazy"
-        />
+        <img className="feature-img" src={image_path} alt={title} />
       )}
 
       <div className="feature-text">

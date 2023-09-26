@@ -78,7 +78,7 @@ export const HeroSection = ({ handleLoginState, signedPerson }) => {
         <div className="hero-img-box">
           <img
             className="hero-img"
-            src="/Images/hero-img.png"
+            src="/Images/hero-img.webp"
             alt="Hero Image"
           />
         </div>
