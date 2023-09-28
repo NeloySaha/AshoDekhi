@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2023 at 10:11 PM
+-- Generation Time: Sep 28, 2023 at 10:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,14 +40,14 @@ CREATE TABLE `features` (
 --
 
 INSERT INTO `features` (`id`, `title`, `description`, `image_path`, `theatre_id`) VALUES
-(1, 'Unparalleled Cinematic Experience', 'Immerse yourself in stunning visuals and crystal-clear sound, as our state-of-the-art IMAX technology transports you directly into the heart of the action. With a screen that stretches beyond your peripheral vision every frame comes alive with unparalleled brilliance.', '/Images/features/imax.jpg', 1),
-(2, 'Delight in Dolby Atmos', 'Experience sound like never before with Dolby Atmos, the epitome audio technology that takes you on an immersive sonic journey.With sound objects moving seamlessly around the theatre, you\'ll be transported into the heart of every scene, making you an integral part of the story.', '/Images/features/sound.jpg', 1),
-(3, 'Tantalizing Treats', 'At our movie theatre, we take your movie-watching experience beyond the screen by offering a delectable array of food items at our concession stand. From freshly buttered popcorn, crispy nachos with zesty cheese dips, to gourmet hotdogs and a variety of refreshing beverages, our concession stand is a culinary paradise for movie enthusiasts.', '/Images/features/food.jpg', 1),
-(4, 'Luxurious Escape', 'Step into a world of opulence and relaxation, designed to cater to your every need before and after the main event. Our Premium Lounge welcomes you with plush leather seating, elegant décor, and a refined ambiance that sets the stage for an unforgettable cinematic journey.', '/Images/features/lounge.jpg', 1),
-(6, 'Unparalleled Cinematic Experience', 'Immerse yourself in stunning visuals and crystal-clear sound, as our state-of-the-art IMAX technology transports you directly into the heart of the action. With a screen that stretches beyond your peripheral vision every frame comes alive with unparalleled brilliance.', '/Images/features/imax.jpg', 2),
-(7, 'Delight in Dolby Atmos', 'Experience sound like never before with Dolby Atmos, the epitome audio technology that takes you on an immersive sonic journey.With sound objects moving seamlessly around the theatre, you\'ll be transported into the heart of every scene, making you an integral part of the story.', '/Images/features/sound.jpg', 2),
-(8, 'Tantalizing Treats', 'At our movie theatre, we take your movie-watching experience beyond the screen by offering a delectable array of food items at our concession stand. From freshly buttered popcorn, crispy nachos with zesty cheese dips, to gourmet hotdogs and a variety of refreshing beverages, our concession stand is a culinary paradise for movie enthusiasts.', '/Images/features/food.jpg', 2),
-(9, 'Luxurious Escape', 'Step into a world of opulence and relaxation, designed to cater to your every need before and after the main event. Our Premium Lounge welcomes you with plush leather seating, elegant décor, and a refined ambiance that sets the stage for an unforgettable cinematic journey.', '/Images/features/lounge.jpg', 2);
+(1, 'Unparalleled Cinematic Experience', 'Immerse yourself in stunning visuals and crystal-clear sound, as our state-of-the-art IMAX technology transports you directly into the heart of the action. With a screen that stretches beyond your peripheral vision every frame comes alive with unparalleled brilliance.', '/Images/features/imax.webp', 1),
+(2, 'Delight in Dolby Atmos', 'Experience sound like never before with Dolby Atmos, the epitome audio technology that takes you on an immersive sonic journey.With sound objects moving seamlessly around the theatre, you\'ll be transported into the heart of every scene, making you an integral part of the story.', '/Images/features/sound.webp', 1),
+(3, 'Tantalizing Treats', 'At our movie theatre, we take your movie-watching experience beyond the screen by offering a delectable array of food items at our concession stand. From freshly buttered popcorn, crispy nachos with zesty cheese dips, to gourmet hotdogs and a variety of refreshing beverages, our concession stand is a culinary paradise for movie enthusiasts.', '/Images/features/food.webp', 1),
+(4, 'Luxurious Escape', 'Step into a world of opulence and relaxation, designed to cater to your every need before and after the main event. Our Premium Lounge welcomes you with plush leather seating, elegant décor, and a refined ambiance that sets the stage for an unforgettable cinematic journey.', '/Images/features/lounge.webp', 1),
+(6, 'Unparalleled Cinematic Experience', 'Immerse yourself in stunning visuals and crystal-clear sound, as our state-of-the-art IMAX technology transports you directly into the heart of the action. With a screen that stretches beyond your peripheral vision every frame comes alive with unparalleled brilliance.', '/Images/features/imax.webp', 2),
+(7, 'Delight in Dolby Atmos', 'Experience sound like never before with Dolby Atmos, the epitome audio technology that takes you on an immersive sonic journey.With sound objects moving seamlessly around the theatre, you\'ll be transported into the heart of every scene, making you an integral part of the story.', '/Images/features/sound.webp', 2),
+(8, 'Tantalizing Treats', 'At our movie theatre, we take your movie-watching experience beyond the screen by offering a delectable array of food items at our concession stand. From freshly buttered popcorn, crispy nachos with zesty cheese dips, to gourmet hotdogs and a variety of refreshing beverages, our concession stand is a culinary paradise for movie enthusiasts.', '/Images/features/food.webp', 2),
+(9, 'Luxurious Escape', 'Step into a world of opulence and relaxation, designed to cater to your every need before and after the main event. Our Premium Lounge welcomes you with plush leather seating, elegant décor, and a refined ambiance that sets the stage for an unforgettable cinematic journey.', '/Images/features/lounge.webp', 2);
 
 -- --------------------------------------------------------
 
@@ -500,12 +500,12 @@ CREATE TABLE `movie` (
 --
 
 INSERT INTO `movie` (`id`, `name`, `image_path`, `language`, `synopsis`, `rating`, `duration`, `top_cast`, `release_date`) VALUES
-(1, 'Spider-Man: Across the Spider-Verse', '/Images/movies/spiderman.jpg', 'English', 'Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.', 8.8, '2h 16m', 'Oscar Isaac', '2023-06-23'),
-(2, 'Extraction 2', '/Images/movies/extraction2.jpg', 'English', 'After barely surviving his grievous wounds from his mission in Dhaka, Bangladesh, Tyler Rake is back, and his team is ready to take on their next mission.', 7.0, '2h 3m', 'Chris Hemsworth', '2023-06-13'),
-(3, 'Murder Mystery 2', '/Images/movies/murderMystery.jpg', 'English', 'Full-time detectives Nick and Audrey are struggling to get their private eye agency off the ground. They find themselves at the center of international abduction when their friend Maharaja, is kidnapped at his own lavish wedding.', 5.7, '1h 30m', 'Jennifer Aniston', '2023-03-31'),
-(4, 'Mission: Impossible - Dead Reckoning Part One', '/Images/movies/missionImpossible.jpg', 'English', 'Ethan Hunt and the IMF team must track down a terrifying new weapon that threatens all of humanity if it falls into the wrong hands. With control of the future and the fate of the world at stake, a deadly race around the globe begins. Confronted by a mysterious, all-powerful enemy, Ethan is forced to consider that nothing can matter more than the mission -- not even the lives of those he cares about most.', 8.0, '2h 43m', 'Tom Cruise', '2023-07-10'),
-(5, 'Oppenheimer', '/Images/movies/oppenheimer.jpg', 'English', 'During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project. Oppenheimer and a team of scientists spend years developing and designing the atomic bomb. Their work comes to fruition on July 16, 1945, as they witness the world\'s first nuclear explosion, forever changing the course of history.', 9.4, '3h', 'Cillian Murphy', '2023-07-21'),
-(6, 'Barbie', '/Images/movies/barbie.jpg', 'English', 'Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.', 7.6, '1h 54m', 'Margot Robbie', '2023-07-21');
+(1, 'Spider-Man: Across the Spider-Verse', '/Images/movies/spiderman.webp', 'English', 'Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero.', 8.8, '2h 16m', 'Oscar Isaac', '2023-06-23'),
+(2, 'Extraction 2', '/Images/movies/extraction2.webp', 'English', 'After barely surviving his grievous wounds from his mission in Dhaka, Bangladesh, Tyler Rake is back, and his team is ready to take on their next mission.', 7.0, '2h 3m', 'Chris Hemsworth', '2023-06-13'),
+(3, 'Murder Mystery 2', '/Images/movies/murderMystery.webp', 'English', 'Full-time detectives Nick and Audrey are struggling to get their private eye agency off the ground. They find themselves at the center of international abduction when their friend Maharaja, is kidnapped at his own lavish wedding.', 5.7, '1h 30m', 'Jennifer Aniston', '2023-03-31'),
+(4, 'Mission: Impossible - Dead Reckoning Part One', '/Images/movies/missionImpossible.webp', 'English', 'Ethan Hunt and the IMF team must track down a terrifying new weapon that threatens all of humanity if it falls into the wrong hands. With control of the future and the fate of the world at stake, a deadly race around the globe begins. Confronted by a mysterious, all-powerful enemy, Ethan is forced to consider that nothing can matter more than the mission -- not even the lives of those he cares about most.', 8.0, '2h 43m', 'Tom Cruise', '2023-07-10'),
+(5, 'Oppenheimer', '/Images/movies/oppenheimer.webp', 'English', 'During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project. Oppenheimer and a team of scientists spend years developing and designing the atomic bomb. Their work comes to fruition on July 16, 1945, as they witness the world\'s first nuclear explosion, forever changing the course of history.', 9.4, '3h', 'Cillian Murphy', '2023-07-21'),
+(6, 'Barbie', '/Images/movies/barbie.webp', 'English', 'Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.', 7.6, '1h 54m', 'Margot Robbie', '2023-07-21');
 
 -- --------------------------------------------------------
 
@@ -584,6 +584,7 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`id`, `payment_time`, `amount`, `method`, `customer_email`) VALUES
+(1, '2023-08-16 19:41:37', 1400, 'Bkash', 'Belal123@gmail.com'),
 (2, '2023-08-16 19:43:03', 1350, 'Nagad', 'rahim123@gmail.com'),
 (3, '2023-08-20 10:32:06', 1350, 'Nagad', 'neloy.saha456@gmail.com'),
 (4, '2023-08-20 10:44:19', 700, 'Bkash', 'neloy.saha456@gmail.com'),
@@ -592,58 +593,7 @@ INSERT INTO `payment` (`id`, `payment_time`, `amount`, `method`, `customer_email
 (7, '2023-08-20 12:41:00', 900, 'Nagad', 'adib@yahoo.com'),
 (8, '2023-08-20 14:36:08', 2700, 'Bkash', 'sazin@gmail.com'),
 (9, '2023-08-20 16:13:23', 700, 'Bkash', 'neloy.saha456@gmail.com'),
-(10, '2023-08-20 17:56:07', 900, 'Bkash', 'farhan@gmail.com'),
-(11, '2023-08-21 09:03:53', 900, 'Bkash', 'neloy.saha456@gmail.com'),
-(12, '2023-08-21 10:09:59', 1800, 'Credit Card', 'neloy.saha456@gmail.com'),
-(13, '2023-08-21 20:44:40', 900, 'Debit Card', 'adib@yahoo.com'),
-(14, '2023-08-22 14:51:01', 700, 'Nagad', 'adib@yahoo.com'),
-(15, '2023-08-23 13:37:05', 900, 'Debit Card', 'neloy.saha456@gmail.com'),
-(16, '2023-08-23 14:07:08', 350, 'Bkash', 'neloy.saha456@gmail.com'),
-(17, '2023-08-23 19:33:14', 1800, 'Credit Card', 'adib@yahoo.com'),
-(18, '2023-08-24 13:33:14', 900, 'Credit Card', 'neloy.saha456@gmail.com'),
-(25, '2023-08-24 16:28:03', 700, 'Nagad', 'neloy.saha456@gmail.com'),
-(26, '2023-08-24 16:55:22', 1350, 'Bkash', 'neloy.saha456@gmail.com'),
-(27, '2023-08-24 19:47:34', 900, 'Credit Card', 'neloy.saha459@gmail.com'),
-(28, '2023-08-24 19:49:17', 450, 'Nagad', 'neloy.saha459@gmail.com'),
-(29, '2023-08-24 19:52:50', 450, 'Debit Card', 'neloy.saha459@gmail.com'),
-(30, '2023-08-24 19:56:16', 450, 'Debit Card', 'neloy.saha459@gmail.com'),
-(31, '2023-08-24 19:57:54', 450, 'Bkash', 'neloy.saha459@gmail.com'),
-(32, '2023-08-24 20:06:38', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(33, '2023-08-24 20:09:05', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(34, '2023-08-24 20:14:33', 450, 'Debit Card', 'neloy.saha459@gmail.com'),
-(35, '2023-08-24 20:15:42', 450, 'Debit Card', 'neloy.saha459@gmail.com'),
-(36, '2023-08-24 20:16:37', 900, 'Credit Card', 'neloy.saha459@gmail.com'),
-(37, '2023-08-24 20:18:37', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(38, '2023-08-24 20:21:14', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(39, '2023-08-24 20:30:22', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(40, '2023-08-24 20:31:31', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(41, '2023-08-24 20:34:57', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(42, '2023-08-24 20:36:44', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(43, '2023-08-24 20:42:31', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(44, '2023-08-24 20:52:38', 900, 'Debit Card', 'neloy.saha459@gmail.com'),
-(45, '2023-08-24 22:51:41', 900, 'Nagad', 'neloy.saha456@gmail.com'),
-(46, '2023-08-25 05:34:30', 450, 'Bkash', 'neloy.saha456@gmail.com'),
-(47, '2023-08-25 09:28:17', 2100, 'Bkash', 'kenny.asad@gmail.com'),
-(48, '2023-08-25 09:30:58', 700, 'Bkash', 'kenny.asad@gmail.com'),
-(49, '2023-08-25 09:32:04', 350, 'Debit Card', 'kenny.asad@gmail.com'),
-(50, '2023-08-25 09:35:11', 700, 'Nagad', 'kenny.asad@gmail.com'),
-(51, '2023-08-25 09:37:16', 900, 'Nagad', 'farhan@gmail.com'),
-(52, '2023-08-25 10:18:24', 450, 'Credit Card', 'neloy.saha456@gmail.com'),
-(53, '2023-08-25 10:19:10', 900, 'Bkash', 'neloy.saha456@gmail.com'),
-(54, '2023-08-25 11:41:38', 900, 'Bkash', 'neloy.saha456@gmail.com'),
-(55, '2023-08-25 19:05:05', 900, 'Debit Card', 'neloy.saha456@gmail.com'),
-(56, '2023-08-25 21:17:08', 2250, 'Debit Card', 'adib@yahoo.com'),
-(57, '2023-08-25 21:18:58', 450, 'Debit Card', 'adib@yahoo.com'),
-(58, '2023-08-25 21:24:32', 450, 'Nagad', 'jon@snow.com'),
-(59, '2023-08-26 19:54:09', 450, 'Bkash', 'orpita220202@gmail.com'),
-(60, '2023-08-28 08:04:51', 450, 'Bkash', 'sazin.adnan@gmail.com'),
-(62, '2023-08-29 12:22:45', 1350, 'Debit Card', 'neloy.saha456@gmail.com'),
-(63, '2023-08-29 12:24:07', 900, 'Credit Card', 'neloy.saha456@gmail.com'),
-(64, '2023-08-29 21:06:43', 900, 'Nagad', 'neloy.saha456@gmail.com'),
-(65, '2023-08-30 11:23:20', 350, 'Bkash', 'neloy.saha456@gmail.com'),
-(66, '2023-08-30 19:05:09', 350, 'Bkash', 'adib@yahoo.com'),
-(67, '2023-08-30 19:12:43', 900, 'Debit Card', 'adib@yahoo.com'),
-(68, '2023-08-30 19:48:50', 450, 'Nagad', 'ichigo12@gmail.com');
+(10, '2023-08-20 17:56:07', 900, 'Bkash', 'farhan@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -657,6 +607,7 @@ CREATE TABLE `person` (
   `last_name` varchar(20) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `phone_number` char(11) DEFAULT NULL,
+  `account_balance` int(11) DEFAULT NULL,
   `person_type` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -664,28 +615,18 @@ CREATE TABLE `person` (
 -- Dumping data for table `person`
 --
 
-INSERT INTO `person` (`email`, `first_name`, `last_name`, `password`, `phone_number`, `person_type`) VALUES
-('adib@yahoo.com', 'Adib', 'Rahman', 'adib123', '01757912079', 'Customer'),
-('farhan.abedin@gmail.com', 'Farhan', 'Abedin', 'farhan123', '01757912079', 'Customer'),
-('farhan@gmail.com', 'Farhan', 'Abedin', 'farhan123', '01757912079', 'Customer'),
-('ichigo12@gmail.com', 'Ichigo', 'Kurosaki', 'ichigo123', '01231231211', 'Customer'),
-('jon@snow.com', 'Jon', 'Snow', '456', '123123233', 'Customer'),
-('kenny.asad@gmail.com', 'Kenny', 'Asad', 'kenny123', '01757912079', 'Customer'),
-('kenny@yahoo.com', 'Kenny', 'Ackerman', 'kenny12', '01757912079', 'Customer'),
-('mahinul.haque@gmail.com', 'Mahinul', 'Haque', 'mahin123', '123123211', 'Admin'),
-('neloy.alexa@gmail.com', 'Neloy', 'Saha', 'neloy123', '01922292292', 'Customer'),
-('neloy.saha42@gmail.com', 'Neloy', 'Saha', 'neloy123', '01757912079', 'Customer'),
-('neloy.saha456@gmail.com', 'Neloy', 'Saha', '1234', '01757912079', 'Customer'),
-('neloy.saha457@gmail.com', 'Neloy', 'Saha', '123', '01757912079', 'Customer'),
-('neloy.saha458@gmail.com', 'Neloy', 'Saha', '123', '01757912079', 'Customer'),
-('neloy.saha459@gmail.com', 'Neloy', 'Saha', 'neloy123', '01757912079', 'Customer'),
-('niaz@nafi.com', 'Niaz', 'Rahman', '123', '01821379981', 'Customer'),
-('orpita220202@gmail.com', 'Orpita', 'Saha', 'gigi#ero?', '01819815700', 'Customer'),
-('rahim123@gmail.com', 'Rahim', 'Sheikh', '123', '01757912079', 'Customer'),
-('sajib12@yahoo.com', 'Sajib', 'Rahman', 'admin123', '01757912079', 'Admin'),
-('sazin.adnan@gmail.com', 'Sazin', 'Haque', 'sazin123', '01757912079', 'Customer'),
-('sazin@gmail.com', 'Sazin', 'Haque', 'sazin1234', '01757912079', 'Customer'),
-('subash123@gmail.com', 'Subash', 'Saha', '123', '01757912079', 'Customer');
+INSERT INTO `person` (`email`, `first_name`, `last_name`, `password`, `phone_number`, `account_balance`, `person_type`) VALUES
+('addin@gmail.com', 'Test2', 'test', '123', '17579120791', 100000, 'Customer'),
+('adib@yahoo.com', 'Adib', 'Rahman', 'adib123', '01757912079', 100000, 'Customer'),
+('Belal123@gmail.com', 'Belal', 'Hasan', '123', '01757912079', 1000000, 'Customer'),
+('farhan@gmail.com', 'Farhan', 'Abedin', 'farhan123', '01757912079', 100000, 'Customer'),
+('jon@alu.com', 'Test', 'Saha1', 'test1', '123321311', 100000, 'Customer'),
+('jon@potato.com', 'Test', 'Saha', 'test1', '123321311', 100000, 'Customer'),
+('Jon@snow.com', 'Jon', 'Snow', '456', '123123233', 10000, 'Customer'),
+('neloy.saha456@gmail.com', 'Neloy', 'Saha', '1234', '01757912079', 100000, 'Customer'),
+('niaz@nafi.com', 'Niaz', 'Rahman', '123', '01821379981', 100000, 'Customer'),
+('rahim123@gmail.com', 'Rahim', 'Sheikh', '123', '01757912079', 100000, 'Customer'),
+('sazin@gmail.com', 'Sazin', 'Haque', 'sazin1234', '01757912079', 100000, 'Customer');
 
 -- --------------------------------------------------------
 
@@ -885,18 +826,18 @@ CREATE TABLE `showtimes` (
 --
 
 INSERT INTO `showtimes` (`id`, `movie_start_time`, `show_type`, `showtime_date`, `price_per_seat`) VALUES
-(1, '11:00 am', '2D', '2023-08-26', 350),
-(2, '2:30 pm', '3D', '2023-08-26', 450),
-(3, '6:00 pm', '3D', '2023-08-26', 450),
-(4, '11:00 am', '2D', '2023-08-27', 350),
-(5, '2:30 pm', '3D', '2023-08-27', 450),
-(6, '6:00 pm', '3D', '2023-08-27', 450),
-(7, '11:00 am', '2D', '2023-08-28', 350),
-(8, '2:30 pm', '3D', '2023-08-28', 450),
-(9, '6:00 pm', '3D', '2023-08-28', 450),
-(10, '11:00 am', '2D', '2023-08-29', 350),
-(11, '2:30 pm', '3D', '2023-08-29', 450),
-(12, '6:00 pm', '3D', '2023-08-29', 450);
+(1, '11:00 am', '2D', '2023-08-19', 350),
+(2, '2:30 pm', '3D', '2023-08-19', 450),
+(3, '6:00 pm', '3D', '2023-08-19', 450),
+(4, '11:00 am', '2D', '2023-08-20', 350),
+(5, '2:30 pm', '3D', '2023-08-20', 450),
+(6, '6:00 pm', '3D', '2023-08-20', 450),
+(7, '11:00 am', '2D', '2023-08-21', 350),
+(8, '2:30 pm', '3D', '2023-08-21', 450),
+(9, '6:00 pm', '3D', '2023-08-21', 450),
+(10, '11:00 am', '2D', '2023-08-22', 350),
+(11, '2:30 pm', '3D', '2023-08-22', 450),
+(12, '6:00 pm', '3D', '2023-08-22', 450);
 
 -- --------------------------------------------------------
 
@@ -944,6 +885,10 @@ INSERT INTO `ticket` (`id`, `price`, `purchase_date`, `payment_id`, `seat_id`, `
 (1, 450, '2023-08-17', 2, 3, 1, 5, 3),
 (2, 450, '2023-08-17', 2, 4, 1, 5, 3),
 (3, 450, '2023-08-17', 2, 5, 1, 5, 3),
+(4, 350, '2023-08-17', 1, 3, 2, 5, 1),
+(5, 350, '2023-08-17', 1, 4, 2, 5, 1),
+(6, 350, '2023-08-17', 1, 5, 2, 5, 1),
+(7, 350, '2023-08-17', 1, 6, 2, 5, 1),
 (8, 450, '2023-08-20', 3, 19, 2, 6, 2),
 (9, 450, '2023-08-20', 3, 20, 2, 6, 2),
 (10, 450, '2023-08-20', 3, 21, 2, 6, 2),
@@ -965,104 +910,7 @@ INSERT INTO `ticket` (`id`, `price`, `purchase_date`, `payment_id`, `seat_id`, `
 (26, 350, '2023-08-20', 9, 37, 8, 4, 7),
 (27, 350, '2023-08-20', 9, 38, 8, 4, 7),
 (28, 450, '2023-08-20', 10, 31, 6, 6, 11),
-(29, 450, '2023-08-20', 10, 32, 6, 6, 11),
-(30, 450, '2023-08-21', 11, 13, 6, 6, 11),
-(31, 450, '2023-08-21', 11, 14, 6, 6, 11),
-(32, 450, '2023-08-21', 12, 28, 1, 5, 3),
-(33, 450, '2023-08-21', 12, 29, 1, 5, 3),
-(34, 450, '2023-08-21', 12, 30, 1, 5, 3),
-(35, 450, '2023-08-21', 12, 27, 1, 5, 3),
-(36, 450, '2023-08-22', 13, 21, 1, 5, 3),
-(37, 450, '2023-08-22', 13, 22, 1, 5, 3),
-(38, 350, '2023-08-22', 14, 38, 8, 4, 4),
-(39, 350, '2023-08-22', 14, 37, 8, 4, 4),
-(40, 450, '2023-08-23', 15, 11, 4, 2, 8),
-(41, 450, '2023-08-23', 15, 12, 4, 2, 8),
-(43, 450, '2023-08-24', 17, 12, 3, 1, 12),
-(44, 450, '2023-08-24', 17, 13, 3, 1, 12),
-(45, 450, '2023-08-24', 17, 14, 3, 1, 12),
-(46, 450, '2023-08-24', 17, 11, 3, 1, 12),
-(47, 450, '2023-08-24', 18, 23, 6, 6, 2),
-(48, 450, '2023-08-24', 18, 24, 6, 6, 2),
-(49, 350, '2023-08-24', 25, 5, 3, 3, 10),
-(50, 350, '2023-08-24', 25, 6, 3, 3, 10),
-(51, 450, '2023-08-24', 26, 25, 4, 2, 3),
-(52, 450, '2023-08-24', 26, 27, 4, 2, 3),
-(53, 450, '2023-08-24', 26, 26, 4, 2, 3),
-(54, 450, '2023-08-25', 27, 37, 1, 5, 3),
-(55, 450, '2023-08-25', 27, 38, 1, 5, 3),
-(56, 450, '2023-08-25', 28, 35, 1, 5, 3),
-(57, 450, '2023-08-25', 29, 36, 1, 5, 3),
-(58, 450, '2023-08-25', 30, 44, 1, 5, 3),
-(59, 450, '2023-08-25', 31, 45, 1, 5, 3),
-(60, 450, '2023-08-25', 32, 20, 1, 5, 3),
-(61, 450, '2023-08-25', 32, 19, 1, 5, 3),
-(62, 450, '2023-08-25', 33, 47, 1, 5, 3),
-(63, 450, '2023-08-25', 33, 48, 1, 5, 3),
-(64, 450, '2023-08-25', 34, 43, 1, 5, 3),
-(65, 450, '2023-08-25', 35, 46, 1, 5, 3),
-(66, 450, '2023-08-25', 36, 45, 5, 5, 2),
-(67, 450, '2023-08-25', 36, 46, 5, 5, 2),
-(68, 450, '2023-08-25', 37, 11, 1, 5, 3),
-(69, 450, '2023-08-25', 37, 12, 1, 5, 3),
-(70, 450, '2023-08-25', 38, 13, 1, 5, 3),
-(71, 450, '2023-08-25', 38, 14, 1, 5, 3),
-(72, 450, '2023-08-25', 39, 23, 1, 5, 3),
-(73, 450, '2023-08-25', 39, 24, 1, 5, 3),
-(74, 450, '2023-08-25', 40, 25, 1, 5, 3),
-(75, 450, '2023-08-25', 40, 26, 1, 5, 3),
-(76, 450, '2023-08-25', 41, 31, 1, 5, 3),
-(77, 450, '2023-08-25', 41, 32, 1, 5, 3),
-(78, 450, '2023-08-25', 42, 17, 1, 5, 3),
-(79, 450, '2023-08-25', 42, 18, 1, 5, 3),
-(80, 450, '2023-08-25', 43, 39, 1, 5, 3),
-(81, 450, '2023-08-25', 43, 40, 1, 5, 3),
-(82, 450, '2023-08-25', 44, 15, 1, 5, 3),
-(83, 450, '2023-08-25', 44, 16, 1, 5, 3),
-(84, 450, '2023-08-25', 45, 31, 6, 6, 2),
-(85, 450, '2023-08-25', 45, 32, 6, 6, 2),
-(86, 450, '2023-08-25', 46, 13, 5, 5, 8),
-(87, 350, '2023-08-25', 47, 36, 5, 1, 4),
-(88, 350, '2023-08-25', 47, 37, 5, 1, 4),
-(89, 350, '2023-08-25', 47, 38, 5, 1, 4),
-(90, 350, '2023-08-25', 47, 34, 5, 1, 4),
-(91, 350, '2023-08-25', 47, 35, 5, 1, 4),
-(92, 350, '2023-08-25', 47, 33, 5, 1, 4),
-(93, 350, '2023-08-25', 48, 29, 5, 1, 4),
-(94, 350, '2023-08-25', 48, 30, 5, 1, 4),
-(95, 350, '2023-08-25', 49, 47, 5, 1, 4),
-(96, 350, '2023-08-25', 50, 24, 5, 1, 4),
-(97, 350, '2023-08-25', 50, 23, 5, 1, 4),
-(98, 450, '2023-08-25', 51, 39, 2, 6, 9),
-(99, 450, '2023-08-25', 51, 40, 2, 6, 9),
-(100, 450, '2023-08-25', 52, 9, 1, 5, 3),
-(101, 450, '2023-08-25', 53, 22, 4, 2, 8),
-(102, 450, '2023-08-25', 53, 21, 4, 2, 8),
-(103, 450, '2023-08-25', 54, 34, 1, 5, 3),
-(104, 450, '2023-08-25', 54, 33, 1, 5, 3),
-(105, 450, '2023-08-26', 55, 29, 1, 5, 2),
-(106, 450, '2023-08-26', 55, 30, 1, 5, 2),
-(107, 450, '2023-08-26', 56, 29, 1, 5, 5),
-(108, 450, '2023-08-26', 56, 30, 1, 5, 5),
-(109, 450, '2023-08-26', 56, 27, 1, 5, 5),
-(110, 450, '2023-08-26', 56, 28, 1, 5, 5),
-(111, 450, '2023-08-26', 56, 42, 1, 5, 5),
-(112, 450, '2023-08-26', 57, 48, 6, 6, 8),
-(113, 450, '2023-08-26', 58, 42, 1, 5, 3),
-(114, 450, '2023-08-27', 59, 11, 2, 6, 3),
-(115, 450, '2023-08-28', 60, 8, 1, 5, 3),
-(118, 450, '2023-08-29', 62, 44, 7, 1, 8),
-(119, 450, '2023-08-29', 62, 43, 7, 1, 8),
-(120, 450, '2023-08-29', 62, 45, 7, 1, 8),
-(121, 450, '2023-08-29', 63, 37, 7, 1, 8),
-(122, 450, '2023-08-29', 63, 38, 7, 1, 8),
-(123, 450, '2023-08-30', 64, 38, 4, 2, 2),
-(124, 450, '2023-08-30', 64, 37, 4, 2, 2),
-(125, 350, '2023-08-30', 65, 8, 4, 4, 1),
-(126, 350, '2023-08-31', 66, 38, 7, 3, 4),
-(127, 450, '2023-08-31', 67, 22, 4, 2, 5),
-(128, 450, '2023-08-31', 67, 21, 4, 2, 5),
-(129, 450, '2023-08-31', 68, 28, 5, 5, 2);
+(29, 450, '2023-08-20', 10, 32, 6, 6, 11);
 
 --
 -- Indexes for dumped tables
@@ -1177,13 +1025,13 @@ ALTER TABLE `hall`
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `seat`
@@ -1195,7 +1043,7 @@ ALTER TABLE `seat`
 -- AUTO_INCREMENT for table `showtimes`
 --
 ALTER TABLE `showtimes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `theatre`
@@ -1207,7 +1055,7 @@ ALTER TABLE `theatre`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
