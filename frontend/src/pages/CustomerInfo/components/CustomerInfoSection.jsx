@@ -10,52 +10,54 @@ export const CustomerInfoSection = ({ signedPerson }) => {
     margin: "2.4rem auto",
   };
 
-  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
 
   useEffect(() => {
-    const fetchData1 = async () => {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/customerProfile`, {
-          email: signedPerson.email,
-        })
-        .then((res) => {
-          setCusProData(res.data[0]);
-        })
-        .catch((err) => console.log(err));
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/customerProfile`,
+          {
+            email: signedPerson.email,
+          }
+        );
+        setCusProData(response.data[0]);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading1(false);
+      }
+
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/customerPurchases`,
+          {
+            email: signedPerson.email,
+          }
+        );
+        const formattedData = response.data.map((dataObj) => {
+          const purDate = new Date(dataObj.purchase_date).toLocaleDateString(
+            "en-GB"
+          );
+          const showDate = new Date(dataObj.showtime_date).toLocaleDateString(
+            "en-GB"
+          );
+          return {
+            ...dataObj,
+            showtime_date: showDate,
+            purchase_date: purDate,
+          };
+        });
+        setCusTicketData(formattedData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading2(false);
+      }
     };
 
-    const fetchData2 = async () => {
-      setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/customerPurchases`, {
-          email: signedPerson.email,
-        })
-        .then((res) => {
-          setCusTicketData(() => {
-            const formattedObj = res.data.map((dataObj) => {
-              const purDate = new Date(
-                dataObj.purchase_date
-              ).toLocaleDateString("en-GB");
-              const showDate = new Date(
-                dataObj.showtime_date
-              ).toLocaleDateString("en-GB");
-
-              return {
-                ...dataObj,
-                showtime_date: showDate,
-                purchase_date: purDate,
-              };
-            });
-
-            return formattedObj;
-          });
-        })
-        .catch((err) => console.log(err));
-      setLoading(false);
-    };
-
-    fetchData1();
-    fetchData2();
+    fetchData();
   }, [signedPerson]);
 
   const purchaseHtml = cusTicketData.map((cusTicket) => {
@@ -128,30 +130,35 @@ export const CustomerInfoSection = ({ signedPerson }) => {
     <div className="section-customer-info">
       <div className="container">
         <h3 className="customer-info-heading">Customer Info</h3>
-        <div className="customer-info-details">
-          <div>
-            <p>Name</p>
-            <p>:</p>
-            <p>
-              {cusProData && `${cusProData.first_name} ${cusProData.last_name}`}
-            </p>
-          </div>
+        {loading1 ? (
+          <HashLoader cssOverride={override} color="#eb3656" />
+        ) : (
+          <div className="customer-info-details">
+            <div>
+              <p>Name</p>
+              <p>:</p>
+              <p>
+                {cusProData &&
+                  `${cusProData.first_name} ${cusProData.last_name}`}
+              </p>
+            </div>
 
-          <div>
-            <p>Email Address</p>
-            <p>:</p>
-            <p>{cusProData.email}</p>
-          </div>
+            <div>
+              <p>Email Address</p>
+              <p>:</p>
+              <p>{cusProData.email}</p>
+            </div>
 
-          <div>
-            <p>Phone No.</p>
-            <p>:</p>
-            <p>{cusProData.phone_number}</p>
+            <div>
+              <p>Phone No.</p>
+              <p>:</p>
+              <p>{cusProData.phone_number}</p>
+            </div>
           </div>
-        </div>
+        )}
 
         <h3 className="customer-info-heading">Purchase History</h3>
-        {loading ? (
+        {loading2 ? (
           <HashLoader cssOverride={override} color="#eb3656" />
         ) : (
           <>

@@ -18,21 +18,18 @@ export const AdminShownInModifySection = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/adminLatestShowDates`)
-        .then((res) =>
-          setLatestShowDates(() => {
-            const tempDateList = res.data.map((dateObj) => {
-              return dateFormatter(dateObj.showtime_date);
-            });
-
-            return tempDateList;
-          })
-        )
-        .catch((err) => {
-          console.log(err);
-          adminErrorToast();
-        });
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/adminLatestShowDates`
+        );
+        const tempDateList = response.data.map((dateObj) =>
+          dateFormatter(dateObj.showtime_date)
+        );
+        setLatestShowDates(tempDateList);
+      } catch (err) {
+        console.error(err);
+        adminErrorToast();
+      }
     };
 
     fetchData();
@@ -41,57 +38,67 @@ export const AdminShownInModifySection = ({
   useEffect(() => {
     const fetchData = async () => {
       if (selectedShowDate !== "") {
-        await axios
-          .post(`${import.meta.env.VITE_API_URL}/adminShowtimes`, {
-            selectedShowDate,
-          })
-          .then((res) => {
-            console.log(res.data);
-            setShowtimeData(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-            adminErrorToast();
-          });
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/adminShowtimes`,
+            {
+              selectedShowDate,
+            }
+          );
+
+          setShowtimeData(response.data);
+        } catch (err) {
+          console.error(err);
+          adminErrorToast();
+        } finally {
+          setSelectedShowtime("");
+        }
       }
     };
 
     fetchData();
-    setSelectedShowtime("");
   }, [selectedShowDate]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/movieReplaceFrom`, {
-          selectedShowtime,
-        })
-        .then((res) => setMovieReplaceData(res.data))
-        .catch((err) => {
-          console.log(err);
-          adminErrorToast();
-        });
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/movieReplaceFrom`,
+          {
+            selectedShowtime,
+          }
+        );
+        setMovieReplaceData(response.data);
+      } catch (err) {
+        console.error(err);
+        adminErrorToast();
+      } finally {
+        setSelectedReplace("");
+      }
     };
 
     fetchData();
-    setSelectedReplace("");
   }, [selectedShowtime]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/movieReplaceTo`, {
-          selectedShowtime,
-        })
-        .then((res) => setMovieAltData(res.data))
-        .catch((err) => {
-          console.log(err);
-          adminErrorToast();
-        });
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/movieReplaceTo`,
+          {
+            selectedShowtime,
+          }
+        );
+        setMovieAltData(response.data);
+      } catch (err) {
+        console.error(err);
+        adminErrorToast();
+      } finally {
+        setSelectedAlt("");
+      }
     };
 
     fetchData();
-    setSelectedAlt("");
   }, [selectedReplace]);
 
   const checkedColor = (val, checkVal) => {

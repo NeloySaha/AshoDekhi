@@ -25,15 +25,21 @@ export const PictureQualitySelector = ({
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/halls`, {
-          theatreId,
-          userDate,
-          userMovieId,
-        })
-        .then((res) => getHallData(res.data))
-        .catch((err) => console.log(err));
-      setLoading(false);
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/halls`,
+          {
+            theatreId,
+            userDate,
+            userMovieId,
+          }
+        );
+        getHallData(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

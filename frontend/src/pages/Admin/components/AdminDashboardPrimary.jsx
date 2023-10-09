@@ -12,23 +12,38 @@ export const AdminDashboardPrimary = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/totalTickets`)
-        .then((res) => setTicketData(res.data))
-        .catch((err) => console.log(err));
-      setLoading1(false);
+      try {
+        const response1 = await axios.get(
+          `${import.meta.env.VITE_API_URL}/totalTickets`
+        );
+        setTicketData(response1.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading1(false);
+      }
 
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/totalPayment`)
-        .then((res) => setPaymentData(res.data))
-        .catch((err) => console.log(err));
-      setLoading2(false);
+      try {
+        const response2 = await axios.get(
+          `${import.meta.env.VITE_API_URL}/totalPayment`
+        );
+        setPaymentData(response2.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading2(false);
+      }
 
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/totalCustomers`)
-        .then((res) => setCustomerData(res.data))
-        .catch((err) => console.log(err));
-      setLoading3(false);
+      try {
+        const response3 = await axios.get(
+          `${import.meta.env.VITE_API_URL}/totalCustomers`
+        );
+        setCustomerData(response3.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading3(false);
+      }
     };
 
     fetchData();

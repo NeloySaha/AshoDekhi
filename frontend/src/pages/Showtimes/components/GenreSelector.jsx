@@ -12,11 +12,15 @@ export const GenreSelector = ({ userGenre, handleGenreChange }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/genres`)
-        .then((res) => setGenreData([{ genre: "All" }, ...res.data]))
-        .catch((err) => console.log(err));
-      setLoading(false);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/genres`
+        );
+        setGenreData([{ genre: "All" }, ...response.data]);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
   }, []);

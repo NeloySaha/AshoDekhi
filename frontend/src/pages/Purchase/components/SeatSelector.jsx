@@ -17,18 +17,25 @@ export const SeatSelector = ({
   };
 
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/seats`, {
-          userShowtimeId,
-          userHallId,
-          userMovieId,
-        })
-        .then((res) => getSeatsData(res.data))
-        .catch((err) => console.log(err));
-      setLoading(false);
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/seats`,
+          {
+            userShowtimeId,
+            userHallId,
+            userMovieId,
+          }
+        );
+        getSeatsData(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

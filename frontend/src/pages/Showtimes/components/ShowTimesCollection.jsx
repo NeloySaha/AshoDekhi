@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { ShowtimesCard } from "./ShowtimesCard";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -19,40 +19,51 @@ export const ShowTimesCollection = ({
   const [loading2, setLoading2] = useState(false);
   const [showtimesData, setShowtimesData] = useState([]);
   const theatreName = userLocation && userLocation.name;
-  const initialRender = useRef(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading1(true);
-      await dataFetch();
-      setLoading1(false);
+      try {
+        await dataFetch();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading1(false);
+      }
     };
-    console.log(userLocation);
+
     fetchData();
   }, [userLocation]);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading2(true);
-      await dataFetch();
-      setLoading2(false);
+      try {
+        await dataFetch();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading2(false);
+      }
     };
 
     fetchData();
   }, [userGenre]);
 
   const dataFetch = async () => {
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/showtimes`, {
-        theatreName,
-        userGenre,
-      })
-      .then((res) => {
-        setShowtimesData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/showtimes`,
+        {
+          theatreName,
+          userGenre,
+        }
+      );
+
+      setShowtimesData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const movieShowtimes = [];

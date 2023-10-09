@@ -37,7 +37,6 @@ export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
 
   const movieAdd = async (e) => {
     e.preventDefault();
-    let movieId;
 
     if (
       movieInfo.movieName !== "" &&
@@ -51,70 +50,65 @@ export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
       movieInfo.genres !== "" &&
       movieInfo.directors !== ""
     ) {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/adminMovieAdd`, {
-          name: movieInfo.movieName,
-          image_path: movieInfo.imagePath,
-          language: movieInfo.language,
-          synopsis: movieInfo.description,
-          rating: movieInfo.rating,
-          duration: movieInfo.duration,
-          top_cast: movieInfo.cast,
-          release_date: movieInfo.relDate,
-        })
-        .then((res) => (movieId = res.data && res.data[0].last_id))
-        .catch((err) => {
-          console.log(err);
-          adminErrorToast();
-        });
+      try {
+        // Add the movie
+        const movieResponse = await axios.post(
+          `${import.meta.env.VITE_API_URL}/adminMovieAdd`,
+          {
+            name: movieInfo.movieName,
+            image_path: movieInfo.imagePath,
+            language: movieInfo.language,
+            synopsis: movieInfo.description,
+            rating: movieInfo.rating,
+            duration: movieInfo.duration,
+            top_cast: movieInfo.cast,
+            release_date: movieInfo.relDate,
+          }
+        );
 
-      movieId !== "" &&
-        (await movieInfo.genres.forEach((genre) => {
-          axios
-            .post(`${import.meta.env.VITE_API_URL}/genreInsert`, {
+        const movieId = movieResponse.data && movieResponse.data[0].last_id;
+
+        if (movieId) {
+          // Add genres
+          for (const genre of movieInfo.genres) {
+            await axios.post(`${import.meta.env.VITE_API_URL}/genreInsert`, {
               movieId,
               genre,
-            })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-              adminErrorToast();
             });
-        }));
+          }
 
-      movieId !== "" &&
-        (await movieInfo.directors.forEach((director, idx) => {
-          axios
-            .post(`${import.meta.env.VITE_API_URL}/directorInsert`, {
+          // Add directors
+          for (let idx = 0; idx < movieInfo.directors.length; idx++) {
+            const director = movieInfo.directors[idx];
+            await axios.post(`${import.meta.env.VITE_API_URL}/directorInsert`, {
               movieId,
               director,
-            })
-            .then((res) => {
-              if (movieInfo.directors.length - 1 === idx) {
-                adminMovieToast();
-                setMovieInfo({
-                  movieName: "",
-                  imagePath: "",
-                  language: "",
-                  description: "",
-                  rating: "",
-                  duration: "",
-                  cast: "",
-                  relDate: "",
-                  genres: "",
-                  directors: "",
-                });
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              adminErrorToast();
             });
-        }));
 
-      toggleAdminSection();
+            // Check if it's the last director
+            if (idx === movieInfo.directors.length - 1) {
+              adminMovieToast();
+              setMovieInfo({
+                movieName: "",
+                imagePath: "",
+                language: "",
+                description: "",
+                rating: "",
+                duration: "",
+                cast: "",
+                relDate: "",
+                genres: "",
+                directors: "",
+              });
+            }
+          }
+
+          toggleAdminSection();
+        }
+      } catch (err) {
+        console.error(err);
+        adminErrorToast();
+      }
     }
   };
 

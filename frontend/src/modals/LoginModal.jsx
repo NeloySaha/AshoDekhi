@@ -26,30 +26,30 @@ export const LoginModal = ({
     setLoginDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
-  const getLoginData = (e) => {
+  const getLoginData = async (e) => {
     e.preventDefault();
 
-    const fetchData = async () => {
-      setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/login`, {
-          email: loginDetails.email,
-          password: loginDetails.password,
-        })
-        .then((res) => {
-          handleSignedPerson(res.data);
-          handleLoginState();
-        })
-        .catch((err) => {
-          loginFailedToast(err.response.data.message);
-          console.log("Couldn't log in");
-          handleLoginState();
-        });
-      setLoading(false);
-    };
-
     if (loginDetails.email !== "" && loginDetails.password !== "") {
-      fetchData();
+      setLoading(true);
+
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/login`,
+          {
+            email: loginDetails.email,
+            password: loginDetails.password,
+          }
+        );
+
+        handleSignedPerson(response.data);
+        handleLoginState();
+      } catch (err) {
+        handleLoginState();
+        loginFailedToast(err.response.data.message);
+        console.log("Couldn't log in");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

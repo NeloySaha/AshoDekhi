@@ -9,12 +9,14 @@ export const LocationSelector = ({
 }) => {
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/theatres`)
-        .then((res) => {
-          getTheatreData(res.data);
-        })
-        .catch((err) => console.log(err));
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/theatres`
+        );
+        getTheatreData(response.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchData();

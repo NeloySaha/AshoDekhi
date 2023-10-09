@@ -40,6 +40,7 @@ export const HomePage = ({
         <Footer
           handleSignState={handleSignState}
           handleLoginState={handleLoginState}
+          pageName="home"
         />
       </>
     </AnimatedPage>

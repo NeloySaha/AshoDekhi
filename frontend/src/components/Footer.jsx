@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import HashLoader from "react-spinners/HashLoader";
 
-export const Footer = ({ handleSignState, handleLoginState }) => {
+export const Footer = ({
+  handleSignState,
+  handleLoginState,
+  pageName = "",
+}) => {
   const [locationData, setLocationData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/locationDetails`)
-        .then((res) => setLocationData(res.data))
-        .catch((err) => console.log(err));
-      setLoading(false);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/locationDetails`
+        );
+        setLocationData(response.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -29,30 +39,57 @@ export const Footer = ({ handleSignState, handleLoginState }) => {
 
   return (
     <section className="section-footer container">
-      <Link className="footer-logo-container" to="/">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="footer-logo-icon"
-          viewBox="0 0 512 512"
-        >
-          <path
-            d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
-            fill="none"
-            stroke="currentColor"
-            strokeMiterlimit="10"
-            strokeWidth="32"
-          />
-          <path
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="32"
-            d="M360 94.59V296M443.13 212.87L296 360M417.41 360H216M299.13 443.13l-144-144M152 416V216M68.87 299.13l144-144M94.59 152H288M212.87 68.87L360 216"
-          />
-        </svg>
-        <h1 className="footer-logo-text">Asho Dekhi</h1>
-      </Link>
+      {pageName === "home" ? (
+        <HashLink className="footer-logo-container" to="#headerTop">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="footer-logo-icon"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+              fill="none"
+              stroke="currentColor"
+              strokeMiterlimit="10"
+              strokeWidth="32"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="32"
+              d="M360 94.59V296M443.13 212.87L296 360M417.41 360H216M299.13 443.13l-144-144M152 416V216M68.87 299.13l144-144M94.59 152H288M212.87 68.87L360 216"
+            />
+          </svg>
+          <h1 className="footer-logo-text">Asho Dekhi</h1>
+        </HashLink>
+      ) : (
+        <Link className="footer-logo-container" to="/">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="footer-logo-icon"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+              fill="none"
+              stroke="currentColor"
+              strokeMiterlimit="10"
+              strokeWidth="32"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="32"
+              d="M360 94.59V296M443.13 212.87L296 360M417.41 360H216M299.13 443.13l-144-144M152 416V216M68.87 299.13l144-144M94.59 152H288M212.87 68.87L360 216"
+            />
+          </svg>
+          <h1 className="footer-logo-text">Asho Dekhi</h1>
+        </Link>
+      )}
 
       <div className="footer-link-container foot-reg">
         <button className="footer-btn" onClick={handleSignState}>

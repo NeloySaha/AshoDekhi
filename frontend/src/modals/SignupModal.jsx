@@ -43,27 +43,31 @@ export const SignupModal = ({
       signupDetails.password !== "" &&
       signupDetails.password.length >= 8
     ) {
-      setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/registration`, {
-          firstName: signupDetails.firstName,
-          lastName: signupDetails.lastName,
-          phoneNumber: signupDetails.phoneNumber,
-          email: signupDetails.email,
-          password: signupDetails.password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            handleSignState();
-            signupSuccessToast(res.data.message);
+      try {
+        setLoading(true);
+
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/registration`,
+          {
+            firstName: signupDetails.firstName,
+            lastName: signupDetails.lastName,
+            phoneNumber: signupDetails.phoneNumber,
+            email: signupDetails.email,
+            password: signupDetails.password,
           }
-        })
-        .catch((err) => {
-          console.log("Error during registration:", err.response.data.message);
+        );
+
+        if (response.status === 200) {
           handleSignState();
-          signupFailedToast(err.response.data.message);
-        });
-      setLoading(false);
+          signupSuccessToast(response.data.message);
+        }
+      } catch (err) {
+        console.log("Error during registration:", err.response.data.message);
+        handleSignState();
+        signupFailedToast(err.response.data.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

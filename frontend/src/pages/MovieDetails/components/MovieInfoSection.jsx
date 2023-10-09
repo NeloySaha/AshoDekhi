@@ -22,41 +22,49 @@ export const MovieInfoSection = ({
     display: "block",
     margin: "9.6rem auto",
   };
-  const initialRender = useRef(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading1(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/movieDetail`, { movieDetailsId })
-        .then((res) =>
-          setMovieData(() => {
-            const formattedRelDate = new Date(
-              res.data[0].release_date
-            ).toLocaleDateString("en-GB");
+      try {
+        const movieDetailResponse = await axios.post(
+          `${import.meta.env.VITE_API_URL}/movieDetail`,
+          {
+            movieDetailsId,
+          }
+        );
 
-            const durationDetail1 = res.data[0].duration.replace("h", " hours");
-            const duration = durationDetail1.replace("m", " minutes");
+        const formattedRelDate = new Date(
+          movieDetailResponse.data[0].release_date
+        ).toLocaleDateString("en-GB");
+        const durationDetail1 = movieDetailResponse.data[0].duration.replace(
+          "h",
+          " hours"
+        );
+        const duration = durationDetail1.replace("m", " minutes");
+        const formattedMovieData = {
+          ...movieDetailResponse.data[0],
+          name: movieDetailResponse.data[0].name,
+          duration,
+          release_date: formattedRelDate,
+          rating: movieDetailResponse.data[0].rating.toFixed(1),
+        };
 
-            return {
-              ...res.data[0],
-              name: res.data[0].name,
-              duration,
-              release_date: formattedRelDate,
-              rating: res.data[0].rating.toFixed(1),
-            };
-          })
-        )
-        .catch((err) => console.log(err));
+        setMovieData(formattedMovieData);
 
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/movieWiseShowtime`, {
-          movieDetailsId,
-          theatreId: userLocation?.id,
-        })
-        .then((res) => setShowtimesData(res.data))
-        .catch((err) => console.log(err));
-      setLoading1(false);
+        const showtimeResponse = await axios.post(
+          `${import.meta.env.VITE_API_URL}/movieWiseShowtime`,
+          {
+            movieDetailsId,
+            theatreId: userLocation?.id,
+          }
+        );
+        setShowtimesData(showtimeResponse.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading1(false);
+      }
     };
 
     fetchData();
@@ -64,13 +72,18 @@ export const MovieInfoSection = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/movieWiseShowtime`, {
-          movieDetailsId,
-          theatreId: userLocation?.id,
-        })
-        .then((res) => setShowtimesData(res.data))
-        .catch((err) => console.log(err));
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/movieWiseShowtime`,
+          {
+            movieDetailsId,
+            theatreId: userLocation?.id,
+          }
+        );
+        setShowtimesData(response.data);
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     fetchData();

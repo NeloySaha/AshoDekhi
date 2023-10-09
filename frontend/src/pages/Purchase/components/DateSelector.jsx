@@ -11,12 +11,17 @@ export const DateSelector = ({
 }) => {
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/showtimesDates`, { theatreId })
-        .then((res) => {
-          getShowDatesData(res.data);
-        })
-        .catch((err) => console.log(err));
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/showtimesDates`,
+          {
+            theatreId,
+          }
+        );
+        getShowDatesData(response.data);
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     fetchData();

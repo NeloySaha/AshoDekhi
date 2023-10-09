@@ -6,7 +6,7 @@ export const HeroSection = ({ handleLoginState, signedPerson }) => {
   const navigate = useNavigate();
 
   return (
-    <section className="section-hero">
+    <section className="section-hero" id="headerTop">
       <div className="container hero">
         <div className="hero-text">
           <h1 className="heading-primary">

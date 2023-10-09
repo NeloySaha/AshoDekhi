@@ -55,24 +55,25 @@ export const PurchaseSection = ({
   };
 
   const handleTicketPurchase = async () => {
-    let paymentID;
+    try {
+      setLoading(true);
+      let paymentID;
 
-    setLoading(true);
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/payment`, {
-        amount: userSeatPrice * userSeatListName.length,
-        userPayMethod,
-        email: signedPerson.email,
-      })
-      .then((res) => (paymentID = res.data && res.data[0].last_id))
-      .catch((err) => {
-        console.log(err);
-        ticketPurchaseError();
-      });
+      // Make the payment request
+      const paymentResponse = await axios.post(
+        `${import.meta.env.VITE_API_URL}/payment`,
+        {
+          amount: userSeatPrice * userSeatListName.length,
+          userPayMethod,
+          email: signedPerson.email,
+        }
+      );
 
-    userSeatList.forEach(async (seatId) => {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/purchaseTicket`, {
+      paymentID = paymentResponse.data && paymentResponse.data[0].last_id;
+
+      // Purchase tickets for each seat
+      for (const seatId of userSeatList) {
+        await axios.post(`${import.meta.env.VITE_API_URL}/purchaseTicket`, {
           price: userSeatPrice,
           purchase_date: currentDate(),
           paymentID,
@@ -80,26 +81,27 @@ export const PurchaseSection = ({
           userHallId,
           userMovieId,
           userShowtimeId,
-        })
-        .then((res) => console.log(res.data))
-        .catch((err) => {
-          console.log(err);
-          ticketPurchaseError();
         });
-    });
+      }
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+      // Get recent purchase data
+      const recentPurchaseResponse = await axios.post(
+        `${import.meta.env.VITE_API_URL}/recentPurchase`,
+        {
+          paymentID,
+        }
+      );
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/recentPurchase`, { paymentID })
-      .then((res) => setTicketIds(res.data))
-      .catch((err) => {
-        console.log(err);
-        ticketPurchaseError();
-      });
+      setTicketIds(recentPurchaseResponse.data);
 
-    await clearUserSelection();
-    setLoading(false);
+      // Clear user selection
+      await clearUserSelection();
+    } catch (err) {
+      console.error(err);
+      ticketPurchaseError();
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

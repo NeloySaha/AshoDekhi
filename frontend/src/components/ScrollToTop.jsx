@@ -6,12 +6,9 @@ export const ScrollToTop = () => {
 
   useEffect(() => {
     const body = document.querySelector("#root");
-    body.scrollIntoView(
-      {
-        behavior: "smooth",
-      },
-      500
-    );
+    body.scrollIntoView({
+      behavior: "smooth",
+    });
   }, [pathname]);
 
   return null;

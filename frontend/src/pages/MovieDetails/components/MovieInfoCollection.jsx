@@ -19,11 +19,19 @@ export const MovieInfoCollection = ({
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/otherMovies`, { movieDetailsId })
-        .then((res) => setMovieData(res.data))
-        .catch((err) => console.log(err));
-      setLoading(false);
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/otherMovies`,
+          {
+            movieDetailsId,
+          }
+        );
+        setMovieData(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

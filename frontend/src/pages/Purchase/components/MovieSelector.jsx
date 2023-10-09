@@ -20,14 +20,20 @@ export const MovieSelector = ({
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/uniqueMovies`, {
-          theatreId,
-          userDate,
-        })
-        .then((res) => getMovieData(res.data))
-        .catch((err) => console.log(err));
-      setLoading(false);
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/uniqueMovies`,
+          {
+            theatreId,
+            userDate,
+          }
+        );
+        getMovieData(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

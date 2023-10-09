@@ -14,13 +14,15 @@ export const AdminShowtimesAddSection = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/lastShowDate`)
-        .then((res) => setLastShowDate(res.data[0].lastDate))
-        .catch((err) => {
-          console.log(err);
-          adminErrorToast();
-        });
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/lastShowDate`
+        );
+        setLastShowDate(response.data[0].lastDate);
+      } catch (err) {
+        console.error(err);
+        adminErrorToast();
+      }
     };
 
     fetchData();

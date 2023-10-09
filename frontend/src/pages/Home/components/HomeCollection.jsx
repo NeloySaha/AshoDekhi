@@ -15,19 +15,20 @@ export const HomeCollection = ({
   };
 
   const [movieData, setMovieData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading((prevState) => !prevState);
-      await axios
-        .get(`${import.meta.env.VITE_API_URL}/latestMovies`)
-        .then((res) => {
-          setMovieData(res.data);
-        })
-        .catch((err) => console.log(err));
-
-      setLoading((prevState) => !prevState);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/latestMovies`
+        );
+        setMovieData(response.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
