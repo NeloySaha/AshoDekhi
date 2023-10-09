@@ -20,29 +20,40 @@ const configuration = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 };
 
-function handleDisconnect() {
-  db = mysql.createConnection(configuration);
+db = mysql.createPool(configuration);
 
-  db.connect(function (err) {
-    if (err) {
-      console.log("error when connecting to db:", err);
-      setTimeout(handleDisconnect, 2000);
-    } else {
-      console.log("connection is successful");
-    }
-  });
-  db.on("error", function (err) {
-    console.log("db error", err);
-    if (err.code === "PROTOCOL_CONNECTION_LOST") {
-      handleDisconnect();
-    } else {
-      throw err;
-    }
-  });
-}
-handleDisconnect();
+db.getConnection((err, conn) => {
+  if (err) console.log(err);
+  console.log("Connected Succesfully in Pool");
+});
+
+// Manually setting connection
+// function handleDisconnect() {
+//   db = mysql.createConnection(configuration);
+
+//   db.connect(function (err) {
+//     if (err) {
+//       console.log("error when connecting to db:", err);
+//       setTimeout(handleDisconnect, 2000);
+//     } else {
+//       console.log("connection is successful");
+//     }
+//   });
+//   db.on("error", function (err) {
+//     console.log("db error", err);
+//     if (err.code === "PROTOCOL_CONNECTION_LOST") {
+//       handleDisconnect();
+//     } else {
+//       throw err;
+//     }
+//   });
+// }
+// handleDisconnect();
 
 app.get("/", (req, res) => {
   return res.json("Hello Backend Side");

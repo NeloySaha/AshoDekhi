@@ -114,17 +114,19 @@ To get a local copy of ASHO DEKHI up and running, follow these steps:
    cd AshoDekhi
    ```
 
-2. Install frontend dependencies:
+2. Add your neccessary credentials in the .env files for both frontend and backend
+
+3. Install frontend dependencies:
 
    ```sh
    cd frontend
    yarn
    ```
 
-3. Install server dependencies:
+4. Install server dependencies:
 
    ```sh
-   cd server
+   cd backend
    yarn
    ```
 
@@ -133,7 +135,7 @@ To get a local copy of ASHO DEKHI up and running, follow these steps:
 1. Start the backend server:
 
    ```sh
-   cd server
+   cd backend
    yarn start
    ```
 
