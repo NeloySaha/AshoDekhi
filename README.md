@@ -4,6 +4,8 @@ Welcome to ASHO DEKHI, your one-stop destination for booking movie tickets onlin
 
 ### 🚀 Visit ASHO DEKHI live [Here](https://asho-dekhi.vercel.app/)
 
+### Backend is hosted at [Here](https://asho-dekhi-api.onrender.com/)
+
 ## Table of Contents
 
 - [👋 Introduction](#introduction)
