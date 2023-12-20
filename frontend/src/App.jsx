@@ -4,22 +4,29 @@ import "./styles/queries.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { SignupModal } from "./modals/SignupModal";
 import { LoginModal } from "./modals/LoginModal";
 
-import { HomePage } from "./pages/Home/HomePage";
-import { PurchasePage } from "./pages/Purchase/PurchasePage";
-import { ShowtimesPage } from "./pages/Showtimes/ShowtimesPage";
-import { MovieDetailsPage } from "./pages/MovieDetails/MovieDetailsPage";
-import { AboutUsPage } from "./pages/AboutUs/AboutUsPage";
-import { CustomerInfoPage } from "./pages/CustomerInfo/CustomerInfoPage";
-import { AdminPage } from "./pages/Admin/AdminPage";
+import HomePage from "./pages/Home/HomePage";
+
 import { AnimatePresence } from "framer-motion";
 import { MobileNav } from "./components/MobileNav";
+import { PageLoader } from "./components/PageLoader";
+
+const PurchasePage = lazy(() => import("./pages/Purchase/PurchasePage"));
+const ShowtimesPage = lazy(() => import("./pages/Showtimes/ShowtimesPage"));
+const MovieDetailsPage = lazy(() =>
+  import("./pages/MovieDetails/MovieDetailsPage")
+);
+const AboutUsPage = lazy(() => import("./pages/AboutUs/AboutUsPage"));
+const CustomerInfoPage = lazy(() =>
+  import("./pages/CustomerInfo/CustomerInfoPage")
+);
+const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));
 
 function App() {
   // //////////
@@ -365,32 +372,36 @@ function App() {
             <Route
               path="/"
               element={
-                <HomePage
-                  signedPerson={signedPerson}
-                  handleSignState={handleSignState}
-                  handleLoginState={handleLoginState}
-                  handlelogout={handlelogout}
-                  currentMovieDetails={currentMovieDetails}
-                  setMenuState={setMenuState}
-                />
+                <Suspense fallback={<PageLoader />}>
+                  <HomePage
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                    currentMovieDetails={currentMovieDetails}
+                    setMenuState={setMenuState}
+                  />
+                </Suspense>
               }
             />
 
             <Route
               path="/showtimes"
               element={
-                <ShowtimesPage
-                  signedPerson={signedPerson}
-                  handleSignState={handleSignState}
-                  handleLoginState={handleLoginState}
-                  handlelogout={handlelogout}
-                  getTheatreData={getTheatreData}
-                  locationData={locationData}
-                  userLocation={userLocation}
-                  handleLocationSelection={handleLocationSelection}
-                  currentMovieDetails={currentMovieDetails}
-                  setMenuState={setMenuState}
-                />
+                <Suspense fallback={<PageLoader />}>
+                  <ShowtimesPage
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                    getTheatreData={getTheatreData}
+                    locationData={locationData}
+                    userLocation={userLocation}
+                    handleLocationSelection={handleLocationSelection}
+                    currentMovieDetails={currentMovieDetails}
+                    setMenuState={setMenuState}
+                  />
+                </Suspense>
               }
             />
 
@@ -407,58 +418,62 @@ function App() {
               <Route
                 path="/purchase"
                 element={
-                  <PurchasePage
-                    theatreId={userPurchaseInfo.theatre_id}
-                    userDate={userPurchaseInfo.showtime_date}
-                    userMovieId={userPurchaseInfo.movie_id}
-                    userHallId={userPurchaseInfo.hall_id}
-                    userShowtimeId={userPurchaseInfo.showtime_id}
-                    userSeatPrice={userPurchaseInfo.seat_price}
-                    userSeatList={userPurchaseInfo.seat_id_list}
-                    userPayMethod={userPurchaseInfo.payment_method}
-                    clearUserSelection={handleUserPurchaseLocationInfo}
-                    signedPerson={signedPerson}
-                    handleSignState={handleSignState}
-                    handleLoginState={handleLoginState}
-                    handlelogout={handlelogout}
-                    getTheatreData={getTheatreData}
-                    locationData={locationData}
-                    userLocation={userLocation}
-                    handleLocationSelection={handleLocationSelection}
-                    handleUserDateChange={handleUserDateChange}
-                    datesData={datesData}
-                    getMovieData={getMovieData}
-                    movieData={movieData}
-                    handleUserMovieChange={handleUserMovieChange}
-                    getHallData={getHallData}
-                    hallData={hallData}
-                    handleUserHallShow={handleUserHallShow}
-                    getShowDatesData={getShowDatesData}
-                    seatsData={seatsData}
-                    getSeatsData={getSeatsData}
-                    handleUserSeats={handleUserSeats}
-                    formattedDate={formattedDate}
-                    curHallObj={curHallObj}
-                    currentMovie={currentMovie}
-                    userSeatListName={userSeatListName}
-                    handleUserPaymentMethod={handleUserPaymentMethod}
-                    purchaseCompletion={purchaseCompletion}
-                    ticketPurchaseError={ticketPurchaseError}
-                    setMenuState={setMenuState}
-                  />
+                  <Suspense fallback={<PageLoader />}>
+                    <PurchasePage
+                      theatreId={userPurchaseInfo.theatre_id}
+                      userDate={userPurchaseInfo.showtime_date}
+                      userMovieId={userPurchaseInfo.movie_id}
+                      userHallId={userPurchaseInfo.hall_id}
+                      userShowtimeId={userPurchaseInfo.showtime_id}
+                      userSeatPrice={userPurchaseInfo.seat_price}
+                      userSeatList={userPurchaseInfo.seat_id_list}
+                      userPayMethod={userPurchaseInfo.payment_method}
+                      clearUserSelection={handleUserPurchaseLocationInfo}
+                      signedPerson={signedPerson}
+                      handleSignState={handleSignState}
+                      handleLoginState={handleLoginState}
+                      handlelogout={handlelogout}
+                      getTheatreData={getTheatreData}
+                      locationData={locationData}
+                      userLocation={userLocation}
+                      handleLocationSelection={handleLocationSelection}
+                      handleUserDateChange={handleUserDateChange}
+                      datesData={datesData}
+                      getMovieData={getMovieData}
+                      movieData={movieData}
+                      handleUserMovieChange={handleUserMovieChange}
+                      getHallData={getHallData}
+                      hallData={hallData}
+                      handleUserHallShow={handleUserHallShow}
+                      getShowDatesData={getShowDatesData}
+                      seatsData={seatsData}
+                      getSeatsData={getSeatsData}
+                      handleUserSeats={handleUserSeats}
+                      formattedDate={formattedDate}
+                      curHallObj={curHallObj}
+                      currentMovie={currentMovie}
+                      userSeatListName={userSeatListName}
+                      handleUserPaymentMethod={handleUserPaymentMethod}
+                      purchaseCompletion={purchaseCompletion}
+                      ticketPurchaseError={ticketPurchaseError}
+                      setMenuState={setMenuState}
+                    />
+                  </Suspense>
                 }
               />
 
               <Route
                 path="/customer"
                 element={
-                  <CustomerInfoPage
-                    signedPerson={signedPerson}
-                    handleSignState={handleSignState}
-                    handleLoginState={handleLoginState}
-                    handlelogout={handlelogout}
-                    setMenuState={setMenuState}
-                  />
+                  <Suspense fallback={<PageLoader />}>
+                    <CustomerInfoPage
+                      signedPerson={signedPerson}
+                      handleSignState={handleSignState}
+                      handleLoginState={handleLoginState}
+                      handlelogout={handlelogout}
+                      setMenuState={setMenuState}
+                    />
+                  </Suspense>
                 }
               />
             </Route>
@@ -476,17 +491,19 @@ function App() {
               <Route
                 path="/admin"
                 element={
-                  <AdminPage
-                    signedPerson={signedPerson}
-                    handleSignState={handleSignState}
-                    handleLoginState={handleLoginState}
-                    handlelogout={handlelogout}
-                    adminErrorToast={adminErrorToast}
-                    adminMovieToast={adminMovieToast}
-                    adminShowtimeToast={adminShowtimeToast}
-                    adminShowninToast={adminShowninToast}
-                    setMenuState={setMenuState}
-                  />
+                  <Suspense fallback={<PageLoader />}>
+                    <AdminPage
+                      signedPerson={signedPerson}
+                      handleSignState={handleSignState}
+                      handleLoginState={handleLoginState}
+                      handlelogout={handlelogout}
+                      adminErrorToast={adminErrorToast}
+                      adminMovieToast={adminMovieToast}
+                      adminShowtimeToast={adminShowtimeToast}
+                      adminShowninToast={adminShowninToast}
+                      setMenuState={setMenuState}
+                    />
+                  </Suspense>
                 }
               />
             </Route>
@@ -494,32 +511,36 @@ function App() {
             <Route
               path="/aboutus"
               element={
-                <AboutUsPage
-                  signedPerson={signedPerson}
-                  handleSignState={handleSignState}
-                  handleLoginState={handleLoginState}
-                  handlelogout={handlelogout}
-                  setMenuState={setMenuState}
-                />
+                <Suspense fallback={<PageLoader />}>
+                  <AboutUsPage
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                    setMenuState={setMenuState}
+                  />
+                </Suspense>
               }
             />
 
             <Route
               path="/movieDetails"
               element={
-                <MovieDetailsPage
-                  signedPerson={signedPerson}
-                  handleSignState={handleSignState}
-                  handleLoginState={handleLoginState}
-                  handlelogout={handlelogout}
-                  getTheatreData={getTheatreData}
-                  locationData={locationData}
-                  userLocation={userLocation}
-                  handleLocationSelection={handleLocationSelection}
-                  movieDetailsId={movieDetailsId}
-                  currentMovieDetails={currentMovieDetails}
-                  setMenuState={setMenuState}
-                />
+                <Suspense fallback={<PageLoader />}>
+                  <MovieDetailsPage
+                    signedPerson={signedPerson}
+                    handleSignState={handleSignState}
+                    handleLoginState={handleLoginState}
+                    handlelogout={handlelogout}
+                    getTheatreData={getTheatreData}
+                    locationData={locationData}
+                    userLocation={userLocation}
+                    handleLocationSelection={handleLocationSelection}
+                    movieDetailsId={movieDetailsId}
+                    currentMovieDetails={currentMovieDetails}
+                    setMenuState={setMenuState}
+                  />
+                </Suspense>
               }
             />
           </Routes>

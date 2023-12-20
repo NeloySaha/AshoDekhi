@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+import HashLoader from "react-spinners/HashLoader";
 
 export const LocationSelector = ({
   locationData,
@@ -7,15 +9,20 @@ export const LocationSelector = ({
   handleLocationSelection,
   getTheatreData,
 }) => {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/theatres`
         );
         getTheatreData(response.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -32,7 +39,7 @@ export const LocationSelector = ({
       );
     });
 
-  return (
+  return !loading ? (
     <div className="location-select-container ">
       <select
         id="location-selector"
@@ -48,5 +55,7 @@ export const LocationSelector = ({
         Theatre: <span>{userLocation?.name}</span>
       </p>
     </div>
+  ) : (
+    <HashLoader color="#eb3656" />
   );
 };

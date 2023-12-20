@@ -67,6 +67,13 @@ export const SignupModal = ({
         signupFailedToast(err.response.data.message);
       } finally {
         setLoading(false);
+        setSignupDetails({
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          email: "",
+          password: "",
+        });
       }
     }
   };
@@ -111,6 +118,7 @@ export const SignupModal = ({
                 type="text"
                 placeholder="Enter First Name"
                 onChange={(e) => handleSignupDetails(e)}
+                value={signupDetails.firstName}
                 required
               />
             </div>
@@ -122,6 +130,7 @@ export const SignupModal = ({
               <input
                 name="lastName"
                 type="text"
+                value={signupDetails.lastName}
                 placeholder="Enter Last Name"
                 onChange={(e) => handleSignupDetails(e)}
                 required
@@ -136,6 +145,7 @@ export const SignupModal = ({
             <input
               name="phoneNumber"
               type="number"
+              value={signupDetails.phoneNumber}
               placeholder="Enter Phone No."
               onChange={(e) => handleSignupDetails(e)}
               required
@@ -149,6 +159,7 @@ export const SignupModal = ({
             <input
               name="email"
               type="email"
+              value={signupDetails.email}
               placeholder="Enter Email"
               onChange={(e) => handleSignupDetails(e)}
               required
@@ -162,6 +173,7 @@ export const SignupModal = ({
             <div className="input-password">
               <input
                 name="password"
+                value={signupDetails.password}
                 type={passViewState ? "text" : "password"}
                 onChange={(e) => handleSignupDetails(e)}
                 placeholder="Enter Password"

@@ -2284,3 +2284,11 @@ header {
   padding-bottom: 7.2rem;
   border-bottom: 1px solid #313441;
 }
+
+/* loader */
+.page-loader-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

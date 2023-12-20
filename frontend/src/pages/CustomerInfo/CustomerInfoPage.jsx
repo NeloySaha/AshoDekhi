@@ -5,7 +5,7 @@ import { Footer } from "../../components/Footer";
 import { CustomerInfoSection } from "./components/CustomerInfoSection";
 import { AnimatedPage } from "../../components/AnimatedPage";
 
-export const CustomerInfoPage = ({
+const CustomerInfoPage = ({
   handleSignState,
   handleLoginState,
   signedPerson,
@@ -32,3 +32,5 @@ export const CustomerInfoPage = ({
     </AnimatedPage>
   );
 };
+
+export default CustomerInfoPage;

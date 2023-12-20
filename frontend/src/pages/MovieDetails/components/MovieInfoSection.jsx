@@ -17,6 +17,7 @@ export const MovieInfoSection = ({
   const [showtimesData, setShowtimesData] = useState([]);
   const navigate = useNavigate();
   const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(true);
 
   const override = {
     display: "block",
@@ -73,6 +74,7 @@ export const MovieInfoSection = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading2(true);
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/movieWiseShowtime`,
           {
@@ -83,6 +85,8 @@ export const MovieInfoSection = ({
         setShowtimesData(response.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading2(false);
       }
     };
 
@@ -346,23 +350,27 @@ export const MovieInfoSection = ({
 
       <h3 className="movie-info-screen-heading">Showtimes</h3>
 
-      <div className="movie-info-screen-container">
-        {showHtml3d.length > 0 && (
-          <div className="movie-info-screen-container-3d">
-            <h2 className="showtimes-screen">3D</h2>
+      {!loading2 ? (
+        <div className="movie-info-screen-container">
+          {showHtml3d.length > 0 && (
+            <div className="movie-info-screen-container-3d">
+              <h2 className="showtimes-screen">3D</h2>
 
-            {showHtml3d}
-          </div>
-        )}
+              {showHtml3d}
+            </div>
+          )}
 
-        {showHtml2d.length > 0 && (
-          <div className="movie-info-screen-container-2d">
-            <h2 className="showtimes-screen">2D</h2>
+          {showHtml2d.length > 0 && (
+            <div className="movie-info-screen-container-2d">
+              <h2 className="showtimes-screen">2D</h2>
 
-            {showHtml2d}
-          </div>
-        )}
-      </div>
+              {showHtml2d}
+            </div>
+          )}
+        </div>
+      ) : (
+        <HashLoader cssOverride={override} size={60} color="#eb3656" />
+      )}
     </div>
   );
 };

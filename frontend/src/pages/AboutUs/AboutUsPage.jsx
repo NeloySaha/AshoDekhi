@@ -4,7 +4,7 @@ import { AboutUsSection } from "./components/AboutUsSection";
 import { Footer } from "../../components/Footer";
 import { AnimatedPage } from "../../components/AnimatedPage";
 
-export const AboutUsPage = ({
+const AboutUsPage = ({
   handleSignState,
   handleLoginState,
   signedPerson,
@@ -31,3 +31,5 @@ export const AboutUsPage = ({
     </AnimatedPage>
   );
 };
+
+export default AboutUsPage;

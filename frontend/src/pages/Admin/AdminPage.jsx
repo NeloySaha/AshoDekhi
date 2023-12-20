@@ -8,7 +8,7 @@ import { AdminDashboardPrimary } from "./components/AdminDashboardPrimary";
 import { MovieWiseTicket } from "./components/MovieWiseTicket";
 import { AnimatedPage } from "../../components/AnimatedPage";
 
-export const AdminPage = ({
+const AdminPage = ({
   signedPerson,
   handleSignState,
   handleLoginState,
@@ -62,3 +62,5 @@ export const AdminPage = ({
     </AnimatedPage>
   );
 };
+
+export default AdminPage;

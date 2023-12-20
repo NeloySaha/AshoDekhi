@@ -5,7 +5,7 @@ import { ShowTimesCollection } from "./components/ShowTimesCollection";
 import { Footer } from "../../components/Footer";
 import { AnimatedPage } from "../../components/AnimatedPage";
 
-export const ShowtimesPage = ({
+const ShowtimesPage = ({
   handleSignState,
   handleLoginState,
   locationData,
@@ -57,3 +57,5 @@ export const ShowtimesPage = ({
     </AnimatedPage>
   );
 };
+
+export default ShowtimesPage;

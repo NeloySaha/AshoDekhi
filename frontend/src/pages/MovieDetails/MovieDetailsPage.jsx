@@ -5,7 +5,7 @@ import { MovieInfoCollection } from "./components/MovieInfoCollection";
 import { Footer } from "../../components/Footer";
 import { AnimatedPage } from "../../components/AnimatedPage";
 
-export const MovieDetailsPage = ({
+const MovieDetailsPage = ({
   handleSignState,
   handleLoginState,
   signedPerson,
@@ -56,3 +56,5 @@ export const MovieDetailsPage = ({
     </AnimatedPage>
   );
 };
+
+export default MovieDetailsPage;

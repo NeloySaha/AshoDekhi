@@ -3,7 +3,7 @@ import { PurchaseSection } from "./components/PurchaseSection";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import { AnimatedPage } from "../../components/AnimatedPage";
-export const PurchasePage = ({
+const PurchasePage = ({
   handleSignState,
   handleLoginState,
   locationData,
@@ -96,3 +96,5 @@ export const PurchasePage = ({
     </AnimatedPage>
   );
 };
+
+export default PurchasePage;

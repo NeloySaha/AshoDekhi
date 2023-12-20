@@ -49,6 +49,10 @@ export const LoginModal = ({
         console.log("Couldn't log in");
       } finally {
         setLoading(false);
+        setLoginDetails({
+          email: "",
+          password: "",
+        });
       }
     }
   };
@@ -94,6 +98,7 @@ export const LoginModal = ({
             <input
               name="email"
               type="email"
+              value={loginDetails.email}
               placeholder="Enter Email"
               onChange={(e) => handleLoginDetails(e)}
               required
@@ -107,6 +112,7 @@ export const LoginModal = ({
             <div className="input-password">
               <input
                 name="password"
+                value={loginDetails.password}
                 type={passViewState ? "text" : "password"}
                 placeholder="Enter Password"
                 onChange={(e) => handleLoginDetails(e)}

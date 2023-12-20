@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 
 export const DateSelector = ({
   datesData,
@@ -9,9 +10,11 @@ export const DateSelector = ({
   getShowDatesData,
   theatreId,
 }) => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/showtimesDates`,
           {
@@ -21,6 +24,8 @@ export const DateSelector = ({
         getShowDatesData(response.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -90,7 +95,11 @@ export const DateSelector = ({
     <div>
       <form>
         <div className="form-item-heading">Select Date</div>
-        <div className="form-item-options">{dateOptions}</div>
+        {!loading ? (
+          <div className="form-item-options">{dateOptions}</div>
+        ) : (
+          <HashLoader color="#eb3656" />
+        )}
       </form>
     </div>
   );

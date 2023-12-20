@@ -7,7 +7,7 @@ import { Features } from "./components/Features";
 import { SocialLinks } from "./components/SocialLinks";
 import { AnimatedPage } from "../../components/AnimatedPage";
 
-export const HomePage = ({
+const HomePage = ({
   handleSignState,
   handleLoginState,
   signedPerson,
@@ -46,3 +46,5 @@ export const HomePage = ({
     </AnimatedPage>
   );
 };
+
+export default HomePage;

@@ -45,6 +45,7 @@ export const PurchaseSection = ({
 }) => {
   const [ticketIds, setTicketIds] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   const currentDate = () => {
     const date = new Date();
@@ -54,8 +55,13 @@ export const PurchaseSection = ({
     return `${year}-${month}-${day}`;
   };
 
+  useEffect(() => {
+    userPayMethod.length > 0 ? setBtnDisabled(false) : setBtnDisabled(true);
+  }, [userPayMethod]);
+
   const handleTicketPurchase = async () => {
     try {
+      setBtnDisabled(true);
       setLoading(true);
       let paymentID;
 
@@ -478,11 +484,9 @@ export const PurchaseSection = ({
             </div>
 
             <button
-              className={
-                userPayMethod === "" ? "ticket-btn-disabled" : "ticket-btn"
-              }
+              className={btnDisabled ? "ticket-btn-disabled" : "ticket-btn"}
               onClick={handleTicketPurchase}
-              disabled={userPayMethod === ""}
+              disabled={btnDisabled}
             >
               {loading ? <BarLoader color="#e6e6e8" /> : "purchase ticket"}
             </button>
