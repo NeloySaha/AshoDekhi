@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -39,14 +39,10 @@ export const SeatSelector = ({
     };
 
     fetchData();
-  }, [userHallId, userShowtimeId, userMovieId]);
+  }, [userHallId, userShowtimeId, userMovieId, getSeatsData]);
 
   let rows = [];
   let rowSeat = [];
-
-  seatsData.forEach((seat) => {
-    return seat.selected && userSeat.push(seat.seat_id);
-  });
 
   seatsData.forEach((seat, idx) => {
     let seatStatus;

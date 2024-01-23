@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -43,7 +43,7 @@ export const PictureQualitySelector = ({
     };
 
     fetchData();
-  }, [userMovieId]);
+  }, [userMovieId, getHallData, theatreId, userDate]);
 
   const checkedColor = (val) => {
     return {
@@ -106,7 +106,7 @@ export const PictureQualitySelector = ({
     });
 
     return (
-      <div className="form-options-hall">
+      <div key={show.movie_start_time} className="form-options-hall">
         <div className="form-picture-quality">
           {`${show.hall_name} (${show.show_type})`}
           <div className="form-showtimes">{options}</div>

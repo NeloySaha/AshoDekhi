@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export const ShowtimesCard = (props) => {
@@ -12,7 +11,7 @@ export const ShowtimesCard = (props) => {
     dates3d.map((curDate, idx) => {
       const curStartTimes = props["3D"][curDate].map((curStartTime) => {
         return (
-          <li>
+          <li key={idx}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
@@ -35,7 +34,7 @@ export const ShowtimesCard = (props) => {
       });
 
       return (
-        <div className="showtimes-schedule">
+        <div key={`${curDate}3d`} className="showtimes-schedule">
           <h3 className="showtimes-date">{formattedDate}</h3>
           <ul className="showtimes-startime-btn-list">{curStartTimes}</ul>
         </div>
@@ -47,7 +46,7 @@ export const ShowtimesCard = (props) => {
     dates2d.map((curDate, idx) => {
       const curStartTimes = props["2D"][curDate].map((curStartTime) => {
         return (
-          <li>
+          <li key={idx}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
@@ -70,7 +69,7 @@ export const ShowtimesCard = (props) => {
       });
 
       return (
-        <div key={idx} className="showtimes-schedule">
+        <div key={`${curDate}2d`} className="showtimes-schedule">
           <h3 className="showtimes-date">{formattedDate}</h3>
           <ul className="showtimes-startime-btn-list">{curStartTimes}</ul>
         </div>

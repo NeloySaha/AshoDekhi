@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import BarLoader from "react-spinners/BarLoader";
+
 import { DateSelector } from "./DateSelector";
 import { MovieSelector } from "./MovieSelector";
 import { PictureQualitySelector } from "./PictureQualitySelector";
 import { SeatSelector } from "./SeatSelector";
 import { LocationSelector } from "../../../components/LocationSelector";
 import { PayMethodSelector } from "./PayMethodSelector";
-import BarLoader from "react-spinners/BarLoader";
 
 export const PurchaseSection = ({
   locationData,
@@ -120,7 +121,7 @@ export const PurchaseSection = ({
       console.log(tickets);
       purchaseCompletion(tickets);
     }
-  }, [ticketIds]);
+  }, [ticketIds, purchaseCompletion]);
 
   return (
     <section className="section-purchase">

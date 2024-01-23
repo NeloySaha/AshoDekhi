@@ -1,5 +1,3 @@
-import React from "react";
-
 export const SocialLinks = () => {
   return (
     <section className="section-social-links">

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const AdminShowtimesAddSection = ({
   selectedShowDate,
@@ -26,7 +26,7 @@ export const AdminShowtimesAddSection = ({
     };
 
     fetchData();
-  }, []);
+  }, [adminErrorToast]);
 
   const checkedColor = (val) => {
     return {
@@ -92,27 +92,36 @@ export const AdminShowtimesAddSection = ({
     e.preventDefault();
     let showtimeId;
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/showdateAdd`, {
-        selectedShowDate,
-      })
-      .then((res) => (showtimeId = res.data && res.data[0].last_id))
-      .catch((err) => {
-        console.log(err);
-        adminErrorToast();
-      });
+    try {
+      const showdateResponse = await axios.post(
+        `${import.meta.env.VITE_API_URL}/showdateAdd`,
+        {
+          selectedShowDate,
+        }
+      );
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/shownInUpdate`, { showtimeId })
-      .then((res) => {
-        adminShowtimeToast();
-      })
-      .catch((err) => {
-        console.log(err);
-        adminErrorToast();
-      });
+      if (showdateResponse.data && showdateResponse.data[0].last_id) {
+        showtimeId = showdateResponse.data[0].last_id;
 
-    setSelectedShowDate("");
+        const shownInUpdateResponse = await axios.post(
+          `${import.meta.env.VITE_API_URL}/shownInUpdate`,
+          { showtimeId }
+        );
+
+        if (
+          shownInUpdateResponse.status >= 200 &&
+          shownInUpdateResponse.status < 300
+        )
+          adminShowtimeToast();
+      } else {
+        throw new Error("Error Occurred!");
+      }
+    } catch (err) {
+      console.log(err);
+      adminErrorToast();
+    } finally {
+      setSelectedShowDate("");
+    }
   };
 
   return (

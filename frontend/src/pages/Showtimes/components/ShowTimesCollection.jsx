@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ShowtimesCard } from "./ShowtimesCard";
+import { useCallback, useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
+
+import { ShowtimesCard } from "./ShowtimesCard";
 
 export const ShowTimesCollection = ({
   userLocation,
@@ -33,7 +34,7 @@ export const ShowTimesCollection = ({
     };
 
     fetchData();
-  }, [userLocation]);
+  }, [userLocation, dataFetch]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,9 +49,9 @@ export const ShowTimesCollection = ({
     };
 
     fetchData();
-  }, [userGenre]);
+  }, [userGenre, dataFetch]);
 
-  const dataFetch = async () => {
+  const dataFetch = useCallback(async () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/showtimes`,
@@ -64,7 +65,7 @@ export const ShowTimesCollection = ({
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [theatreName, userGenre]);
 
   const movieShowtimes = [];
 

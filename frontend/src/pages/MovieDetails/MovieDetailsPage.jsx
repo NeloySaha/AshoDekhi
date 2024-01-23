@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+
 import { Navbar } from "../../components/Navbar";
 import { MovieInfoSection } from "./components/MovieInfoSection";
 import { MovieInfoCollection } from "./components/MovieInfoCollection";

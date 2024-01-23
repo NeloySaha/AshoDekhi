@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const AdminShownInModifySection = ({
   selectedDate,
@@ -33,7 +33,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedDate]);
+  }, [selectedDate, adminErrorToast]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +57,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedShowDate]);
+  }, [selectedShowDate, adminErrorToast]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +78,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedShowtime]);
+  }, [selectedShowtime, adminErrorToast]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,7 +99,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedReplace]);
+  }, [selectedReplace, adminErrorToast, selectedShowtime]);
 
   const checkedColor = (val, checkVal) => {
     return {
@@ -127,21 +127,27 @@ export const AdminShownInModifySection = ({
   const handleMovieSwap = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/movieSwap`, {
-        selectedAlt,
-        selectedShowtime,
-        selectedReplace,
-      })
-      .then((res) => {
-        adminShowninToast();
-      })
-      .catch((err) => {
-        console.log(err);
-        adminErrorToast();
-      });
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/movieSwap`,
+        {
+          selectedAlt,
+          selectedShowtime,
+          selectedReplace,
+        }
+      );
 
-    setSelectedShowDate("");
+      if (res.status >= 200 && res.status < 300) {
+        adminShowninToast();
+      } else {
+        throw new Error("Error occurred!");
+      }
+    } catch (err) {
+      console.log(err);
+      adminErrorToast();
+    } finally {
+      setSelectedShowDate("");
+    }
   };
 
   const toggleDropDown = () => {

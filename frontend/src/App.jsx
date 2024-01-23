@@ -1,11 +1,12 @@
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import { useState, useEffect, lazy, Suspense, useCallback } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+
 import "./styles/styles.css";
 import "./styles/queries.css";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import { useState, useEffect, lazy, Suspense } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { SignupModal } from "./modals/SignupModal";
@@ -13,7 +14,6 @@ import { LoginModal } from "./modals/LoginModal";
 
 import HomePage from "./pages/Home/HomePage";
 
-import { AnimatePresence } from "framer-motion";
 import { MobileNav } from "./components/MobileNav";
 import { PageLoader } from "./components/PageLoader";
 
@@ -29,10 +29,6 @@ const CustomerInfoPage = lazy(() =>
 const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));
 
 function App() {
-  // //////////
-  // Variables
-  // //////////
-
   const [signModalState, setSignModalState] = useState(false);
   const [loginModalState, setLoginModalState] = useState(false);
   const [menuState, setMenuState] = useState(false);
@@ -132,7 +128,7 @@ function App() {
 
   useEffect(() => {
     handleUserPurchaseLocationInfo();
-  }, [userLocation]);
+  }, [userLocation, handleUserPurchaseLocationInfo]);
 
   // ////////////////////////////
   // Data fetching and setting
@@ -191,7 +187,7 @@ function App() {
     setSignedPerson({});
   };
 
-  const handleUserPurchaseLocationInfo = () => {
+  const handleUserPurchaseLocationInfo = useCallback(() => {
     setUserPurchaseInfo(() => ({
       theatre_id: userLocation?.id,
       showtime_date: "",
@@ -202,7 +198,7 @@ function App() {
       seat_price: "",
       payment_method: "",
     }));
-  };
+  }, [userLocation]);
 
   const handleUserDateChange = (e) => {
     setUserPurchaseInfo((prevData) => ({

@@ -1,8 +1,8 @@
-import React from "react";
 import { PurchaseSection } from "./components/PurchaseSection";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import { AnimatedPage } from "../../components/AnimatedPage";
+
 const PurchasePage = ({
   handleSignState,
   handleLoginState,
