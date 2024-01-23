@@ -107,64 +107,22 @@ function App() {
       userPurchaseInfo.seat_id_list.includes(seatData.seat_id)
     );
 
-  // /////////////
-  // Use Effects
-  // /////////////
-
-  useEffect(() => {
-    window.localStorage.setItem("signedInPerson", JSON.stringify(signedPerson));
-  }, [signedPerson]);
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      "selectedMovie",
-      JSON.stringify(movieDetailsId)
-    );
-  }, [movieDetailsId]);
-
-  useEffect(() => {
-    setUserLocation(() => locationData[0]);
-  }, [locationData]);
-
-  useEffect(() => {
-    handleUserPurchaseLocationInfo();
-  }, [userLocation, handleUserPurchaseLocationInfo]);
-
-  // ////////////////////////////
-  // Data fetching and setting
-  // ////////////////////////////
-
-  const getTheatreData = (val) => {
-    setLocationData(val);
-  };
-
-  const getShowDatesData = (val) => {
-    setDatesData(val);
-  };
-
-  const getMovieData = (val) => {
-    setMovieData(val);
-  };
-
-  const getHallData = (val) => {
-    setHallData(val);
-  };
-
-  const getSeatsData = (val) => {
-    setSeatsData(val);
-  };
-
   // //////////////////
   // Handler Functions
   // //////////////////
 
-  const handleLocationSelection = (e) => {
-    const selectedLocationObj = locationData.find(
-      (locationObj) => locationObj.location === e.target.value
-    );
+  const handleLocationSelection = useCallback(
+    (e) => {
+      const selectedLocationObj = locationData.find(
+        (locationObj) => locationObj.location === e.target.value
+      );
 
-    e ? setUserLocation(selectedLocationObj) : setUserLocation(locationData[0]);
-  };
+      e
+        ? setUserLocation(selectedLocationObj)
+        : setUserLocation(locationData[0]);
+    },
+    [locationData]
+  );
 
   const handleSignState = () => {
     setSignModalState((prevState) => !prevState);
@@ -266,6 +224,53 @@ function App() {
       };
     });
   };
+
+  // /////////////
+  // Use Effects
+  // /////////////
+
+  useEffect(() => {
+    window.localStorage.setItem("signedInPerson", JSON.stringify(signedPerson));
+  }, [signedPerson]);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "selectedMovie",
+      JSON.stringify(movieDetailsId)
+    );
+  }, [movieDetailsId]);
+
+  useEffect(() => {
+    setUserLocation(() => locationData[0]);
+  }, [locationData]);
+
+  useEffect(() => {
+    handleUserPurchaseLocationInfo();
+  }, [userLocation, handleUserPurchaseLocationInfo]);
+
+  // ////////////////////////////
+  // Data fetching and setting
+  // ////////////////////////////
+
+  const getTheatreData = useCallback((val) => {
+    setLocationData(val);
+  }, []);
+
+  const getShowDatesData = useCallback((val) => {
+    setDatesData(val);
+  }, []);
+
+  const getMovieData = useCallback((val) => {
+    setMovieData(val);
+  }, []);
+
+  const getHallData = useCallback((val) => {
+    setHallData(val);
+  }, []);
+
+  const getSeatsData = useCallback((val) => {
+    setSeatsData(val);
+  }, []);
 
   // //////////////////
   // Toasts handlers

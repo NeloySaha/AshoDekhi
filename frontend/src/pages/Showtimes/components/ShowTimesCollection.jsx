@@ -21,6 +21,22 @@ export const ShowTimesCollection = ({
   const [showtimesData, setShowtimesData] = useState([]);
   const theatreName = userLocation && userLocation.name;
 
+  const dataFetch = useCallback(async () => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/showtimes`,
+        {
+          theatreName,
+          userGenre,
+        }
+      );
+
+      setShowtimesData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [theatreName, userGenre]);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading1(true);
@@ -50,22 +66,6 @@ export const ShowTimesCollection = ({
 
     fetchData();
   }, [userGenre, dataFetch]);
-
-  const dataFetch = useCallback(async () => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/showtimes`,
-        {
-          theatreName,
-          userGenre,
-        }
-      );
-
-      setShowtimesData(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [theatreName, userGenre]);
 
   const movieShowtimes = [];
 
@@ -124,7 +124,7 @@ export const ShowTimesCollection = ({
   const showtimesCards = movieShowtimes.map((showtime, idx) => {
     return (
       <ShowtimesCard
-        key={idx}
+        key={`${showtime.movie_name} ${idx}`}
         {...showtime}
         handleLoginState={handleLoginState}
         signedPerson={signedPerson}

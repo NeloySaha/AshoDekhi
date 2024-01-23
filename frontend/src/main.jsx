@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <ScrollToTop />
       <App />
-      <Analytics />
     </BrowserRouter>
+    <Analytics />
   </React.StrictMode>
 );

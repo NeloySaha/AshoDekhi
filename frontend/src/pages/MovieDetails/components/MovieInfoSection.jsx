@@ -69,7 +69,7 @@ export const MovieInfoSection = ({
     };
 
     fetchData();
-  }, [movieDetailsId, userLocation]);
+  }, [movieDetailsId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +91,7 @@ export const MovieInfoSection = ({
     };
 
     fetchData();
-  }, [userLocation, movieDetailsId]);
+  }, [userLocation]);
 
   const showtimesObj3d = {};
   const showtimesObj2d = {};
@@ -122,12 +122,12 @@ export const MovieInfoSection = ({
       }
     });
 
-  const showHtml3d = Object.keys(showtimesObj3d).map((showDate) => {
+  const showHtml3d = Object.keys(showtimesObj3d).map((showDate, id) => {
     const times = showtimesObj3d[showDate];
 
-    const timesHtml = times.map((singleTime, idx) => {
+    const timesHtml = times.map((singleTime) => {
       return (
-        <li key={idx}>
+        <li key={singleTime.movie_start_time}>
           <button
             className="showtimes-startime-btn"
             onClick={() => {
@@ -149,7 +149,10 @@ export const MovieInfoSection = ({
     });
 
     return (
-      <div key={`${movieDetailsId}3d`} className="showtimes-schedule">
+      <div
+        key={`${movieDetailsId}-3d-${showDate}-${id}`}
+        className="showtimes-schedule"
+      >
         <h3 className="showtimes-date">{formattedDate}</h3>
 
         <ul className="showtimes-startime-btn-list">{timesHtml}</ul>
@@ -157,12 +160,12 @@ export const MovieInfoSection = ({
     );
   });
 
-  const showHtml2d = Object.keys(showtimesObj2d).map((showDate) => {
+  const showHtml2d = Object.keys(showtimesObj2d).map((showDate, id) => {
     const times = showtimesObj2d[showDate];
 
-    const timesHtml = times.map((singleTime, idx) => {
+    const timesHtml = times.map((singleTime) => {
       return (
-        <li key={idx}>
+        <li key={singleTime.movie_start_time}>
           <button
             className="showtimes-startime-btn"
             onClick={() => {
@@ -184,7 +187,10 @@ export const MovieInfoSection = ({
     });
 
     return (
-      <div key={`${movieDetailsId}2d`} className="showtimes-schedule">
+      <div
+        key={`${movieDetailsId}-2d-${showDate}-${id}`}
+        className="showtimes-schedule"
+      >
         <h3 className="showtimes-date">{formattedDate}</h3>
 
         <ul className="showtimes-startime-btn-list">{timesHtml}</ul>

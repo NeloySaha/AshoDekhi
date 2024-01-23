@@ -8,10 +8,10 @@ export const ShowtimesCard = (props) => {
 
   const show_types_3d =
     dates3d.length &&
-    dates3d.map((curDate, idx) => {
+    dates3d.map((curDate) => {
       const curStartTimes = props["3D"][curDate].map((curStartTime) => {
         return (
-          <li key={idx}>
+          <li key={`${props["movie_name"]}${curStartTime}`}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
@@ -43,10 +43,10 @@ export const ShowtimesCard = (props) => {
 
   const show_types_2d =
     dates2d.length &&
-    dates2d.map((curDate, idx) => {
+    dates2d.map((curDate) => {
       const curStartTimes = props["2D"][curDate].map((curStartTime) => {
         return (
-          <li key={idx}>
+          <li key={`${props["movie_name"]}${curStartTime}`}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
