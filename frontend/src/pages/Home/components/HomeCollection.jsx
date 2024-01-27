@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CollectionCard } from "../../../components/CollectionCard";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
@@ -34,7 +34,7 @@ export const HomeCollection = ({
     fetchData();
   }, []);
 
-  const latestMoviesCards = movieData.map((latestMovie) => {
+  const latestMoviesCards = movieData.map((latestMovie, idx) => {
     return (
       <CollectionCard
         key={latestMovie.id}

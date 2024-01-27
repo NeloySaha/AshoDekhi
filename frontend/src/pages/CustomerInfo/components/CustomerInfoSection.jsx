@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -62,7 +62,7 @@ export const CustomerInfoSection = ({ signedPerson }) => {
 
   const purchaseHtml = cusTicketData.map((cusTicket) => {
     return (
-      <li key={cusTicket.ticket_ids} className="purchase-history-item">
+      <li className="purchase-history-item">
         <div className="purchase-item-categories">
           <div className="purchase-item-category">
             <p>Movie:</p>
@@ -70,13 +70,18 @@ export const CustomerInfoSection = ({ signedPerson }) => {
           </div>
 
           <div className="purchase-item-category">
-            <p>Show type:</p>
-            <p>{cusTicket.show_type}</p>
+            <p>Ticket ID:</p>
+            <p>{cusTicket.ticket_ids}</p>
           </div>
 
           <div className="purchase-item-category">
-            <p>Ticket ID:</p>
-            <p>{cusTicket.ticket_ids}</p>
+            <p>Showtime Date:</p>
+            <p>{cusTicket.showtime_date}</p>
+          </div>
+
+          <div className="purchase-item-category">
+            <p>Show type:</p>
+            <p>{cusTicket.show_type}</p>
           </div>
 
           <div className="purchase-item-category">
@@ -95,16 +100,6 @@ export const CustomerInfoSection = ({ signedPerson }) => {
           </div>
 
           <div className="purchase-item-category">
-            <p>Showtime Date:</p>
-            <p>{cusTicket.showtime_date}</p>
-          </div>
-
-          <div className="purchase-item-category">
-            <p>Movie Start time:</p>
-            <p>{cusTicket.movie_start_time}</p>
-          </div>
-
-          <div className="purchase-item-category">
             <p>Price:</p>
             <p>BDT {cusTicket.ticket_price}TK</p>
           </div>
@@ -112,6 +107,11 @@ export const CustomerInfoSection = ({ signedPerson }) => {
           <div className="purchase-item-category">
             <p>Purchase Date:</p>
             <p>{cusTicket.purchase_date}</p>
+          </div>
+
+          <div className="purchase-item-category">
+            <p>Movie Start time:</p>
+            <p>{cusTicket.movie_start_time}</p>
           </div>
         </div>
 
@@ -164,7 +164,7 @@ export const CustomerInfoSection = ({ signedPerson }) => {
           <>
             {cusTicketData.length === 0 && (
               <p className="customer-empty-status">
-                You haven&apos;t purchased any ticket yet
+                You haven't purchased any ticket yet
               </p>
             )}
             <div className="purchase-history-section">

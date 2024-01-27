@@ -1,3 +1,4 @@
+import React from "react";
 import { LocationSelector } from "../../../components/LocationSelector";
 import { GenreSelector } from "./GenreSelector";
 

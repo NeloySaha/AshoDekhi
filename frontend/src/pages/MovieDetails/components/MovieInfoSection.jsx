@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { LocationSelector } from "../../../components/LocationSelector";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +69,7 @@ export const MovieInfoSection = ({
     };
 
     fetchData();
-  }, [movieDetailsId, userLocation]);
+  }, [movieDetailsId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +91,7 @@ export const MovieInfoSection = ({
     };
 
     fetchData();
-  }, [userLocation, movieDetailsId]);
+  }, [userLocation]);
 
   const showtimesObj3d = {};
   const showtimesObj2d = {};
@@ -125,9 +125,9 @@ export const MovieInfoSection = ({
   const showHtml3d = Object.keys(showtimesObj3d).map((showDate) => {
     const times = showtimesObj3d[showDate];
 
-    const timesHtml = times.map((singleTime, idx) => {
+    const timesHtml = times.map((singleTime) => {
       return (
-        <li key={idx}>
+        <li>
           <button
             className="showtimes-startime-btn"
             onClick={() => {
@@ -149,7 +149,7 @@ export const MovieInfoSection = ({
     });
 
     return (
-      <div key={`${movieDetailsId}3d`} className="showtimes-schedule">
+      <div className="showtimes-schedule">
         <h3 className="showtimes-date">{formattedDate}</h3>
 
         <ul className="showtimes-startime-btn-list">{timesHtml}</ul>
@@ -160,9 +160,9 @@ export const MovieInfoSection = ({
   const showHtml2d = Object.keys(showtimesObj2d).map((showDate) => {
     const times = showtimesObj2d[showDate];
 
-    const timesHtml = times.map((singleTime, idx) => {
+    const timesHtml = times.map((singleTime) => {
       return (
-        <li key={idx}>
+        <li>
           <button
             className="showtimes-startime-btn"
             onClick={() => {
@@ -184,7 +184,7 @@ export const MovieInfoSection = ({
     });
 
     return (
-      <div key={`${movieDetailsId}2d`} className="showtimes-schedule">
+      <div className="showtimes-schedule">
         <h3 className="showtimes-date">{formattedDate}</h3>
 
         <ul className="showtimes-startime-btn-list">{timesHtml}</ul>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const AdminShownInModifySection = ({
   selectedDate,
@@ -33,7 +33,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedDate, adminErrorToast]);
+  }, [selectedDate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +57,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedShowDate, adminErrorToast]);
+  }, [selectedShowDate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +78,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedShowtime, adminErrorToast]);
+  }, [selectedShowtime]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,7 +99,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedReplace, adminErrorToast, selectedShowtime]);
+  }, [selectedReplace]);
 
   const checkedColor = (val, checkVal) => {
     return {
@@ -127,27 +127,21 @@ export const AdminShownInModifySection = ({
   const handleMovieSwap = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/movieSwap`,
-        {
-          selectedAlt,
-          selectedShowtime,
-          selectedReplace,
-        }
-      );
-
-      if (res.status >= 200 && res.status < 300) {
+    await axios
+      .post(`${import.meta.env.VITE_API_URL}/movieSwap`, {
+        selectedAlt,
+        selectedShowtime,
+        selectedReplace,
+      })
+      .then((res) => {
         adminShowninToast();
-      } else {
-        throw new Error("Error occurred!");
-      }
-    } catch (err) {
-      console.log(err);
-      adminErrorToast();
-    } finally {
-      setSelectedShowDate("");
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+        adminErrorToast();
+      });
+
+    setSelectedShowDate("");
   };
 
   const toggleDropDown = () => {

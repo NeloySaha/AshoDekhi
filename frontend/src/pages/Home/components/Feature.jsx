@@ -1,3 +1,5 @@
+import React from "react";
+
 export const Feature = ({ idx, title, description, image_path }) => {
   const featureSvgs = {
     "Unparalleled Cinematic Experience": (

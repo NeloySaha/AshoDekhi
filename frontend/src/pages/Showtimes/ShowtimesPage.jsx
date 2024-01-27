@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import React, { useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { ShowTimesHeader } from "./components/ShowTimesHeader";
 import { ShowTimesCollection } from "./components/ShowTimesCollection";

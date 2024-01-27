@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
   const [movieInfo, setMovieInfo] = useState({

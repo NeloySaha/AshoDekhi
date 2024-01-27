@@ -1,3 +1,5 @@
+import React from "react";
+
 export const AboutUsSection = () => {
   return (
     <section className="section-about-us ">
@@ -40,30 +42,29 @@ export const AboutUsSection = () => {
           <p>
             With state-of-the-art technology, including mesmerizing IMAX screens
             and immersive Dolby Atmos sound, we bring your favorite movies to
-            life like never before. Our theatre&apos;s premium lounge area
-            offers a luxurious escape, where you can indulge in handcrafted
-            cocktails and gourmet snacks, surrounded by the finest comfort and
-            elegance.
+            life like never before. Our theatre's premium lounge area offers a
+            luxurious escape, where you can indulge in handcrafted cocktails and
+            gourmet snacks, surrounded by the finest comfort and elegance.
           </p>
           <p>
             As true cinephiles, we understand that every movie moment counts,
             which is why we strive to provide you with the best amenities,
-            premium seating, and top-notch customer service. Whether you&apos;re
-            here for the latest blockbusters, captivating documentaries, or
-            special events, our diverse selection of films ensures there&apos;s
-            something for every taste.
+            premium seating, and top-notch customer service. Whether you're here
+            for the latest blockbusters, captivating documentaries, or special
+            events, our diverse selection of films ensures there's something for
+            every taste.
           </p>
           <p>
             We believe that going to the movies should be more than just an
-            outing; it should be an unforgettable experience. That&apos;s why we
-            take pride in curating each detail to create lasting memories for
-            you and your loved ones.
+            outing; it should be an unforgettable experience. That's why we take
+            pride in curating each detail to create lasting memories for you and
+            your loved ones.
           </p>
           <p>
             Join us at ASHO DEKHI and immerse yourself in the captivating world
             of cinema. Get ready to unleash the movie magic and embark on a
-            journey of pure entertainment, delight, and wonder. We can&apos;t
-            wait to share the magic of the silver screen with you.
+            journey of pure entertainment, delight, and wonder. We can't wait to
+            share the magic of the silver screen with you.
           </p>
         </div>
       </div>

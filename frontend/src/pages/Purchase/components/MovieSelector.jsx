@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -37,7 +37,7 @@ export const MovieSelector = ({
     };
 
     fetchData();
-  }, [userDate, getMovieData, theatreId]);
+  }, [userDate]);
 
   const movieOptions = movieData.map((movie, idx) => {
     return (
