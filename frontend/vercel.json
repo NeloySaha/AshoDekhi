@@ -24,6 +24,10 @@
     {
       "src": "/movieDetails",
       "dest": "/"
+    },
+    {
+      "src": "/movieDetails/:id",
+      "dest": "/"
     }
   ]
 }
