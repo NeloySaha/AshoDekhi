@@ -27,7 +27,7 @@
     },
     {
       "src": "/movieDetails/:id",
-      "dest": "/"
+      "dest": "/movieDetails"
     }
   ]
 }
