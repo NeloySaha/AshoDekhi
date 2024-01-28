@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CollectionCard } from "../../../components/CollectionCard";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useParams } from "react-router-dom";
 
 export const MovieInfoCollection = ({
   currentMovieDetails,
-  movieDetailsId,
+
   signedPerson,
   handleLoginState,
 }) => {
+  const { id } = useParams();
   const [movieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
   const override = {
     display: "block",
     margin: "4.8rem auto",
   };
+  const movieDetailsId = Number(id);
 
   useEffect(() => {
     const fetchData = async () => {

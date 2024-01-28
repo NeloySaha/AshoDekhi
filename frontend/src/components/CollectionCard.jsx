@@ -1,5 +1,4 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CollectionCard = ({
   id,
@@ -9,7 +8,7 @@ export const CollectionCard = ({
   duration,
   release_date,
   genres,
-  currentMovieDetails,
+
   signedPerson,
   handleLoginState,
 }) => {
@@ -21,10 +20,7 @@ export const CollectionCard = ({
   return (
     <div
       className="home-movie-card"
-      onClick={() => {
-        currentMovieDetails(id);
-        navigate("/movieDetails");
-      }}
+      onClick={() => navigate(`/movieDetails/${id}`)}
     >
       <div className="home-movie-img-box">
         <img

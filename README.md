@@ -1,8 +1,10 @@
 # ASHO DEKHI - Movie Ticket Booking Website
 
-Welcome to ASHO DEKHI, your one-stop destination for booking movie tickets online. This repository contains the codebase for the ASHO DEKHI website, built using React, Express, MySQL, and Node.js.
+Welcome to ASHO DEKHI, your one-stop destination for booking movie tickets online. This repository contains the codebase for the ASHO DEKHI website, built using React, Express, MySQL, and Node.js. It's a test application🛠️.
 
 ### 🚀 VISIT LIVE DEMO _[HERE](https://asho-dekhi.vercel.app/)_
+
+**N.B.: _Backend/API is hosted at render.com on free tier. So, it goes inactive after 15 minutes of inactivity. So, if you see data loading, please wait for 15-30 seconds😉._**
 
 ## Table of Contents
 

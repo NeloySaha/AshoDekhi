@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ShowtimesCard } from "./ShowtimesCard";
 import HashLoader from "react-spinners/HashLoader";
+import { useSearchParams } from "react-router-dom";
 
 export const ShowTimesCollection = ({
   userLocation,
-  userGenre,
   currentMovieDetails,
   handleLoginState,
   signedPerson,
@@ -19,6 +19,8 @@ export const ShowTimesCollection = ({
   const [loading2, setLoading2] = useState(false);
   const [showtimesData, setShowtimesData] = useState([]);
   const theatreName = userLocation && userLocation.name;
+  const [searchParams] = useSearchParams();
+  const userGenre = searchParams.get("genre") || "All";
 
   useEffect(() => {
     const fetchData = async () => {

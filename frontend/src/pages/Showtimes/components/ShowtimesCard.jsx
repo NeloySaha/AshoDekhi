@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export const ShowtimesCard = (props) => {
@@ -9,10 +8,10 @@ export const ShowtimesCard = (props) => {
 
   const show_types_3d =
     dates3d.length &&
-    dates3d.map((curDate, idx) => {
+    dates3d.map((curDate, id) => {
       const curStartTimes = props["3D"][curDate].map((curStartTime) => {
         return (
-          <li>
+          <li key={`${props["movie_name"]} 3d ${curStartTime}`}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
@@ -35,7 +34,10 @@ export const ShowtimesCard = (props) => {
       });
 
       return (
-        <div className="showtimes-schedule">
+        <div
+          className="showtimes-schedule"
+          key={`${props["movie_name"]} 3d ${id}`}
+        >
           <h3 className="showtimes-date">{formattedDate}</h3>
           <ul className="showtimes-startime-btn-list">{curStartTimes}</ul>
         </div>
@@ -44,10 +46,10 @@ export const ShowtimesCard = (props) => {
 
   const show_types_2d =
     dates2d.length &&
-    dates2d.map((curDate, idx) => {
+    dates2d.map((curDate, id) => {
       const curStartTimes = props["2D"][curDate].map((curStartTime) => {
         return (
-          <li>
+          <li key={`${props["movie_name"]} 2d ${curStartTime}`}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
@@ -70,7 +72,10 @@ export const ShowtimesCard = (props) => {
       });
 
       return (
-        <div key={idx} className="showtimes-schedule">
+        <div
+          key={`${props["movie_name"]} 2d ${id}`}
+          className="showtimes-schedule"
+        >
           <h3 className="showtimes-date">{formattedDate}</h3>
           <ul className="showtimes-startime-btn-list">{curStartTimes}</ul>
         </div>
@@ -91,10 +96,7 @@ export const ShowtimesCard = (props) => {
         <h2 className="showtimes-title">{props.movie_name}</h2>
         <button
           className="showtimes-details-btn"
-          onClick={() => {
-            props.currentMovieDetails(props.id);
-            navigate("/movieDetails");
-          }}
+          onClick={() => navigate(`/movieDetails/${props.id}`)}
         >
           See details
         </button>

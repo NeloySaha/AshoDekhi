@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useState, useEffect, lazy, Suspense } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { SignupModal } from "./modals/SignupModal";
@@ -525,6 +525,11 @@ function App() {
 
             <Route
               path="/movieDetails"
+              element={<Navigate replace to="/movieDetails/1" />}
+            />
+
+            <Route
+              path="/movieDetails/:id"
               element={
                 <Suspense fallback={<PageLoader />}>
                   <MovieDetailsPage

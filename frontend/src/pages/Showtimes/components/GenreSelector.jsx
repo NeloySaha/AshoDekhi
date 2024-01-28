@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useSearchParams } from "react-router-dom";
 
-export const GenreSelector = ({ userGenre, handleGenreChange }) => {
+export const GenreSelector = () => {
   const [genreData, setGenreData] = useState([]);
   const [loading, setLoading] = useState(true);
   const override = {
     display: "block",
     margin: "4.8rem auto",
   };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const userGenre = searchParams.get("genre") || "All";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +47,9 @@ export const GenreSelector = ({ userGenre, handleGenreChange }) => {
           id={idx}
           name="Select Genre"
           value={genre}
-          onChange={(e) => handleGenreChange(e)}
+          onChange={() => {
+            setSearchParams({ genre: genre });
+          }}
           checked={genre === userGenre}
         />
 

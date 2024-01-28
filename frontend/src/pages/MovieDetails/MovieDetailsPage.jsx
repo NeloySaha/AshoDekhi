@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
 import { MovieInfoSection } from "./components/MovieInfoSection";
 import { MovieInfoCollection } from "./components/MovieInfoCollection";
@@ -38,13 +38,11 @@ const MovieDetailsPage = ({
           locationData={locationData}
           userLocation={userLocation}
           handleLocationSelection={handleLocationSelection}
-          movieDetailsId={movieDetailsId}
           signedPerson={signedPerson}
           handleLoginState={handleLoginState}
         />
         <MovieInfoCollection
           currentMovieDetails={currentMovieDetails}
-          movieDetailsId={movieDetailsId}
           signedPerson={signedPerson}
           handleLoginState={handleLoginState}
         />

@@ -1,4 +1,3 @@
-import React from "react";
 import { LocationSelector } from "../../../components/LocationSelector";
 import { GenreSelector } from "./GenreSelector";
 
@@ -7,8 +6,6 @@ export const ShowTimesHeader = ({
   userLocation,
   handleLocationSelection,
   getTheatreData,
-  userGenre,
-  handleGenreChange,
 }) => {
   return (
     <section className="showtimes-header container">
@@ -18,10 +15,7 @@ export const ShowTimesHeader = ({
         handleLocationSelection={handleLocationSelection}
         getTheatreData={getTheatreData}
       />
-      <GenreSelector
-        userGenre={userGenre}
-        handleGenreChange={handleGenreChange}
-      />
+      <GenreSelector />
     </section>
   );
 };

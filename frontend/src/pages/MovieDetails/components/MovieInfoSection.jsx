@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { LocationSelector } from "../../../components/LocationSelector";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 
 export const MovieInfoSection = ({
@@ -9,7 +9,7 @@ export const MovieInfoSection = ({
   getTheatreData,
   userLocation,
   handleLocationSelection,
-  movieDetailsId,
+
   signedPerson,
   handleLoginState,
 }) => {
@@ -18,6 +18,8 @@ export const MovieInfoSection = ({
   const navigate = useNavigate();
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(true);
+  const { id } = useParams();
+  const movieDetailsId = Number(id);
 
   const override = {
     display: "block",

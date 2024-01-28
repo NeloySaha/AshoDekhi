@@ -1,10 +1,10 @@
-import React from "react";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { HomeCollection } from "./components/HomeCollection";
 import { Features } from "./components/Features";
 import { SocialLinks } from "./components/SocialLinks";
+import { TopEdge } from "../../components/TopEdge";
 
 const HomePage = ({
   handleSignState,
@@ -16,6 +16,7 @@ const HomePage = ({
 }) => {
   return (
     <>
+      <TopEdge />
       <Navbar
         signedPerson={signedPerson}
         pageName="home"

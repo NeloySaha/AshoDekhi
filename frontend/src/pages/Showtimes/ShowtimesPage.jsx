@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { ShowTimesHeader } from "./components/ShowTimesHeader";
 import { ShowTimesCollection } from "./components/ShowTimesCollection";
@@ -17,12 +16,6 @@ const ShowtimesPage = ({
   currentMovieDetails,
   setMenuState,
 }) => {
-  const [userGenre, setUserGenre] = useState("All");
-
-  const handleGenreChange = (e) => {
-    setUserGenre(e.target.value);
-  };
-
   return (
     <AnimatedPage>
       <>
@@ -38,13 +31,10 @@ const ShowtimesPage = ({
           locationData={locationData}
           userLocation={userLocation}
           handleLocationSelection={handleLocationSelection}
-          handleGenreChange={handleGenreChange}
-          userGenre={userGenre}
           getTheatreData={getTheatreData}
         />
         <ShowTimesCollection
           userLocation={userLocation}
-          userGenre={userGenre}
           currentMovieDetails={currentMovieDetails}
           handleLoginState={handleLoginState}
           signedPerson={signedPerson}
