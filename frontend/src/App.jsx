@@ -1,11 +1,12 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+import { lazy, Suspense } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+
 import "./styles/styles.css";
 import "./styles/queries.css";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import { lazy, Suspense } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { SignupModal } from "./modals/SignupModal";
@@ -13,7 +14,6 @@ import { LoginModal } from "./modals/LoginModal";
 
 import { MobileNav } from "./components/MobileNav";
 import { PageLoader } from "./components/PageLoader";
-import { useSelector } from "react-redux";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 import HomePage from "./pages/Home/HomePage";
