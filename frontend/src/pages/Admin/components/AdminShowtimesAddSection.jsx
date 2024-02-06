@@ -1,12 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { adminErrorToast, adminShowtimeToast } from "../../../toasts/toast";
 
 export const AdminShowtimesAddSection = ({
   selectedShowDate,
   setSelectedShowDate,
   handleSelectedDate,
-  adminErrorToast,
-  adminShowtimeToast,
 }) => {
   const [lastShowDate, setLastShowDate] = useState("");
   const [adminShowtimeDropdown, setAdminShowtimeDropdown] = useState(false);
@@ -92,27 +91,27 @@ export const AdminShowtimesAddSection = ({
     e.preventDefault();
     let showtimeId;
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/showdateAdd`, {
-        selectedShowDate,
-      })
-      .then((res) => (showtimeId = res.data && res.data[0].last_id))
-      .catch((err) => {
-        console.log(err);
-        adminErrorToast();
+    try {
+      const response1 = await axios.post(
+        `${import.meta.env.VITE_API_URL}/showdateAdd`,
+        {
+          selectedShowDate,
+        }
+      );
+
+      showtimeId = response1.data && response1.data[0].last_id;
+
+      await axios.post(`${import.meta.env.VITE_API_URL}/shownInUpdate`, {
+        showtimeId,
       });
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/shownInUpdate`, { showtimeId })
-      .then((res) => {
-        adminShowtimeToast();
-      })
-      .catch((err) => {
-        console.log(err);
-        adminErrorToast();
-      });
-
-    setSelectedShowDate("");
+      adminShowtimeToast();
+    } catch (err) {
+      console.error(err);
+      adminErrorToast();
+    } finally {
+      setSelectedShowDate("");
+    }
   };
 
   return (

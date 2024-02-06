@@ -53,7 +53,7 @@ export const GenreSelector = () => {
           checked={genre === userGenre}
         />
 
-        <label className="form-genre-detail" htmlFor={genre}>
+        <label className="form-genre-detail" htmlFor={idx}>
           {genre}
         </label>
       </div>

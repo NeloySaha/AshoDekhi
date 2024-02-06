@@ -1,20 +1,10 @@
 import { LocationSelector } from "../../../components/LocationSelector";
 import { GenreSelector } from "./GenreSelector";
 
-export const ShowTimesHeader = ({
-  locationData,
-  userLocation,
-  handleLocationSelection,
-  getTheatreData,
-}) => {
+export const ShowTimesHeader = () => {
   return (
     <section className="showtimes-header container">
-      <LocationSelector
-        locationData={locationData}
-        userLocation={userLocation}
-        handleLocationSelection={handleLocationSelection}
-        getTheatreData={getTheatreData}
-      />
+      <LocationSelector />
       <GenreSelector />
     </section>
   );

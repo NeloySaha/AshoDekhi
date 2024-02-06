@@ -1,32 +1,49 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { logout, showLoginModal, showSignModal } from "../reducers/authSlice";
+import { toggleMenuState } from "../reducers/mobileNavSlice";
 
-export const Navbar = ({
-  pageName,
-  handleSignState,
-  handleLoginState,
-  signedPerson,
-  handlelogout,
-  setMenuState,
-}) => {
-  const [signUpState, setSignUpState] = useState(false);
+export const Navbar = () => {
+  const [navSignOptionsVis, setNavSignOptionsVis] = useState(false);
+  let pageName;
   const navigate = useNavigate();
-
-  const toggleSignState = () => {
-    setSignUpState((prevState) => !prevState);
-  };
+  const location = useLocation();
 
   const selectionTab = {
     backgroundColor: "#eb3656",
   };
 
+  const { isAuthenticated, signedPerson } = useSelector(
+    (store) => store.authentication
+  );
+
+  const dispatch = useDispatch();
+
+  const handlelogout = () => {
+    dispatch(logout());
+  };
+
+  const toggleNavSignOptionsVis = () => {
+    setNavSignOptionsVis((prevState) => !prevState);
+  };
+
+  if (location.pathname === "/") {
+    pageName = "home";
+  } else if (location.pathname === "/showtimes") {
+    pageName = "showtimes";
+  } else if (location.pathname === "/aboutus") {
+    pageName = "aboutUs";
+  } else if (location.pathname === "/admin") {
+    pageName = "admin";
+  } else {
+    pageName = "";
+  }
+
   return (
     <header>
-      <button
-        className="btn-menu"
-        onClick={() => setMenuState((prevState) => !prevState)}
-      >
+      <button className="btn-menu" onClick={() => dispatch(toggleMenuState())}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="menu-icon"
@@ -124,33 +141,31 @@ export const Navbar = ({
               About Us
             </Link>
           </li>
-          {Object.keys(signedPerson).length !== 0 &&
-            signedPerson.person_type === "Admin" && (
-              <li>
-                <Link
-                  className="nav-item"
-                  to="/admin"
-                  style={pageName === "admin" ? selectionTab : {}}
-                >
-                  Admin
-                </Link>
-              </li>
-            )}
+          {isAuthenticated && signedPerson.person_type === "Admin" && (
+            <li>
+              <Link
+                className="nav-item"
+                to="/admin"
+                style={pageName === "admin" ? selectionTab : {}}
+              >
+                Admin
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
 
       <div className="nav-signup">
-        {Object.keys(signedPerson).length !== 0 && (
+        {isAuthenticated && (
           <p className="nav-signed-name">{signedPerson.first_name}</p>
         )}
         <button
           className="customer-profile-btn"
           onClick={(e) => {
             e.stopPropagation();
-            Object.keys(signedPerson).length !== 0 &&
-            signedPerson.person_type === "Customer"
+            isAuthenticated && signedPerson.person_type === "Customer"
               ? navigate("/customer")
-              : handleLoginState();
+              : dispatch(showLoginModal());
           }}
         >
           <svg
@@ -176,9 +191,12 @@ export const Navbar = ({
           </svg>
         </button>
 
-        {Object.keys(signedPerson).length === 0 ? (
-          <button className="btn-signup-arrow" onClick={toggleSignState}>
-            {!signUpState ? (
+        {!isAuthenticated ? (
+          <button
+            className="btn-signup-arrow"
+            onClick={toggleNavSignOptionsVis}
+          >
+            {!navSignOptionsVis ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="signup-icon"
@@ -229,7 +247,7 @@ export const Navbar = ({
           </button>
         )}
 
-        {signUpState && (
+        {navSignOptionsVis && (
           <div className="signup-options">
             {
               <ul className="signup-buttons">
@@ -237,8 +255,8 @@ export const Navbar = ({
                   <button
                     className="signup-button"
                     onClick={() => {
-                      toggleSignState();
-                      handleSignState();
+                      toggleNavSignOptionsVis();
+                      dispatch(showSignModal());
                     }}
                   >
                     Sign up
@@ -248,8 +266,8 @@ export const Navbar = ({
                   <button
                     className="login-button"
                     onClick={() => {
-                      toggleSignState();
-                      handleLoginState();
+                      toggleNavSignOptionsVis();
+                      dispatch(showLoginModal());
                     }}
                   >
                     Sign in

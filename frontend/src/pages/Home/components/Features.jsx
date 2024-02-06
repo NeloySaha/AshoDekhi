@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Feature } from "./Feature";
 import HashLoader from "react-spinners/HashLoader";
@@ -34,7 +34,7 @@ export const Features = () => {
 
   return (
     <section className="section-features container">
-      <h4 className="subheading">What you'll get?</h4>
+      <h4 className="subheading">What you&apos;ll get?</h4>
       <h2 className="section-features-heading heading-secondary">
         Unleash the Movie Magic and Discover Our Spectacular Features
       </h2>

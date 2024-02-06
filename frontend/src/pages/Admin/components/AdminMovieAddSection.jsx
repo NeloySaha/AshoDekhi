@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
+import { adminErrorToast, adminMovieToast } from "../../../toasts/toast";
 
-export const AdminMovieAddSection = ({ adminErrorToast, adminMovieToast }) => {
+export const AdminMovieAddSection = () => {
   const [movieInfo, setMovieInfo] = useState({
     movieName: "",
     imagePath: "",

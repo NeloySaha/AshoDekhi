@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { setSeat } from "../../../reducers/cartSlice";
 
-export const SeatSelector = ({
-  userShowtimeId,
-  userHallId,
-  userMovieId,
-  seatsData,
-  getSeatsData,
-  handleUserSeats,
-  userSeatList,
-}) => {
+export const SeatSelector = ({ seatsData, setSeatsData }) => {
   const override = {
     display: "block",
     margin: "1.6rem auto",
   };
 
   const [loading, setLoading] = useState(false);
+
+  const {
+    movie_id: userMovieId,
+    hall_id: userHallId,
+    showtime_id: userShowtimeId,
+    seat_id_list: userSeatList,
+  } = useSelector((store) => store.cart);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +33,7 @@ export const SeatSelector = ({
             userMovieId,
           }
         );
-        getSeatsData(response.data);
+        setSeatsData(response.data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -39,21 +42,21 @@ export const SeatSelector = ({
     };
 
     fetchData();
-  }, [userHallId, userShowtimeId, userMovieId]);
+  }, [userHallId, userShowtimeId, userMovieId, setSeatsData]);
 
   let rows = [];
   let rowSeat = [];
 
-  seatsData.forEach((seat) => {
-    return seat.selected && userSeat.push(seat.seat_id);
-  });
+  // seatsData.forEach((seat) => {
+  //   return seat.selected && userSeat.push(seat.seat_id);
+  // });
 
   seatsData.forEach((seat, idx) => {
     let seatStatus;
 
     const handleTouchStart = (e) => {
       e.preventDefault();
-      handleUserSeats(seat.seat_id);
+      dispatch(setSeat(seat.seat_id));
     };
 
     seat.booked_status === 0
@@ -63,7 +66,9 @@ export const SeatSelector = ({
     const seatHtml = (
       <div
         className={`seat ${seatStatus}`}
-        onClick={() => seatStatus !== "booked" && handleUserSeats(seat.seat_id)}
+        onClick={() =>
+          seatStatus !== "booked" && dispatch(setSeat(seat.seat_id))
+        }
         onTouchEnd={seatStatus !== "booked" ? handleTouchStart : undefined}
         key={seat.seat_id}
         style={{

@@ -4,12 +4,7 @@ import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import { useParams } from "react-router-dom";
 
-export const MovieInfoCollection = ({
-  currentMovieDetails,
-
-  signedPerson,
-  handleLoginState,
-}) => {
+export const MovieInfoCollection = () => {
   const { id } = useParams();
   const [movieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,17 +36,7 @@ export const MovieInfoCollection = ({
   }, [movieDetailsId]);
 
   const latestMoviesCards = movieData.map((latestMovie, idx) => {
-    return (
-      idx < 6 && (
-        <CollectionCard
-          key={latestMovie.id}
-          {...latestMovie}
-          signedPerson={signedPerson}
-          handleLoginState={handleLoginState}
-          currentMovieDetails={currentMovieDetails}
-        />
-      )
-    );
+    return idx < 6 && <CollectionCard key={latestMovie.id} {...latestMovie} />;
   });
 
   return (

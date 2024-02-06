@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { resetCart, setShowDate } from "../../../reducers/cartSlice";
 
-export const DateSelector = ({
-  datesData,
-  handleUserDateChange,
-  userDate,
-  userLocation,
-  getShowDatesData,
-  theatreId,
-}) => {
+export const DateSelector = () => {
+  const [showDatesData, setShowDatesData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { id: theatreId } = useSelector((store) => store.currentLocation);
+  const { showtime_date: userDate } = useSelector((store) => store.cart);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +22,8 @@ export const DateSelector = ({
             theatreId,
           }
         );
-        getShowDatesData(response.data);
+        setShowDatesData(response.data);
+        dispatch(resetCart());
       } catch (err) {
         console.error(err);
       } finally {
@@ -30,7 +32,7 @@ export const DateSelector = ({
     };
 
     fetchData();
-  }, [userLocation]);
+  }, [theatreId, dispatch]);
 
   const checkedColor = (val) => {
     return {
@@ -39,7 +41,7 @@ export const DateSelector = ({
     };
   };
 
-  const dateOptions = datesData?.map((dateData, idx) => {
+  const dateOptions = showDatesData?.map((dateData, idx) => {
     const day = new Date(dateData.showtime_date).toLocaleString("en-us", {
       weekday: "short",
     });
@@ -76,11 +78,11 @@ export const DateSelector = ({
           id={idx}
           name="Select Date"
           value={formattedDate}
-          onChange={(e) => handleUserDateChange(e)}
+          onChange={(e) => dispatch(setShowDate(e.target.value))}
           checked={formattedDate === userDate}
         />
 
-        <label className="form-date-detail" htmlFor={formattedDate}>
+        <label className="form-date-detail" htmlFor={idx}>
           <p className="form-day">{day}</p>
           <div className="form-date-month">
             <p className="form-date">{date}</p>

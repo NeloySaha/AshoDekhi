@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { DateSelector } from "./DateSelector";
 import { MovieSelector } from "./MovieSelector";
@@ -7,57 +7,63 @@ import { SeatSelector } from "./SeatSelector";
 import { LocationSelector } from "../../../components/LocationSelector";
 import { PayMethodSelector } from "./PayMethodSelector";
 import BarLoader from "react-spinners/BarLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { purchaseCompletion, ticketPurchaseError } from "../../../toasts/toast";
+import { resetCart } from "../../../reducers/cartSlice";
 
-export const PurchaseSection = ({
-  locationData,
-  userLocation,
-  handleLocationSelection,
-  theatreId,
-  handleUserDateChange,
-  userDate,
-  datesData,
-  getMovieData,
-  movieData,
-  userMovieId,
-  handleUserMovieChange,
-  userShowtimeId,
-  userHallId,
-  getHallData,
-  hallData,
-  handleUserHallShow,
-  getTheatreData,
-  signedPerson,
-  userSeatPrice,
-  getShowDatesData,
-  seatsData,
-  getSeatsData,
-  handleUserSeats,
-  userSeatList,
-  formattedDate,
-  curHallObj,
-  currentMovie,
-  userSeatListName,
-  handleUserPaymentMethod,
-  userPayMethod,
-  clearUserSelection,
-  ticketPurchaseError,
-  purchaseCompletion,
-}) => {
+const currentDate = () => {
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+};
+
+export const PurchaseSection = () => {
+  const [hallData, setHallData] = useState([]);
+  const [movieData, setMovieData] = useState([]);
+  const [seatsData, setSeatsData] = useState([]);
+
   const [ticketIds, setTicketIds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const { signedPerson } = useSelector((store) => store.authentication);
+  const { id: theatreId, location: theatreLocation } = useSelector(
+    (store) => store.currentLocation
+  );
+  const {
+    payment_method: userPayMethod,
+    showtime_date: userDate,
+    movie_id: userMovieId,
+    showtime_id: userShowtimeId,
+    seat_id_list: userSeatList,
+    hall_id: userHallId,
+    seat_price: userSeatPrice,
+  } = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
 
-  const currentDate = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  };
+  const formattedDate =
+    userDate !== "" &&
+    new Date(userDate).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
 
-  useEffect(() => {
-    userPayMethod.length > 0 ? setBtnDisabled(false) : setBtnDisabled(true);
-  }, [userPayMethod]);
+  const currentMovie =
+    userMovieId !== "" &&
+    movieData.find((movieObj) => movieObj.id === userMovieId);
+
+  const curHallObj =
+    userHallId &&
+    hallData.find(
+      (hall) =>
+        hall.hall_id === userHallId && hall.showtime_id === userShowtimeId
+    );
+
+  const userSeats =
+    seatsData &&
+    seatsData.filter((seatData) => userSeatList.includes(seatData.seat_id));
 
   const handleTicketPurchase = async () => {
     try {
@@ -69,7 +75,7 @@ export const PurchaseSection = ({
       const paymentResponse = await axios.post(
         `${import.meta.env.VITE_API_URL}/payment`,
         {
-          amount: userSeatPrice * userSeatListName.length,
+          amount: userSeatPrice * userSeats.length,
           userPayMethod,
           email: signedPerson.email,
         }
@@ -101,7 +107,7 @@ export const PurchaseSection = ({
       setTicketIds(recentPurchaseResponse.data);
 
       // Clear user selection
-      await clearUserSelection();
+      dispatch(resetCart());
     } catch (err) {
       console.error(err);
       ticketPurchaseError();
@@ -111,13 +117,17 @@ export const PurchaseSection = ({
   };
 
   useEffect(() => {
+    userPayMethod.length > 0 ? setBtnDisabled(false) : setBtnDisabled(true);
+  }, [userPayMethod]);
+
+  useEffect(() => {
     const tickets = [];
 
     if (ticketIds.length > 0) {
       ticketIds.forEach((ticket) => {
         tickets.push(ticket.id);
       });
-      console.log(tickets);
+
       purchaseCompletion(tickets);
     }
   }, [ticketIds]);
@@ -127,67 +137,27 @@ export const PurchaseSection = ({
       <div className="purchase-container container">
         <div className="purchase-section-left">
           <div className="purchase-heading">
-            <LocationSelector
-              locationData={locationData}
-              userLocation={userLocation}
-              handleLocationSelection={handleLocationSelection}
-              getTheatreData={getTheatreData}
-            />
+            <LocationSelector />
           </div>
 
-          {theatreId && theatreId !== "" && (
-            <DateSelector
-              theatreId={theatreId}
-              userDate={userDate}
-              handleUserDateChange={handleUserDateChange}
-              datesData={datesData}
-              userLocation={userLocation}
-              getShowDatesData={getShowDatesData}
-            />
+          {theatreId !== "" && <DateSelector />}
+
+          {userDate !== "" && (
+            <MovieSelector movieData={movieData} setMovieData={setMovieData} />
           )}
 
-          {userDate?.length !== 0 && (
-            <MovieSelector
-              theatreId={theatreId}
-              movieData={movieData}
-              getMovieData={getMovieData}
-              userDate={userDate}
-              userMovieId={userMovieId}
-              handleUserMovieChange={handleUserMovieChange}
-            />
-          )}
           {userMovieId !== "" && (
             <PictureQualitySelector
-              theatreId={theatreId}
-              userDate={userDate}
-              userShowtimeId={userShowtimeId}
-              userHallId={userHallId}
-              getHallData={getHallData}
               hallData={hallData}
-              userMovieId={userMovieId}
-              handleUserHallShow={handleUserHallShow}
-              userSeatPrice={userSeatPrice}
+              setHallData={setHallData}
             />
           )}
 
           {userShowtimeId !== "" && (
-            <SeatSelector
-              userShowtimeId={userShowtimeId}
-              userHallId={userHallId}
-              userMovieId={userMovieId}
-              seatsData={seatsData}
-              getSeatsData={getSeatsData}
-              handleUserSeats={handleUserSeats}
-              userSeatList={userSeatList}
-            />
+            <SeatSelector seatsData={seatsData} setSeatsData={setSeatsData} />
           )}
 
-          {userSeatList && userSeatList.length > 0 && (
-            <PayMethodSelector
-              handleUserPaymentMethod={handleUserPaymentMethod}
-              userPayMethod={userPayMethod}
-            />
-          )}
+          {userSeatList.length > 0 && <PayMethodSelector />}
         </div>
 
         <div className="purchase-section-right">
@@ -252,7 +222,7 @@ export const PurchaseSection = ({
                   </div>
 
                   <p className="ticket-info-val">
-                    {userLocation ? userLocation.location : "--"}
+                    {theatreLocation !== "" ? theatreLocation : "--"}
                   </p>
                 </li>
 
@@ -338,7 +308,7 @@ export const PurchaseSection = ({
                   </div>
 
                   <p className="ticket-info-val">
-                    {curHallObj ? curHallObj.hall_name : "--"}
+                    {curHallObj ? curHallObj?.hall_name : "--"}
                   </p>
                 </li>
 
@@ -363,7 +333,7 @@ export const PurchaseSection = ({
                   </div>
 
                   <p className="ticket-info-val">
-                    {userHallId ? curHallObj.movie_start_time : "--"}
+                    {userHallId ? curHallObj?.movie_start_time : "--"}
                   </p>
                 </li>
 
@@ -380,7 +350,7 @@ export const PurchaseSection = ({
                   </div>
 
                   <p className="ticket-info-val">
-                    {userSeatListName ? userSeatListName.length : "--"}
+                    {userSeats ? userSeats.length : "--"}
                   </p>
                 </li>
 
@@ -397,10 +367,8 @@ export const PurchaseSection = ({
                   </div>
 
                   <p className="ticket-info-val">
-                    {userSeatListName && userSeatListName.length !== 0
-                      ? userSeatListName
-                          .map((seat) => seat.seat_name)
-                          .join(", ")
+                    {userSeats && userSeats.length !== 0
+                      ? userSeats.map((seat) => seat.seat_name).join(", ")
                       : "--"}
                   </p>
                 </li>
@@ -475,8 +443,8 @@ export const PurchaseSection = ({
                   </div>
 
                   <p className="ticket-info-val">
-                    {userSeatPrice && userSeatListName
-                      ? `BDT ${userSeatPrice * userSeatListName.length}TK`
+                    {userSeatPrice && userSeats
+                      ? `BDT ${userSeatPrice * userSeats.length}TK`
                       : "--"}
                   </p>
                 </li>

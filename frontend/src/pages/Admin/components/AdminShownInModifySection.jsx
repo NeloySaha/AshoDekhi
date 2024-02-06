@@ -1,11 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { adminErrorToast, adminShowninToast } from "../../../toasts/toast";
 
-export const AdminShownInModifySection = ({
-  selectedDate,
-  adminErrorToast,
-  adminShowninToast,
-}) => {
+export const AdminShownInModifySection = ({ selectedDate }) => {
   const [moviePlaylistDropDown, setMoviePlaylistDropDown] = useState(false);
   const [latestShowDates, setLatestShowDates] = useState([]);
   const [selectedShowDate, setSelectedShowDate] = useState("");
@@ -99,7 +96,7 @@ export const AdminShownInModifySection = ({
     };
 
     fetchData();
-  }, [selectedReplace]);
+  }, [selectedReplace, selectedShowtime]);
 
   const checkedColor = (val, checkVal) => {
     return {
@@ -126,22 +123,24 @@ export const AdminShownInModifySection = ({
 
   const handleMovieSwap = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/movieSwap`,
+        {
+          selectedAlt,
+          selectedShowtime,
+          selectedReplace,
+        }
+      );
 
-    await axios
-      .post(`${import.meta.env.VITE_API_URL}/movieSwap`, {
-        selectedAlt,
-        selectedShowtime,
-        selectedReplace,
-      })
-      .then((res) => {
-        adminShowninToast();
-      })
-      .catch((err) => {
-        console.log(err);
-        adminErrorToast();
-      });
-
-    setSelectedShowDate("");
+      if (res.status === 200) adminShowninToast();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+      adminErrorToast();
+    } finally {
+      toggleDropDown();
+    }
   };
 
   const toggleDropDown = () => {

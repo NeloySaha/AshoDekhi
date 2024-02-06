@@ -1,8 +1,14 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { showLoginModal } from "../../../reducers/authSlice";
 
-export const HeroSection = ({ handleLoginState, signedPerson }) => {
+export const HeroSection = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, signedPerson } = useSelector(
+    (store) => store.authentication
+  );
+  const dispatch = useDispatch();
 
   return (
     <section className="section-hero">
@@ -20,10 +26,9 @@ export const HeroSection = ({ handleLoginState, signedPerson }) => {
           <div className="hero-btn-container">
             <button
               onClick={() => {
-                Object.keys(signedPerson).length !== 0 &&
-                signedPerson.person_type === "Customer"
+                isAuthenticated && signedPerson.person_type === "Customer"
                   ? navigate("/purchase")
-                  : handleLoginState();
+                  : dispatch(showLoginModal());
               }}
               className="btn btn-full"
             >

@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import HashLoader from "react-spinners/HashLoader";
+import { useDispatch } from "react-redux";
+import { showLoginModal, showSignModal } from "../reducers/authSlice";
 
-export const Footer = ({
-  handleSignState,
-  handleLoginState,
-  pageName = "",
-}) => {
+export const Footer = () => {
   const [locationData, setLocationData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  let pageName;
+  const location = useLocation();
+
+  location.pathname === "/" ? (pageName = "home") : (pageName = "");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,13 +95,23 @@ export const Footer = ({
       )}
 
       <div className="footer-link-container foot-reg">
-        <button className="footer-btn" onClick={handleSignState}>
+        <button
+          className="footer-btn"
+          onClick={() => {
+            dispatch(showSignModal());
+          }}
+        >
           Create account
         </button>
       </div>
 
       <div className="footer-link-container">
-        <button className="footer-btn" onClick={handleLoginState}>
+        <button
+          className="footer-btn"
+          onClick={() => {
+            dispatch(showLoginModal());
+          }}
+        >
           Sign in
         </button>
       </div>

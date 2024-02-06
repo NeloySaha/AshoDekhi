@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { setMovie } from "../../../reducers/cartSlice";
 
-export const MovieSelector = ({
-  userMovieId,
-  handleUserMovieChange,
-  movieData,
-  getMovieData,
-  userDate,
-  theatreId,
-}) => {
+export const MovieSelector = ({ movieData, setMovieData }) => {
   const override = {
     display: "block",
     margin: "1.6rem auto",
@@ -17,8 +12,16 @@ export const MovieSelector = ({
 
   const [loading, setLoading] = useState(false);
 
+  const { showtime_date: userDate, movie_id: userMovieId } = useSelector(
+    (store) => store.cart
+  );
+  const { id: theatreId } = useSelector((store) => store.currentLocation);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
+      if (userDate === "") return;
+
       setLoading(true);
       try {
         const response = await axios.post(
@@ -28,7 +31,8 @@ export const MovieSelector = ({
             userDate,
           }
         );
-        getMovieData(response.data);
+
+        setMovieData(response.data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -37,7 +41,7 @@ export const MovieSelector = ({
     };
 
     fetchData();
-  }, [userDate]);
+  }, [userDate, theatreId, setMovieData]);
 
   const movieOptions = movieData.map((movie, idx) => {
     return (
@@ -47,11 +51,11 @@ export const MovieSelector = ({
           id={idx}
           name="Select Movie"
           value={movie.id}
-          onChange={(e) => handleUserMovieChange(e)}
+          onChange={(e) => dispatch(setMovie(e.target.value))}
           checked={movie.id === userMovieId}
         />
 
-        <label className="form-movie-detail" htmlFor={movie.id}>
+        <label className="form-movie-detail" htmlFor={idx}>
           <div className="movie-option-box">
             <div className="movie-option-img-box">
               <img

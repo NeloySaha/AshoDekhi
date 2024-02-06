@@ -1,72 +1,46 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ShowtimesCard } from "./ShowtimesCard";
 import HashLoader from "react-spinners/HashLoader";
 import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const ShowTimesCollection = ({
-  userLocation,
-  currentMovieDetails,
-  handleLoginState,
-  signedPerson,
-}) => {
+import { ShowtimesCard } from "./ShowtimesCard";
+
+export const ShowTimesCollection = () => {
   const override = {
     display: "block",
     margin: "4.8rem auto",
   };
 
-  const [loading1, setLoading1] = useState(false);
-  const [loading2, setLoading2] = useState(false);
   const [showtimesData, setShowtimesData] = useState([]);
-  const theatreName = userLocation && userLocation.name;
+  const [loading, setLoading] = useState(false);
+
+  const { name: theatreName } = useSelector((store) => store.currentLocation);
   const [searchParams] = useSearchParams();
   const userGenre = searchParams.get("genre") || "All";
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading1(true);
       try {
-        await dataFetch();
+        setLoading(true);
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/showtimes`,
+          {
+            theatreName,
+            userGenre,
+          }
+        );
+
+        setShowtimesData(response.data);
       } catch (err) {
         console.log(err);
       } finally {
-        setLoading1(false);
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, [userLocation]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading2(true);
-      try {
-        await dataFetch();
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading2(false);
-      }
-    };
-
-    fetchData();
-  }, [userGenre]);
-
-  const dataFetch = async () => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/showtimes`,
-        {
-          theatreName,
-          userGenre,
-        }
-      );
-
-      setShowtimesData(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [theatreName, userGenre]);
 
   const movieShowtimes = [];
 
@@ -123,21 +97,13 @@ export const ShowTimesCollection = ({
   }
 
   const showtimesCards = movieShowtimes.map((showtime, idx) => {
-    return (
-      <ShowtimesCard
-        key={idx}
-        {...showtime}
-        handleLoginState={handleLoginState}
-        signedPerson={signedPerson}
-        currentMovieDetails={currentMovieDetails}
-      />
-    );
+    return <ShowtimesCard key={idx} {...showtime} />;
   });
 
   return (
     <section className="section-showtimes">
       <div className="showtimes-collection container">
-        {loading1 || loading2 ? (
+        {loading ? (
           <HashLoader cssOverride={override} color="#eb3656" />
         ) : (
           showtimesCards

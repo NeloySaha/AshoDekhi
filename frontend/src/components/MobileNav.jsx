@@ -1,23 +1,31 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout, showLoginModal, showSignModal } from "../reducers/authSlice";
+import { toggleMenuState } from "../reducers/mobileNavSlice";
 
-export const MobileNav = ({
-  menuState,
-  menuStyle,
-  setMenuState,
-  signedPerson,
-  handlelogout,
-  handleSignState,
-  handleLoginState,
-}) => {
+export const MobileNav = () => {
   const navigate = useNavigate();
+
+  const { isAuthenticated, signedPerson } = useSelector(
+    (store) => store.authentication
+  );
+  const { menuState } = useSelector((store) => store.mobileNav);
+
+  const dispatch = useDispatch();
+
+  const menuStyle = {
+    opacity: "1",
+    pointerEvents: "auto",
+    visibility: "visible",
+    transform: "translateX(0)",
+  };
 
   return (
     <>
       <div className="mobile-nav-menu" style={menuState ? menuStyle : {}}>
         <button
           className="btn-menu-close"
-          onClick={() => setMenuState((prev) => !prev)}
+          onClick={() => dispatch(toggleMenuState())}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +48,7 @@ export const MobileNav = ({
             <button
               className="mobile-nav-item"
               onClick={() => {
-                setMenuState((prev) => !prev);
+                dispatch(toggleMenuState());
                 navigate("/");
               }}
             >
@@ -51,7 +59,7 @@ export const MobileNav = ({
             <button
               className="mobile-nav-item"
               onClick={() => {
-                setMenuState((prev) => !prev);
+                dispatch(toggleMenuState());
                 navigate("/showtimes");
               }}
             >
@@ -62,34 +70,33 @@ export const MobileNav = ({
             <button
               className="mobile-nav-item"
               onClick={() => {
-                setMenuState((prev) => !prev);
+                dispatch(toggleMenuState());
                 navigate("/aboutus");
               }}
             >
               About Us
             </button>
           </li>
-          {Object.keys(signedPerson).length !== 0 &&
-            signedPerson.person_type === "Admin" && (
-              <li className="mobile-nav-list-item">
-                <button
-                  className="mobile-nav-item"
-                  onClick={() => {
-                    setMenuState((prev) => !prev);
-                    navigate("/admin");
-                  }}
-                >
-                  Admin
-                </button>
-              </li>
-            )}
+          {isAuthenticated && signedPerson.person_type === "Admin" && (
+            <li className="mobile-nav-list-item">
+              <button
+                className="mobile-nav-item"
+                onClick={() => {
+                  dispatch(toggleMenuState());
+                  navigate("/admin");
+                }}
+              >
+                Admin
+              </button>
+            </li>
+          )}
 
           <li className="mobile-nav-list-item">
             <button
               className="mobile-nav-item"
               onClick={() => {
-                setMenuState((prev) => !prev);
-                handleSignState();
+                dispatch(toggleMenuState());
+                dispatch(showSignModal());
               }}
             >
               Sign Up
@@ -99,21 +106,21 @@ export const MobileNav = ({
             <button
               className="mobile-nav-item"
               onClick={() => {
-                setMenuState((prev) => !prev);
-                handleLoginState();
+                dispatch(toggleMenuState());
+                dispatch(showLoginModal());
               }}
             >
               Sign in
             </button>
           </li>
 
-          {Object.keys(signedPerson).length > 0 && (
+          {isAuthenticated && (
             <li className="mobile-nav-list-item">
               <button
                 className="mobile-nav-item"
                 onClick={() => {
-                  handlelogout();
-                  setMenuState((prev) => !prev);
+                  dispatch(logout());
+                  dispatch(toggleMenuState());
                 }}
               >
                 Log out
@@ -122,7 +129,7 @@ export const MobileNav = ({
           )}
         </ul>
 
-        {Object.keys(signedPerson).length !== 0 && (
+        {isAuthenticated && (
           <p className="mobile-nav-name">
             Signed in as ({signedPerson.first_name})
           </p>

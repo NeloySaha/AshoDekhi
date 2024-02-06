@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useSelector } from "react-redux";
 
-export const CustomerInfoSection = ({ signedPerson }) => {
+export const CustomerInfoSection = () => {
   const [cusProData, setCusProData] = useState({});
   const [cusTicketData, setCusTicketData] = useState([]);
   const override = {
     display: "block",
     margin: "2.4rem auto",
   };
+
+  const { signedPerson } = useSelector((store) => store.authentication);
 
   const [loading1, setLoading1] = useState(true);
   const [loading2, setLoading2] = useState(true);

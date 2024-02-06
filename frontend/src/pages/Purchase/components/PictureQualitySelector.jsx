@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { setShowDetail } from "../../../reducers/cartSlice";
 
-export const PictureQualitySelector = ({
-  getHallData,
-  hallData,
-  userMovieId,
-  handleUserHallShow,
-  userShowtimeId,
-  userHallId,
-  userSeatPrice,
-  theatreId,
-  userDate,
-}) => {
+export const PictureQualitySelector = ({ hallData, setHallData }) => {
   const override = {
     display: "block",
     margin: "1.6rem auto",
   };
+
+  const { id: theatreId } = useSelector((store) => store.currentLocation);
+  const {
+    showtime_date: userDate,
+    movie_id: userMovieId,
+    hall_id: userHallId,
+    showtime_id: userShowtimeId,
+    seat_price: userSeatPrice,
+  } = useSelector((store) => store.cart);
+
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const newHallData = [];
@@ -34,7 +37,7 @@ export const PictureQualitySelector = ({
             userMovieId,
           }
         );
-        getHallData(response.data);
+        setHallData(response.data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -43,7 +46,7 @@ export const PictureQualitySelector = ({
     };
 
     fetchData();
-  }, [userMovieId]);
+  }, [userMovieId, theatreId, userDate, setHallData]);
 
   const checkedColor = (val) => {
     return {
@@ -94,7 +97,7 @@ export const PictureQualitySelector = ({
             id={show.showtime_id[idx]}
             name="Select picture quality"
             value={valStr}
-            onChange={(e) => handleUserHallShow(e)}
+            onChange={(e) => dispatch(setShowDetail(e.target.value))}
             checked={userAns === valStr}
           />
 
@@ -106,7 +109,10 @@ export const PictureQualitySelector = ({
     });
 
     return (
-      <div className="form-options-hall">
+      <div
+        className="form-options-hall"
+        key={`${show.hall_name} (${show.show_type})`}
+      >
         <div className="form-picture-quality">
           {`${show.hall_name} (${show.show_type})`}
           <div className="form-showtimes">{options}</div>

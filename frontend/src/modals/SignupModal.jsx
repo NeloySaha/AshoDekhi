@@ -1,14 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import BarLoader from "react-spinners/BarLoader";
+import { useState } from "react";
 
-export const SignupModal = ({
-  handleSignState,
-  signupSuccessToast,
-  signupFailedToast,
-}) => {
+import BarLoader from "react-spinners/BarLoader";
+import { signupFailedToast, signupSuccessToast } from "../toasts/toast";
+import { useDispatch } from "react-redux";
+import { hideSignModal } from "../reducers/authSlice";
+
+export const SignupModal = () => {
   const [loading, setLoading] = useState(false);
   const [passViewState, setPassViewState] = useState(false);
   const [signupDetails, setSignupDetails] = useState({
@@ -18,6 +16,7 @@ export const SignupModal = ({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
 
   const handleSignupDetails = (e) => {
     const name = e.target.name;
@@ -58,12 +57,12 @@ export const SignupModal = ({
         );
 
         if (response.status === 200) {
-          handleSignState();
+          dispatch(hideSignModal());
           signupSuccessToast(response.data.message);
         }
       } catch (err) {
         console.log("Error during registration:", err.response.data.message);
-        handleSignState();
+        dispatch(hideSignModal());
         signupFailedToast(err.response.data.message);
       } finally {
         setLoading(false);
@@ -88,7 +87,7 @@ export const SignupModal = ({
           <button
             type="button"
             className="btn-form-exit"
-            onClick={handleSignState}
+            onClick={() => dispatch(hideSignModal())}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -222,10 +221,9 @@ export const SignupModal = ({
             </div>
           </div>
 
-          <button type="submit" className="btn-reg">
+          <button type="submit" className="btn-reg" disabled={loading}>
             {loading ? <BarLoader color="#e6e6e8" /> : "Sign up"}
           </button>
-          <ToastContainer />
         </div>
       </form>
     </div>

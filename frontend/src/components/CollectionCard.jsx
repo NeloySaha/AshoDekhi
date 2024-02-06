@@ -1,4 +1,6 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { showLoginModal } from "../reducers/authSlice";
 
 export const CollectionCard = ({
   id,
@@ -8,11 +10,12 @@ export const CollectionCard = ({
   duration,
   release_date,
   genres,
-
-  signedPerson,
-  handleLoginState,
 }) => {
   const navigate = useNavigate();
+  const { isAuthenticated, signedPerson } = useSelector(
+    (store) => store.authentication
+  );
+  const dispatch = useDispatch();
 
   const releaseDate = new Date(release_date).toLocaleDateString("en-GB");
   const ourRating = rating;
@@ -123,10 +126,9 @@ export const CollectionCard = ({
         className="book-btn btn"
         onClick={(e) => {
           e.stopPropagation();
-          Object.keys(signedPerson).length !== 0 &&
-          signedPerson.person_type === "Customer"
+          isAuthenticated && signedPerson.person_type === "Customer"
             ? navigate("/purchase")
-            : handleLoginState();
+            : dispatch(showLoginModal());
         }}
       >
         Get ticket

@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CollectionCard } from "../../../components/CollectionCard";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 
-export const HomeCollection = ({
-  currentMovieDetails,
-  signedPerson,
-  handleLoginState,
-}) => {
+export const HomeCollection = () => {
   const override = {
     display: "block",
     marginLeft: "auto",
@@ -34,16 +30,8 @@ export const HomeCollection = ({
     fetchData();
   }, []);
 
-  const latestMoviesCards = movieData.map((latestMovie, idx) => {
-    return (
-      <CollectionCard
-        key={latestMovie.id}
-        {...latestMovie}
-        signedPerson={signedPerson}
-        handleLoginState={handleLoginState}
-        currentMovieDetails={currentMovieDetails}
-      />
-    );
+  const latestMoviesCards = movieData.map((latestMovie) => {
+    return <CollectionCard key={latestMovie.id} {...latestMovie} />;
   });
 
   return (

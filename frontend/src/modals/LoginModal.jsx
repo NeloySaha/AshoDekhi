@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import BarLoader from "react-spinners/BarLoader";
+import { useDispatch } from "react-redux";
+import { hideLoginModal, login } from "../reducers/authSlice";
+import { loginFailedToast, loginSuccessToast } from "../toasts/toast";
 
-export const LoginModal = ({
-  handleLoginState,
-  handleSignedPerson,
-  loginFailedToast,
-}) => {
+export const LoginModal = () => {
   const [loading, setLoading] = useState(false);
   const [passViewState, setPassViewState] = useState(false);
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
 
   const togglePassState = (e) => {
     e.preventDefault();
@@ -41,10 +42,12 @@ export const LoginModal = ({
           }
         );
 
-        handleSignedPerson(response.data);
-        handleLoginState();
+        dispatch(login(response.data[0]));
+        dispatch(hideLoginModal());
+
+        loginSuccessToast();
       } catch (err) {
-        handleLoginState();
+        dispatch(hideLoginModal());
         loginFailedToast(err.response.data.message);
         console.log("Couldn't log in");
       } finally {
@@ -71,7 +74,7 @@ export const LoginModal = ({
           <button
             type="button"
             className="btn-form-exit"
-            onClick={handleLoginState}
+            onClick={() => dispatch(hideLoginModal())}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +164,7 @@ export const LoginModal = ({
             </div>
           </div>
 
-          <button type="submit" className="btn-reg">
+          <button type="submit" className="btn-reg" disabled={loading}>
             {loading ? <BarLoader color="#e6e6e8" /> : "Sign in"}
           </button>
         </div>

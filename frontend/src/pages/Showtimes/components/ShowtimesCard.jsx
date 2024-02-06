@@ -1,24 +1,30 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { showLoginModal } from "../../../reducers/authSlice";
 
 export const ShowtimesCard = (props) => {
   const dates3d = props["3D"] ? Object.keys(props["3D"]) : [];
   const dates2d = props["2D"] ? Object.keys(props["2D"]) : [];
 
   const navigate = useNavigate();
+  const { isAuthenticated, signedPerson } = useSelector(
+    (store) => store.authentication
+  );
+  const dispatch = useDispatch();
 
   const show_types_3d =
     dates3d.length &&
     dates3d.map((curDate, id) => {
       const curStartTimes = props["3D"][curDate].map((curStartTime) => {
+        console.log(props);
         return (
           <li key={`${props["movie_name"]} 3d ${curStartTime}`}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
-                Object.keys(props.signedPerson).length !== 0 &&
-                props.signedPerson.person_type === "Customer"
+                isAuthenticated && signedPerson.person_type === "Customer"
                   ? navigate("/purchase")
-                  : props.handleLoginState();
+                  : dispatch(showLoginModal());
               }}
             >
               {curStartTime}
@@ -53,10 +59,9 @@ export const ShowtimesCard = (props) => {
             <button
               className="showtimes-startime-btn"
               onClick={() => {
-                Object.keys(props.signedPerson).length !== 0 &&
-                props.signedPerson.person_type === "Customer"
+                isAuthenticated && signedPerson.person_type === "Customer"
                   ? navigate("/purchase")
-                  : props.handleLoginState();
+                  : dispatch(showLoginModal());
               }}
             >
               {curStartTime}
