@@ -13,7 +13,7 @@ export const ShowTimesCollection = () => {
   };
 
   const [showtimesData, setShowtimesData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { name: theatreName } = useSelector((store) => store.currentLocation);
   const [searchParams] = useSearchParams();
@@ -39,7 +39,7 @@ export const ShowTimesCollection = () => {
       }
     };
 
-    fetchData();
+    theatreName !== "" && userGenre && fetchData();
   }, [theatreName, userGenre]);
 
   const movieShowtimes = [];

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { showLoginModal } from "../../../reducers/authSlice";
+import { resetCart } from "../../../reducers/cartSlice";
 
 export const HeroSection = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export const HeroSection = () => {
           <div className="hero-btn-container">
             <button
               onClick={() => {
+                dispatch(resetCart());
                 isAuthenticated && signedPerson.person_type === "Customer"
                   ? navigate("/purchase")
                   : dispatch(showLoginModal());

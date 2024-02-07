@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showLoginModal } from "../reducers/authSlice";
+import { resetCart } from "../reducers/cartSlice";
 
 export const CollectionCard = ({
   id,
@@ -126,6 +127,7 @@ export const CollectionCard = ({
         className="book-btn btn"
         onClick={(e) => {
           e.stopPropagation();
+          dispatch(resetCart());
           isAuthenticated && signedPerson.person_type === "Customer"
             ? navigate("/purchase")
             : dispatch(showLoginModal());

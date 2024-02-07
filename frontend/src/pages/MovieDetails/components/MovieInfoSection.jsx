@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoginModal } from "../../../reducers/authSlice";
+import { resetCart } from "../../../reducers/cartSlice";
 
 export const MovieInfoSection = () => {
   const [movieData, setMovieData] = useState({});
@@ -126,6 +127,7 @@ export const MovieInfoSection = () => {
           <button
             className="showtimes-startime-btn"
             onClick={() => {
+              dispatch(resetCart());
               isAuthenticated && signedPerson.person_type === "Customer"
                 ? navigate("/purchase")
                 : dispatch(showLoginModal());
@@ -160,6 +162,7 @@ export const MovieInfoSection = () => {
           <button
             className="showtimes-startime-btn"
             onClick={() => {
+              dispatch(resetCart());
               isAuthenticated && signedPerson.person_type === "Customer"
                 ? navigate("/purchase")
                 : dispatch(showLoginModal());

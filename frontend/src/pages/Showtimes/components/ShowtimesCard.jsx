@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showLoginModal } from "../../../reducers/authSlice";
+import { resetCart } from "../../../reducers/cartSlice";
 
 export const ShowtimesCard = (props) => {
   const dates3d = props["3D"] ? Object.keys(props["3D"]) : [];
@@ -16,12 +17,12 @@ export const ShowtimesCard = (props) => {
     dates3d.length &&
     dates3d.map((curDate, id) => {
       const curStartTimes = props["3D"][curDate].map((curStartTime) => {
-        console.log(props);
         return (
           <li key={`${props["movie_name"]} 3d ${curStartTime}`}>
             <button
               className="showtimes-startime-btn"
               onClick={() => {
+                dispatch(resetCart());
                 isAuthenticated && signedPerson.person_type === "Customer"
                   ? navigate("/purchase")
                   : dispatch(showLoginModal());
@@ -59,6 +60,7 @@ export const ShowtimesCard = (props) => {
             <button
               className="showtimes-startime-btn"
               onClick={() => {
+                dispatch(resetCart());
                 isAuthenticated && signedPerson.person_type === "Customer"
                   ? navigate("/purchase")
                   : dispatch(showLoginModal());
