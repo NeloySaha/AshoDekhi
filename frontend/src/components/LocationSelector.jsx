@@ -4,6 +4,7 @@ import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLocation } from "../reducers/locationSlice";
+import { resetCart } from "../reducers/cartSlice";
 
 export const LocationSelector = () => {
   const [locationData, setLocationData] = useState([]);
@@ -21,7 +22,7 @@ export const LocationSelector = () => {
         );
 
         setLocationData(response.data);
-        userLocation.id === "" && dispatch(selectLocation(response.data[0]));
+        dispatch(selectLocation(response.data[0]));
       } catch (err) {
         console.log(err);
       } finally {
@@ -30,8 +31,11 @@ export const LocationSelector = () => {
     };
 
     fetchData();
-    // userLocation.id causes refetch, but that's not necessary
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(resetCart());
+  }, [userLocation.id, dispatch]);
 
   const locationOptions = locationData?.map((location, idx) => {
     return (

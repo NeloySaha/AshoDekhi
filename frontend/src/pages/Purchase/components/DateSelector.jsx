@@ -31,7 +31,7 @@ export const DateSelector = () => {
       }
     };
 
-    fetchData();
+    theatreId !== "" && fetchData();
   }, [theatreId, dispatch]);
 
   const checkedColor = (val) => {
