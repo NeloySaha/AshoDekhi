@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import "./styles/styles.css";
 import "./styles/queries.css";
@@ -95,6 +96,7 @@ function App() {
       {signModalState && <SignupModal />}
       {loginModalState && <LoginModal />}
       <MobileNav />
+      <SpeedInsights />
     </>
   );
 }
