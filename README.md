@@ -36,13 +36,3 @@ _Backend/API is hosted at render.com on free tier. So, it goes inactive after 15
 **Server/BackEnd/API:** Node, Express
 
 **Database:** MySQL
-
-## Contribution🤝
-
-Contributions are welcome! If you'd like to contribute to CrowdForge, please follow these guidelines:
-
-- Fork the repository.
-- Create a new branch for your feature or bug fix.
-- Commit your changes with descriptive commit messages.
-- Push your changes to your fork.
-- Create a pull request detailing your changes.
