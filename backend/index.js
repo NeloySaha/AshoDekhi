@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const cors = require("cors");
 const env = require("dotenv").config();
 
@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://asho-dekhi.vercel.app"],
+    origin: ["http://localhost:5173"],
     methods: ["POST", "GET"],
   })
 );
@@ -16,10 +16,10 @@ app.use(express.json());
 let db;
 
 const configuration = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: "localhost",
+  user: "root",
+  password: "Allison19",
+  database: "example",
 };
 
 // Manually setting connection
