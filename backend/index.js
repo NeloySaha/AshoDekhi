@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["localhost:5173"],
     methods: ["POST", "GET"],
   })
 );
@@ -16,10 +16,10 @@ app.use(express.json());
 let db;
 
 const configuration = {
-  host: "localhost",
-  user: "root",
-  password: "Allison19",
-  database: "example",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
 // Manually setting connection
