@@ -23,6 +23,7 @@ export const CustomerInfoSection = () => {
           `${import.meta.env.VITE_API_URL}/customerProfile`,
           {
             email: signedPerson.email,
+            password: signedPerson.password,
           }
         );
         setCusProData(response.data[0]);

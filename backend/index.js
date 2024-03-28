@@ -11,6 +11,7 @@ app.use(
     methods: ["POST", "GET"],
   })
 );
+
 app.use(express.json());
 
 let db;
@@ -311,7 +312,7 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  const sql = `SELECT email, first_name, person_type FROM person WHERE email=? AND password=?`;
+  const sql = `SELECT email, first_name, person_type, password FROM person WHERE email=? AND password=?`;
 
   db.query(sql, [email, password], (err, data) => {
     if (err) return res.json(err);
@@ -386,9 +387,11 @@ app.post("/otherMovies", (req, res) => {
 
 app.post("/customerProfile", (req, res) => {
   const email = req.body.email;
-  const sql = `SELECT * FROM person where email=?`;
+  const password = req.body.password;
 
-  db.query(sql, [email], (err, data) => {
+  const sql = `SELECT * FROM person where email=? and password=?`;
+
+  db.query(sql, [email, password], (err, data) => {
     if (err) return res.json(err);
 
     return res.json(data);
