@@ -142,13 +142,9 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
       adminErrorToast();
     } finally {
       toggleDropDown();
-      setLatestShowDates([]);
       setSelectedShowDate("");
-      setShowtimeData([]);
       setSelectedShowtime("");
-      setMovieReplaceData([]);
       setSelectedReplace("");
-      setMovieAltData([]);
       setSelectedAlt("");
       setLoading(false);
     }
