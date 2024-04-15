@@ -9,6 +9,7 @@ export const AdminShowtimesAddSection = ({
 }) => {
   const [lastShowDate, setLastShowDate] = useState("");
   const [adminShowtimeDropdown, setAdminShowtimeDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
   let showDateHtml = [];
 
   useEffect(() => {
@@ -92,6 +93,7 @@ export const AdminShowtimesAddSection = ({
     let showtimeId;
 
     try {
+      setLoading(true);
       const response1 = await axios.post(
         `${import.meta.env.VITE_API_URL}/showdateAdd`,
         {
@@ -111,6 +113,7 @@ export const AdminShowtimesAddSection = ({
       adminErrorToast();
     } finally {
       setSelectedShowDate("");
+      setLoading(false);
     }
   };
 
@@ -161,11 +164,10 @@ export const AdminShowtimesAddSection = ({
           <button
             className="btn-admin"
             type="submit"
-            onClick={(e) => {
-              showtimeAdd(e);
-            }}
+            disabled={loading}
+            onClick={showtimeAdd}
           >
-            CONFIRM
+            {loading ? "Loading..." : "CONFIRM"}
           </button>
         </form>
       )}

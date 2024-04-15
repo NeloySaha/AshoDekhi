@@ -16,6 +16,7 @@ export const AdminMovieAddSection = () => {
     directors: "",
   });
   const [adminMovieDropDown, setAdminMovieDropDown] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleAdminSection = () => {
     setAdminMovieDropDown((prevState) => !prevState);
@@ -53,6 +54,7 @@ export const AdminMovieAddSection = () => {
     ) {
       try {
         // Add the movie
+        setLoading(true);
         const movieResponse = await axios.post(
           `${import.meta.env.VITE_API_URL}/adminMovieAdd`,
           {
@@ -89,18 +91,6 @@ export const AdminMovieAddSection = () => {
             // Check if it's the last director
             if (idx === movieInfo.directors.length - 1) {
               adminMovieToast();
-              setMovieInfo({
-                movieName: "",
-                imagePath: "",
-                language: "",
-                description: "",
-                rating: "",
-                duration: "",
-                cast: "",
-                relDate: "",
-                genres: "",
-                directors: "",
-              });
             }
           }
 
@@ -109,6 +99,20 @@ export const AdminMovieAddSection = () => {
       } catch (err) {
         console.error(err);
         adminErrorToast();
+      } finally {
+        setMovieInfo({
+          movieName: "",
+          imagePath: "",
+          language: "",
+          description: "",
+          rating: "",
+          duration: "",
+          cast: "",
+          relDate: "",
+          genres: "",
+          directors: "",
+        });
+        setLoading(false);
       }
     }
   };
@@ -153,12 +157,7 @@ export const AdminMovieAddSection = () => {
       </div>
 
       {adminMovieDropDown && (
-        <form
-          className="form-movie-add"
-          onSubmit={(e) => {
-            movieAdd(e);
-          }}
-        >
+        <form className="form-movie-add" onSubmit={movieAdd}>
           <div>
             <p>Movie Name:</p>
             <input
@@ -258,8 +257,8 @@ export const AdminMovieAddSection = () => {
             />
           </div>
 
-          <button type="submit" className="btn-admin">
-            CONFIRM
+          <button type="submit" className="btn-admin" disabled={loading}>
+            {loading ? "Loading..." : "CONFIRM"}
           </button>
         </form>
       )}

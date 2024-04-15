@@ -12,6 +12,7 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
   const [selectedReplace, setSelectedReplace] = useState("");
   const [movieAltData, setMovieAltData] = useState([]);
   const [selectedAlt, setSelectedAlt] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,6 +125,7 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
   const handleMovieSwap = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/movieSwap`,
         {
@@ -140,6 +142,15 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
       adminErrorToast();
     } finally {
       toggleDropDown();
+      setLatestShowDates([]);
+      setSelectedShowDate("");
+      setShowtimeData([]);
+      setSelectedShowtime("");
+      setMovieReplaceData([]);
+      setSelectedReplace("");
+      setMovieAltData([]);
+      setSelectedAlt("");
+      setLoading(false);
     }
   };
 
@@ -330,9 +341,8 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
               <button
                 className="btn-admin"
                 type="submit"
-                onClick={(e) => {
-                  handleMovieSwap(e);
-                }}
+                disabled={loading}
+                onClick={handleMovieSwap}
               >
                 CONFIRM
               </button>
