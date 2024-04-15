@@ -12,19 +12,19 @@ export const AdminShowtimesAddSection = ({
   const [loading, setLoading] = useState(false);
   let showDateHtml = [];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/lastShowDate`
-        );
-        setLastShowDate(response.data[0].lastDate);
-      } catch (err) {
-        console.error(err);
-        adminErrorToast();
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/lastShowDate`
+      );
+      setLastShowDate(response.data[0].lastDate);
+    } catch (err) {
+      console.error(err);
+      adminErrorToast();
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -113,6 +113,7 @@ export const AdminShowtimesAddSection = ({
       adminErrorToast();
     } finally {
       setSelectedShowDate("");
+      fetchData();
       setLoading(false);
     }
   };
