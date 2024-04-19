@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { adminErrorToast, adminMovieToast } from "../../../toasts/toast";
 
 export const AdminMovieAddSection = () => {
+  const { signedPerson } = useSelector((store) => store.authentication);
+
   const [movieInfo, setMovieInfo] = useState({
     movieName: "",
     imagePath: "",
@@ -58,6 +61,9 @@ export const AdminMovieAddSection = () => {
         const movieResponse = await axios.post(
           `${import.meta.env.VITE_API_URL}/adminMovieAdd`,
           {
+            email: signedPerson.email,
+            password: signedPerson.password,
+
             name: movieInfo.movieName,
             image_path: movieInfo.imagePath,
             language: movieInfo.language,
@@ -75,6 +81,8 @@ export const AdminMovieAddSection = () => {
           // Add genres
           for (const genre of movieInfo.genres) {
             await axios.post(`${import.meta.env.VITE_API_URL}/genreInsert`, {
+              email: signedPerson.email,
+              password: signedPerson.password,
               movieId,
               genre,
             });
@@ -84,6 +92,9 @@ export const AdminMovieAddSection = () => {
           for (let idx = 0; idx < movieInfo.directors.length; idx++) {
             const director = movieInfo.directors[idx];
             await axios.post(`${import.meta.env.VITE_API_URL}/directorInsert`, {
+              email: signedPerson.email,
+              password: signedPerson.password,
+
               movieId,
               director,
             });
@@ -98,7 +109,7 @@ export const AdminMovieAddSection = () => {
         }
       } catch (err) {
         console.error(err);
-        adminErrorToast();
+        adminErrorToast(err.response.data.message);
       } finally {
         setMovieInfo({
           movieName: "",

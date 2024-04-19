@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { adminErrorToast, adminShowninToast } from "../../../toasts/toast";
+import { useSelector } from "react-redux";
 
 export const AdminShownInModifySection = ({ selectedDate }) => {
+  const { signedPerson } = useSelector((store) => store.authentication);
   const [moviePlaylistDropDown, setMoviePlaylistDropDown] = useState(false);
   const [latestShowDates, setLatestShowDates] = useState([]);
   const [selectedShowDate, setSelectedShowDate] = useState("");
@@ -40,6 +42,8 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
           const response = await axios.post(
             `${import.meta.env.VITE_API_URL}/adminShowtimes`,
             {
+              email: signedPerson.email,
+              password: signedPerson.password,
               selectedShowDate,
             }
           );
@@ -47,7 +51,7 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
           setShowtimeData(response.data);
         } catch (err) {
           console.error(err);
-          adminErrorToast();
+          adminErrorToast(err.response.data.message);
         } finally {
           setSelectedShowtime("");
         }
@@ -55,7 +59,7 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
     };
 
     fetchData();
-  }, [selectedShowDate]);
+  }, [selectedShowDate, signedPerson.email, signedPerson.password]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,20 +67,22 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/movieReplaceFrom`,
           {
+            email: signedPerson.email,
+            password: signedPerson.password,
             selectedShowtime,
           }
         );
         setMovieReplaceData(response.data);
       } catch (err) {
         console.error(err);
-        adminErrorToast();
+        adminErrorToast(err.response.data.message);
       } finally {
         setSelectedReplace("");
       }
     };
 
     fetchData();
-  }, [selectedShowtime]);
+  }, [selectedShowtime, signedPerson.email, signedPerson.password]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,20 +90,27 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/movieReplaceTo`,
           {
+            email: signedPerson.email,
+            password: signedPerson.password,
             selectedShowtime,
           }
         );
         setMovieAltData(response.data);
       } catch (err) {
         console.error(err);
-        adminErrorToast();
+        adminErrorToast(err.response.data.message);
       } finally {
         setSelectedAlt("");
       }
     };
 
     fetchData();
-  }, [selectedReplace, selectedShowtime]);
+  }, [
+    selectedReplace,
+    selectedShowtime,
+    signedPerson.email,
+    signedPerson.password,
+  ]);
 
   const checkedColor = (val, checkVal) => {
     return {
@@ -129,6 +142,8 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/movieSwap`,
         {
+          email: signedPerson.email,
+          password: signedPerson.password,
           selectedAlt,
           selectedShowtime,
           selectedReplace,
@@ -139,7 +154,7 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
       console.log(res);
     } catch (err) {
       console.log(err);
-      adminErrorToast();
+      adminErrorToast(err.response.data.message);
     } finally {
       toggleDropDown();
       setSelectedShowDate("");
@@ -220,7 +235,7 @@ export const AdminShownInModifySection = ({ selectedDate }) => {
     </div>
   ));
 
-  const replaceOptionsHtml = movieReplaceData.map((movieObj, i) => (
+  const replaceOptionsHtml = movieReplaceData?.map((movieObj, i) => (
     <div
       className="admin-radio-input-container"
       key={i + 1}

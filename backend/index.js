@@ -479,6 +479,11 @@ app.get("/totalTicketPerMovie", (req, res) => {
 });
 
 app.post("/adminMovieAdd", (req, res) => {
+  //admin revalidation
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const name = req.body.name;
   const image_path = req.body.image_path;
   const language = req.body.language;
@@ -491,34 +496,46 @@ app.post("/adminMovieAdd", (req, res) => {
   const sql1 = `Insert into movie (name,image_path,language,synopsis,rating,duration,top_cast,release_date)
   values
   (?,?,?,?,?,?,?,?)`;
-
   const sql2 = "SELECT LAST_INSERT_ID() as last_id";
 
-  db.query(
-    sql1,
-    [
-      name,
-      image_path,
-      language,
-      synopsis,
-      rating,
-      duration,
-      top_cast,
-      release_date,
-    ],
-    (err1, data1) => {
-      if (err1) return res.json(err1);
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
+    if (err) return res.json(err);
 
-      db.query(sql2, (err2, data2) => {
-        if (err2) return res.json(err2);
-
-        return res.json(data2);
-      });
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
     }
-  );
+
+    db.query(
+      sql1,
+      [
+        name,
+        image_path,
+        language,
+        synopsis,
+        rating,
+        duration,
+        top_cast,
+        release_date,
+      ],
+      (err1, data1) => {
+        if (err1) return res.json(err1);
+
+        db.query(sql2, (err2, data2) => {
+          if (err2) return res.json(err2);
+
+          return res.json(data2);
+        });
+      }
+    );
+  });
 });
 
 app.post("/genreInsert", (req, res) => {
+  //admin revalidation
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const movieId = req.body.movieId;
   const genre = req.body.genre;
 
@@ -526,14 +543,26 @@ app.post("/genreInsert", (req, res) => {
   values
   (?,?)`;
 
-  db.query(sql, [movieId, genre], (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, [movieId, genre], (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 
 app.post("/directorInsert", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const movieId = req.body.movieId;
   const director = req.body.director;
 
@@ -541,10 +570,18 @@ app.post("/directorInsert", (req, res) => {
   values
   (?,?)`;
 
-  db.query(sql, [movieId, director], (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, [movieId, director], (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 
@@ -559,8 +596,11 @@ app.get("/lastShowDate", (req, res) => {
 });
 
 app.post("/showdateAdd", (req, res) => {
-  const showDate = req.body.selectedShowDate;
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
 
+  const showDate = req.body.selectedShowDate;
   const sql1 = `Insert into showtimes (movie_start_time,show_type,showtime_date,price_per_seat)
   values
   ('11:00 am','2D',?,350),
@@ -569,18 +609,30 @@ app.post("/showdateAdd", (req, res) => {
 
   const sql2 = "SELECT LAST_INSERT_ID() as last_id";
 
-  db.query(sql1, [showDate, showDate, showDate], (err1, data1) => {
-    if (err1) return res.json(err1);
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
+    if (err) return res.json(err);
 
-    db.query(sql2, (err2, data2) => {
-      if (err2) return res.json(err2);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
 
-      return res.json(data2);
+    db.query(sql1, [showDate, showDate, showDate], (err1, data1) => {
+      if (err1) return res.json(err1);
+
+      db.query(sql2, (err2, data2) => {
+        if (err2) return res.json(err2);
+
+        return res.json(data2);
+      });
     });
   });
 });
 
 app.post("/shownInUpdate", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   let showId = req.body.showtimeId;
   let showIdArr = [];
 
@@ -599,10 +651,18 @@ app.post("/shownInUpdate", (req, res) => {
   (5,?,1),(6,?,2),(1,?,3),(2,?,4),(5,?,5),(6,?,6),(1,?,7),(2,?,8),
   (5,?,1),(6,?,2),(1,?,3),(2,?,4),(4,?,5),(6,?,6),(1,?,7),(2,?,8)`;
 
-  db.query(sql, showIdArr, (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, showIdArr, (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 
@@ -627,52 +687,100 @@ app.get("/adminLatestShowDates", (req, res) => {
 });
 
 app.post("/adminShowtimes", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const showdate = req.body.selectedShowDate;
 
   const sql = `SELECT id,movie_start_time,show_type FROM showtimes WHERE showtime_date=?`;
 
-  db.query(sql, [showdate], (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, [showdate], (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 
 app.post("/movieReplaceFrom", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const showtimeId = req.body.selectedShowtime;
 
   const sql = `SELECT DISTINCT M.name, Sh.movie_id FROM shown_in Sh JOIN movie M on Sh.movie_id=M.id WHERE Sh.showtime_id = ?`;
 
-  db.query(sql, [showtimeId], (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, [showtimeId], (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 
 app.post("/movieReplaceTo", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const showtimeId = req.body.selectedShowtime;
 
   const sql = `SELECT name, id FROM movie WHERE id NOT IN ( SELECT DISTINCT M.id FROM shown_in Sh JOIN movie M ON Sh.movie_id = M.id WHERE Sh.showtime_id = ? )`;
 
-  db.query(sql, [showtimeId], (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, [showtimeId], (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 
 app.post("/movieSwap", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const sql0 = `SELECT * from person WHERE email = ? and password = ? and person_type = ?`;
+
   const updatedMovieId = req.body.selectedAlt;
   const showtime_id = req.body.selectedShowtime;
   const prevMovieId = req.body.selectedReplace;
 
   const sql = `UPDATE shown_in SET movie_id=? WHERE showtime_id=? AND movie_id=?`;
 
-  db.query(sql, [updatedMovieId, showtime_id, prevMovieId], (err, data) => {
+  db.query(sql0, [email, password, "Admin"], (err, data) => {
     if (err) return res.json(err);
 
-    return res.json(data);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Sorry, You are not Admin!" });
+    }
+
+    db.query(sql, [updatedMovieId, showtime_id, prevMovieId], (err, data) => {
+      if (err) return res.json(err);
+
+      return res.json(data);
+    });
   });
 });
 

@@ -49,7 +49,6 @@ export const LoginModal = () => {
       } catch (err) {
         dispatch(hideLoginModal());
         loginFailedToast(err.response.data.message);
-        console.log("Couldn't log in");
       } finally {
         setLoading(false);
         setLoginDetails({

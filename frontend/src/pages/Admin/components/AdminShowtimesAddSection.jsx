@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { adminErrorToast, adminShowtimeToast } from "../../../toasts/toast";
 
 export const AdminShowtimesAddSection = ({
@@ -7,6 +8,7 @@ export const AdminShowtimesAddSection = ({
   setSelectedShowDate,
   handleSelectedDate,
 }) => {
+  const { signedPerson } = useSelector((store) => store.authentication);
   const [lastShowDate, setLastShowDate] = useState("");
   const [adminShowtimeDropdown, setAdminShowtimeDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -97,6 +99,8 @@ export const AdminShowtimesAddSection = ({
       const response1 = await axios.post(
         `${import.meta.env.VITE_API_URL}/showdateAdd`,
         {
+          email: signedPerson.email,
+          password: signedPerson.password,
           selectedShowDate,
         }
       );
@@ -104,13 +108,15 @@ export const AdminShowtimesAddSection = ({
       showtimeId = response1.data && response1.data[0].last_id;
 
       await axios.post(`${import.meta.env.VITE_API_URL}/shownInUpdate`, {
+        email: signedPerson.email,
+        password: signedPerson.password,
         showtimeId,
       });
 
       adminShowtimeToast();
     } catch (err) {
       console.error(err);
-      adminErrorToast();
+      adminErrorToast(err.response.data.message);
     } finally {
       setSelectedShowDate("");
       fetchData();

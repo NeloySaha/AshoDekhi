@@ -100,8 +100,8 @@ export const adminShowninToast = () => {
   });
 };
 
-export const adminErrorToast = () => {
-  toast.error("Couldn't update. Please try again!", {
+export const adminErrorToast = (msg = "Couldn't update. Please try again!") => {
+  toast.error(msg, {
     ...toastPrimaryCategories,
     theme: "colored",
     style: toastFontStyle,
