@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 const env = require("dotenv").config();
+const port = process.env.PORT || 7000;
 
 const app = express();
 
@@ -785,6 +786,6 @@ app.post("/movieSwap", (req, res) => {
 });
 
 // For local usage
-app.listen(7000, () => {
-  console.log("Now, it is listening");
+app.listen(port, () => {
+  console.log(`AshoDekhi backend running on ${port}`);
 });
