@@ -10,6 +10,7 @@ import BarLoader from "react-spinners/BarLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { purchaseCompletion, ticketPurchaseError } from "../../../toasts/toast";
 import { resetCart } from "../../../reducers/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const currentDate = () => {
   const date = new Date();
@@ -20,6 +21,7 @@ const currentDate = () => {
 };
 
 export const PurchaseSection = () => {
+  const navigate = useNavigate();
   const [hallData, setHallData] = useState([]);
   const [movieData, setMovieData] = useState([]);
   const [seatsData, setSeatsData] = useState([]);
@@ -129,8 +131,9 @@ export const PurchaseSection = () => {
       });
 
       purchaseCompletion(tickets);
+      navigate("/customer");
     }
-  }, [ticketIds]);
+  }, [ticketIds, navigate]);
 
   return (
     <section className="section-purchase">

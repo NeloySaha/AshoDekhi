@@ -1,9 +1,8 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-const env = require("dotenv").config();
+require("dotenv").config();
 const port = process.env.PORT || 7000;
-
 const app = express();
 
 app.use(
@@ -405,28 +404,29 @@ app.post("/customerPurchases", (req, res) => {
   const sql = `SELECT
   P.email AS customer_email,
   PA.id AS payment_id,
-  GROUP_CONCAT(T.id) AS ticket_ids,
-  GROUP_CONCAT(ST.name) AS seat_numbers,
+  GROUP_CONCAT(T.id SEPARATOR ', ') AS ticket_ids,
+  GROUP_CONCAT(ST.name SEPARATOR ', ') AS seat_numbers,
   TH.name AS theatre_name,
   H.name AS hall_name,
   M.name AS movie_name,
+  T.movie_id as movie_id,
   M.image_path AS movie_image,
   S.movie_start_time AS movie_start_time,
   S.show_type AS show_type,
   S.showtime_date AS showtime_date,
   PA.amount AS ticket_price,
   T.purchase_date AS purchase_date
-FROM person P
-JOIN payment PA ON P.email = PA.customer_email
-JOIN ticket T ON PA.id = T.payment_id
-JOIN showtimes S ON T.showtimes_id = S.id
-JOIN movie M ON T.movie_id = M.id
-JOIN hall H ON T.hall_id = H.id
-JOIN theatre TH ON H.theatre_id = TH.id
-JOIN seat ST ON T.seat_id = ST.id
-WHERE P.email = ?
-GROUP BY PA.id 
-ORDER BY payment_id DESC`;
+  FROM person P
+  JOIN payment PA ON P.email = PA.customer_email
+  JOIN ticket T ON PA.id = T.payment_id
+  JOIN showtimes S ON T.showtimes_id = S.id
+  JOIN movie M ON T.movie_id = M.id
+  JOIN hall H ON T.hall_id = H.id
+  JOIN theatre TH ON H.theatre_id = TH.id
+  JOIN seat ST ON T.seat_id = ST.id
+  WHERE P.email = ?
+  GROUP BY PA.id 
+  ORDER BY payment_id DESC`;
 
   db.query(sql, [email], (err, data) => {
     if (err) return res.json(err);

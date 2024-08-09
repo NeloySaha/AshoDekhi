@@ -1,7 +1,17 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import HashLoader from "react-spinners/HashLoader";
+import { useEffect, useState } from "react";
+import {
+  HiCalendar,
+  HiOutlineClock,
+  HiOutlineCurrencyBangladeshi,
+  HiOutlineMapPin,
+  HiOutlineTicket,
+  HiOutlineTv,
+} from "react-icons/hi2";
+import { RiSofaLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 
 export const CustomerInfoSection = () => {
   const [cusProData, setCusProData] = useState({});
@@ -66,67 +76,85 @@ export const CustomerInfoSection = () => {
 
   const purchaseHtml = cusTicketData.map((cusTicket, id) => {
     return (
-      <li key={id} className="purchase-history-item">
-        <div className="purchase-item-categories">
-          <div className="purchase-item-category">
-            <p>Movie:</p>
-            <p>{cusTicket.movie_name}</p>
+      <Link
+        key={id}
+        to={`/movieDetails/${cusTicket.movie_id}`}
+        className="purchase-history-item"
+      >
+        {/* <div className="purchase-first-gap"></div>
+        <div className="purchase-second-gap"></div> */}
+        <div className="purchase-item-details">
+          <div className="purchase-item-header">
+            <h2>{cusTicket.movie_name}</h2>
+
+            <div className="purchase-show-quality">
+              <HiOutlineTv size={18} />
+              <p>{cusTicket.show_type}</p>
+            </div>
           </div>
 
-          <div className="purchase-item-category">
-            <p>Ticket ID:</p>
-            <p>{cusTicket.ticket_ids}</p>
+          <div className="purchase-ticket-id">
+            <HiOutlineTicket size={16} />
+            <p className="ticket-id">Ticket No.: {cusTicket.ticket_ids}</p>
           </div>
 
-          <div className="purchase-item-category">
-            <p>Show type:</p>
-            <p>{cusTicket.show_type}</p>
+          <div className="purchase-hall-info">
+            <HiOutlineMapPin size={18} />
+            <p>
+              {cusTicket.theatre_name} &mdash; {cusTicket.hall_name}
+            </p>
           </div>
 
-          <div className="purchase-item-category">
-            <p>Theatre:</p>
-            <p>{cusTicket.theatre_name}</p>
-          </div>
-
-          <div className="purchase-item-category">
-            <p>Hall:</p>
-            <p>{cusTicket.hall_name}</p>
-          </div>
-
-          <div className="purchase-item-category">
-            <p>Seats:</p>
+          <div className="purchase-seat">
+            <RiSofaLine size={20} />
             <p>{cusTicket.seat_numbers}</p>
           </div>
 
-          <div className="purchase-item-category">
-            <p>Showtime Date:</p>
-            <p>{cusTicket.showtime_date}</p>
+          <div className="purchase-date-time">
+            <div className="purchase-tags">
+              <HiCalendar size={20} />
+              <strong>{cusTicket.showtime_date}</strong>
+            </div>
+            <div className="purchase-tags">
+              <HiOutlineClock size={18} />
+              <strong>{cusTicket.movie_start_time}</strong>
+            </div>
           </div>
 
-          <div className="purchase-item-category">
-            <p>Movie Start time:</p>
-            <p>{cusTicket.movie_start_time}</p>
+          <div className="purchase-price-create">
+            <div className="purchase-tags">
+              <HiOutlineCurrencyBangladeshi size={18} />
+              <strong>{cusTicket.ticket_price}</strong>
+            </div>
+            <div className="purchase-tags">
+              <p>
+                Purchased at <strong>{cusTicket.purchase_date}</strong>
+              </p>
+            </div>
           </div>
 
-          <div className="purchase-item-category">
-            <p>Price:</p>
-            <p>BDT {cusTicket.ticket_price}TK</p>
-          </div>
-
-          <div className="purchase-item-category">
-            <p>Purchase Date:</p>
-            <p>{cusTicket.purchase_date}</p>
-          </div>
+          {/* <p>
+                <strong>Movie Start time:</strong>
+              </p>
+              <p>
+                <strong>Price:</strong> BDT {cusTicket.ticket_price}TK
+              </p>
+              <p>
+                <strong>Purchase Date:</strong>
+              </p> */}
         </div>
 
-        <div className="purchase-item-img-box">
+        <div
+          to={`/movieDetails/${cusTicket.movie_id}`}
+          className="purchase-item-img-box"
+        >
           <img
             className="purchase-item-img"
             src={cusTicket.movie_image}
             alt="movie-photo"
           />
         </div>
-      </li>
+      </Link>
     );
   });
 
@@ -172,7 +200,7 @@ export const CustomerInfoSection = () => {
               </p>
             )}
             <div className="purchase-history-section">
-              <ul className="purchase-history-list">{purchaseHtml}</ul>
+              <div className="purchase-history-list">{purchaseHtml}</div>
             </div>
           </>
         )}

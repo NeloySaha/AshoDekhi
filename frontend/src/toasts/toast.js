@@ -13,6 +13,7 @@ export const toastFontStyle = {
   fontWeight: 500,
   letterSpacing: "0.75px",
   color: "#1a1d2c",
+  whiteSpace: "nowrap",
 };
 
 // //////////////////
