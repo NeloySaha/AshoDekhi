@@ -133,16 +133,6 @@ export const CustomerInfoSection = () => {
               </p>
             </div>
           </div>
-
-          {/* <p>
-                <strong>Movie Start time:</strong>
-              </p>
-              <p>
-                <strong>Price:</strong> BDT {cusTicket.ticket_price}TK
-              </p>
-              <p>
-                <strong>Purchase Date:</strong>
-              </p> */}
         </div>
 
         <div

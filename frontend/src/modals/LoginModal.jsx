@@ -67,9 +67,7 @@ export const LoginModal = () => {
         }}
       >
         <div className="signup-form-heading">
-          <h2 className="signup-form-heading-text">
-            Log Into Your ASHO DEKHI Account
-          </h2>
+          <h2 className="signup-form-heading-text">Sign in to ASHO DEKHI</h2>
           <button
             type="button"
             className="btn-form-exit"
@@ -100,6 +98,7 @@ export const LoginModal = () => {
             <input
               name="email"
               type="email"
+              disabled={loading}
               value={loginDetails.email}
               placeholder="Enter Email"
               onChange={(e) => handleLoginDetails(e)}
@@ -114,6 +113,7 @@ export const LoginModal = () => {
             <div className="input-password">
               <input
                 name="password"
+                disabled={loading}
                 value={loginDetails.password}
                 type={passViewState ? "text" : "password"}
                 placeholder="Enter Password"

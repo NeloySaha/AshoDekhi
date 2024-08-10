@@ -4,7 +4,11 @@ import HashLoader from "react-spinners/HashLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowDetail } from "../../../reducers/cartSlice";
 
-export const PictureQualitySelector = ({ hallData, setHallData }) => {
+export const PictureQualitySelector = ({
+  hallData,
+  setHallData,
+  paymentOngoing,
+}) => {
   const override = {
     display: "block",
     margin: "1.6rem auto",
@@ -93,6 +97,7 @@ export const PictureQualitySelector = ({ hallData, setHallData }) => {
           style={checkedColor(valStr)}
         >
           <input
+            disabled={loading || paymentOngoing}
             type="radio"
             id={show.showtime_id[idx]}
             name="Select picture quality"

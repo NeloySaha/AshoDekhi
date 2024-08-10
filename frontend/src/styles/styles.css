@@ -2137,6 +2137,10 @@ header {
   letter-spacing: 0.5px;
 }
 
+.purchase-date-time {
+  margin-bottom: 2.4rem;
+}
+
 .purchase-tags {
   display: flex;
   gap: 0.4rem;

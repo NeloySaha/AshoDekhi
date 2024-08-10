@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentMethod } from "../../../reducers/cartSlice";
 
-export const PayMethodSelector = () => {
+export const PayMethodSelector = ({ paymentOngoing }) => {
   const { payment_method: userPayMethod } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
@@ -22,6 +22,7 @@ export const PayMethodSelector = () => {
             style={checkedColor("Bkash")}
           >
             <input
+              disabled={paymentOngoing}
               type="radio"
               id={1}
               name="Select Payment"
@@ -41,6 +42,7 @@ export const PayMethodSelector = () => {
             style={checkedColor("Nagad")}
           >
             <input
+              disabled={paymentOngoing}
               type="radio"
               id={2}
               name="Select Payment"
@@ -60,6 +62,7 @@ export const PayMethodSelector = () => {
             style={checkedColor("Credit Card")}
           >
             <input
+              disabled={paymentOngoing}
               type="radio"
               id={3}
               name="Select Payment"
@@ -79,6 +82,7 @@ export const PayMethodSelector = () => {
             style={checkedColor("Debit Card")}
           >
             <input
+              disabled={paymentOngoing}
               type="radio"
               id={4}
               name="Select Payment"

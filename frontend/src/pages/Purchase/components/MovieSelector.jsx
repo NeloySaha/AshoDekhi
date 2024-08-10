@@ -4,7 +4,7 @@ import HashLoader from "react-spinners/HashLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { setMovie } from "../../../reducers/cartSlice";
 
-export const MovieSelector = ({ movieData, setMovieData }) => {
+export const MovieSelector = ({ movieData, setMovieData, paymentOngoing }) => {
   const override = {
     display: "block",
     margin: "1.6rem auto",
@@ -47,6 +47,7 @@ export const MovieSelector = ({ movieData, setMovieData }) => {
     return (
       <div className="movie-input-container" key={idx}>
         <input
+          disabled={loading || paymentOngoing}
           type="radio"
           id={idx}
           name="Select Movie"

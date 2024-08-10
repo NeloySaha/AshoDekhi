@@ -113,6 +113,7 @@ export const SignupModal = () => {
                 First Name: <span>*</span>
               </label>
               <input
+                disabled={loading}
                 name="firstName"
                 type="text"
                 placeholder="Enter First Name"
@@ -127,6 +128,7 @@ export const SignupModal = () => {
                 Last Name: <span>*</span>
               </label>
               <input
+                disabled={loading}
                 name="lastName"
                 type="text"
                 value={signupDetails.lastName}
@@ -142,6 +144,7 @@ export const SignupModal = () => {
               Phone Number(Must contain 11 digits): <span>*</span>
             </label>
             <input
+              disabled={loading}
               name="phoneNumber"
               type="number"
               value={signupDetails.phoneNumber}
@@ -156,6 +159,7 @@ export const SignupModal = () => {
               Email: <span>*</span>
             </label>
             <input
+              disabled={loading}
               name="email"
               type="email"
               value={signupDetails.email}
@@ -171,6 +175,7 @@ export const SignupModal = () => {
             </label>
             <div className="input-password">
               <input
+                disabled={loading}
                 name="password"
                 value={signupDetails.password}
                 type={passViewState ? "text" : "password"}

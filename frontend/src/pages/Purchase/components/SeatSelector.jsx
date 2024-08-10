@@ -4,7 +4,7 @@ import HashLoader from "react-spinners/HashLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { setSeat } from "../../../reducers/cartSlice";
 
-export const SeatSelector = ({ seatsData, setSeatsData }) => {
+export const SeatSelector = ({ seatsData, setSeatsData, paymentOngoing }) => {
   const override = {
     display: "block",
     margin: "1.6rem auto",
@@ -66,6 +66,7 @@ export const SeatSelector = ({ seatsData, setSeatsData }) => {
     const seatHtml = (
       <div
         className={`seat ${seatStatus}`}
+        disabled={loading || paymentOngoing}
         onClick={() =>
           seatStatus !== "booked" && dispatch(setSeat(seat.seat_id))
         }

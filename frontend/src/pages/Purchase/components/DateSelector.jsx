@@ -4,7 +4,7 @@ import HashLoader from "react-spinners/HashLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCart, setShowDate } from "../../../reducers/cartSlice";
 
-export const DateSelector = () => {
+export const DateSelector = ({ paymentOngoing }) => {
   const [showDatesData, setShowDatesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id: theatreId } = useSelector((store) => store.currentLocation);
@@ -74,6 +74,7 @@ export const DateSelector = () => {
         style={checkedColor(formattedDate)}
       >
         <input
+          disabled={loading || paymentOngoing}
           type="radio"
           id={idx}
           name="Select Date"

@@ -140,27 +140,38 @@ export const PurchaseSection = () => {
       <div className="purchase-container container">
         <div className="purchase-section-left">
           <div className="purchase-heading">
-            <LocationSelector />
+            <LocationSelector paymentOngoing={loading} />
           </div>
 
-          {theatreId !== "" && <DateSelector />}
+          {theatreId !== "" && <DateSelector paymentOngoing={loading} />}
 
           {userDate !== "" && (
-            <MovieSelector movieData={movieData} setMovieData={setMovieData} />
+            <MovieSelector
+              movieData={movieData}
+              setMovieData={setMovieData}
+              paymentOngoing={loading}
+            />
           )}
 
           {userMovieId !== "" && (
             <PictureQualitySelector
               hallData={hallData}
               setHallData={setHallData}
+              paymentOngoing={loading}
             />
           )}
 
           {userShowtimeId !== "" && (
-            <SeatSelector seatsData={seatsData} setSeatsData={setSeatsData} />
+            <SeatSelector
+              seatsData={seatsData}
+              setSeatsData={setSeatsData}
+              paymentOngoing={loading}
+            />
           )}
 
-          {userSeatList.length > 0 && <PayMethodSelector />}
+          {userSeatList.length > 0 && (
+            <PayMethodSelector paymentOngoing={loading} />
+          )}
         </div>
 
         <div className="purchase-section-right">

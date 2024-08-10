@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectLocation } from "../reducers/locationSlice";
 import { resetCart } from "../reducers/cartSlice";
 
-export const LocationSelector = () => {
+export const LocationSelector = ({ paymentOngoing }) => {
   const [locationData, setLocationData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -59,6 +59,7 @@ export const LocationSelector = () => {
         id="location-selector"
         onChange={handleLocationSelection}
         value={userLocation?.id}
+        disabled={loading || paymentOngoing}
       >
         {locationOptions}
       </select>
