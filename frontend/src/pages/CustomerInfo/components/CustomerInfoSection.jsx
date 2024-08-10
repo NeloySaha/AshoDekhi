@@ -83,6 +83,7 @@ export const CustomerInfoSection = () => {
       >
         {/* <div className="purchase-first-gap"></div>
         <div className="purchase-second-gap"></div> */}
+
         <div className="purchase-item-details">
           <div className="purchase-item-header">
             <h2>{cusTicket.movie_name}</h2>

@@ -2019,15 +2019,15 @@ header {
 
 .purchase-history-list {
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-columns: 1fr;
   column-gap: 2.4rem;
   row-gap: 4.8rem;
 }
 
 .purchase-history-item {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1.6rem;
+  grid-template-columns: 1fr 0.2fr;
+  gap: 3.2rem;
   background: linear-gradient(145deg, #20242f, #151822);
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -2035,7 +2035,30 @@ header {
   padding: 3.2rem;
   text-decoration: none;
   position: relative;
-  border-radius: 1.2rem;
+}
+
+.purchase-first-gap,
+.purchase-second-gap {
+  height: 5.2rem;
+  width: 5.2rem;
+  background-color: #1a1d2c;
+  position: absolute;
+  z-index: 15;
+  border-radius: 50%;
+  /* clip-path: inset(0 0 0 50%); Show only the right half */
+  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.3); /* Inset shadow on the right */
+}
+
+.purchase-first-gap {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.purchase-second-gap {
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
 }
 
 .purchase-history-item:hover {
@@ -2152,28 +2175,6 @@ header {
   transform: scale(1.05);
 }
 
-/* .purchase-first-gap,
-.purchase-second-gap {
-  height: 5.2rem;
-  width: 5.2rem;
-  background-color: #1a1d2c;
-  position: absolute;
-  z-index: 15;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.purchase-first-gap {
-  left: 0;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.purchase-second-gap {
-  right: 0;
-  top: 50%;
-  transform: translate(50%, -50%);
-} */
 /* ********** */
 /* ADMIN PAGE */
 /* ********** */

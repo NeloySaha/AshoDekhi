@@ -107,15 +107,6 @@
   .btn-reg {
     margin-top: 1.2rem;
   }
-
-  .purchase-history-list {
-    grid-template-columns: 1fr;
-  }
-
-  .purchase-history-item {
-    grid-template-columns: 2fr 0.6fr;
-    gap: 2.4rem;
-  }
 }
 
 /* *************************** */
@@ -269,6 +260,14 @@
   .nav-signed-name {
     display: none;
   }
+
+  .purchase-item-img-box {
+    display: none;
+  }
+
+  .purchase-history-item {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* *************************** */
@@ -391,10 +390,6 @@
     margin: 2.4rem 0;
   }
 
-  .purchase-history-item {
-    grid-template-columns: 0.6fr 0.4fr;
-  }
-
   .movie-ticket-container {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -419,14 +414,6 @@
 
   .showtimes-details-btn {
     margin-top: auto;
-  }
-
-  .purchase-item-img-box {
-    display: none;
-  }
-
-  .purchase-history-item {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -559,16 +546,6 @@
 
   .showtimes-img-box {
     width: 65%;
-  }
-
-  .purchase-history-item {
-    grid-template-columns: 1fr;
-    gap: 2.4rem;
-  }
-
-  .purchase-item-img-box {
-    grid-row: 1;
-    justify-content: center;
   }
 
   .movie-info-grid-container {
