@@ -68,9 +68,9 @@
     width: 50%;
   }
 
-  .home-collection-container {
+  /* .home-collection-container {
     grid-template-columns: repeat(auto-fit, 27rem);
-  }
+  } */
 
   .movie-card-line {
     font-size: 1.4rem;
@@ -118,6 +118,11 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  .purchase-first-gap,
+  .purchase-second-gap {
+    display: none;
   }
 
   .heading-primary {
@@ -221,15 +226,15 @@
     gap: 3.2rem;
   }
 
-  .home-collection-container,
+  /* .home-collection-container, */
   .details-collection-container {
     overflow-x: auto;
     justify-content: start;
   }
 
-  .home-collection-container {
+  /* .home-collection-container {
     grid-template-columns: repeat(6, 27rem);
-  }
+  } */
 
   .details-collection-container {
     grid-template-columns: repeat(5, 27rem);

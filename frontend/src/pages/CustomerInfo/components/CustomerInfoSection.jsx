@@ -81,8 +81,8 @@ export const CustomerInfoSection = () => {
         to={`/movieDetails/${cusTicket.movie_id}`}
         className="purchase-history-item"
       >
-        {/* <div className="purchase-first-gap"></div>
-        <div className="purchase-second-gap"></div> */}
+        <div className="purchase-first-gap"></div>
+        <div className="purchase-second-gap"></div>
 
         <div className="purchase-item-details">
           <div className="purchase-item-header">

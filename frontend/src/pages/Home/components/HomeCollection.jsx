@@ -34,6 +34,10 @@ export const HomeCollection = () => {
     return <CollectionCard key={latestMovie.id} {...latestMovie} />;
   });
 
+  const latestMovieCardsDouble = movieData.map((latestMovie) => {
+    return <CollectionCard key={latestMovie.id + 6} {...latestMovie} />;
+  });
+
   return (
     <section className="section-home-collection" id="nowShowing">
       <div className="home-collection-heading-container">
@@ -43,9 +47,12 @@ export const HomeCollection = () => {
       </div>
 
       {loading && <HashLoader cssOverride={override} color="#eb3656" />}
-      <div className="home-collection-container">
-        {!loading && latestMoviesCards}
-      </div>
+      {!loading && (
+        <div className="home-collection-container">
+          <div className="home-collection-inner">{latestMoviesCards}</div>
+          <div className="home-collection-inner">{latestMovieCardsDouble}</div>
+        </div>
+      )}
     </section>
   );
 };

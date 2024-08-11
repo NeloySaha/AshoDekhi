@@ -641,18 +641,29 @@ header {
   border-bottom: 4px solid #eb3656;
 }
 
-.home-collection-container {
+.details-collection-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, 26rem);
   gap: 4.8rem;
   justify-content: center;
 }
 
-.details-collection-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 26rem);
-  gap: 4.8rem;
-  justify-content: center;
+@keyframes home-slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.home-collection-container {
+  max-width: 132rem;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
 }
 
 .home-movie-card {
@@ -664,6 +675,18 @@ header {
   overflow: hidden;
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.21);
   padding-bottom: 2rem;
+}
+
+.home-collection-inner {
+  display: grid;
+  padding-left: 4.8rem;
+  grid-template-columns: repeat(6, 26rem);
+  gap: 4.8rem;
+  animation: 30s home-slide linear infinite;
+}
+
+.home-collection-container:hover .home-collection-inner {
+  animation-play-state: paused;
 }
 
 .home-movie-img {
@@ -2030,7 +2053,7 @@ header {
   gap: 3.2rem;
   background: linear-gradient(145deg, #20242f, #151822);
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 3.2rem;
   text-decoration: none;
@@ -2045,25 +2068,25 @@ header {
   position: absolute;
   z-index: 15;
   border-radius: 50%;
-  /* clip-path: inset(0 0 0 50%); Show only the right half */
-  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.3); /* Inset shadow on the right */
 }
 
 .purchase-first-gap {
   left: 0;
   top: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .purchase-second-gap {
   right: 0;
   top: 50%;
   transform: translate(50%, -50%);
+  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.9);
 }
 
 .purchase-history-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); */
 }
 
 .purchase-item-details {
