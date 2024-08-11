@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { showLoginModal } from "../../../reducers/authSlice";
 import { resetCart } from "../../../reducers/cartSlice";
+import { TextEffect } from "../../../components/TextEffect";
 
 export const HeroSection = () => {
   const navigate = useNavigate();
@@ -16,7 +17,9 @@ export const HeroSection = () => {
       <div className="container hero">
         <div className="hero-text">
           <h1 className="heading-primary">
-            Unlock the Gateway to Enchanting Movie Magic
+            <TextEffect preset="slide">
+              Unlock the Gateway to Enchanting Movie Magic
+            </TextEffect>
           </h1>
 
           <p className="hero-description">
