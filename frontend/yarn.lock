@@ -537,6 +537,18 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.8.0.tgz#e848d2f669f601544df15ce2a313955e4bf0bafc"
   integrity sha512-mrfKqIHnSZRyIzBcanNJmVQELTnX+qagEDlcKO90RgRBVOZGSGvZKeDihTRfWcqoDn5N/NkUcwWTccnpN18Tfg==
 
+"@stripe/react-stripe-js@^2.7.3":
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-2.7.3.tgz#9cbbc2adc24076850885b059dda86fdb45b9f64a"
+  integrity sha512-05t6oY7cmAJt7asknmeoI4z4GnutgKRZ7dcdTWCkeYclONzIRMuMTiyjBMQ/q3I2sdNizSl25YZ8G6Lg4nN1aw==
+  dependencies:
+    prop-types "^15.7.2"
+
+"@stripe/stripe-js@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-4.2.0.tgz#c54be2ec4837a814734c31e6cd3bb7e650f53a1a"
+  integrity sha512-MdTpmXqtm+B9rIAmaSlCkF6qv3793UrghA95SFI4Ge7KGYWZAMYyxbX/z9FXs6XnU5gUbKtGtlVgZQp1T88UfQ==
+
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.4.tgz#37fc1223f0786c39627068a12e94d6e6fc61de16"
